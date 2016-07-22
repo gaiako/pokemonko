@@ -6,7 +6,7 @@
 	<meta charset="UTF-8" />
 	<title>Pokémon KO</title>
 
-	<link rel="icon" type="img/png" href="/images/favicon.ico" />
+	<link rel="icon" type="img/png" href="/app/assets/images/favicon.ico" />
 	<link href="/bootstrap/css/bootstrap.css" rel="stylesheet" />
 	<link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 	<link href="/bootstrap/css/estilo.css" rel="stylesheet" />
