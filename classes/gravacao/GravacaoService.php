@@ -1,8 +1,4 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT']."/init.php");
-	require_once($_->raiz."/util/autoload.php");
-	require_once($_->raiz."/classes/gravacao/Gravacao.php");
-
 	class GravacaoService extends Service{
 
 		public function __construct($gravacaoDAO){

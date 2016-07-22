@@ -1,6 +1,12 @@
 <?php
-	//ini_set('memory_limit', '1280M');
 	session_start();
+	
+	if(!isset($_SESSION['gravacao']) && ($_GET['file'] != 'gravacao-cadastrar' && $_GET['file'] != 'gravacao-gerenciar')){
+		$_SESSION['mensagem'] = "Bem-vindo ao Pokémon KO! Crie ou carregue uma gravação para começar";
+		header('Location:/gravacao-gerenciar');
+	}
+	
+	error_reporting(E_ALL & ~(E_DEPRECATED|E_STRICT|E_NOTICE|E_WARNING));
 
 	global $_;
 	global $_service;

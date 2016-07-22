@@ -1,8 +1,4 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT']."/init.php");
-	require_once($_->raiz."/util/autoload.php");
-	require_once($_->raiz."/classes/BancoDados.php");
-
 	class GravacaoDAO extends DAO{
 
 		public function __construct($bancoDados){
@@ -10,21 +6,22 @@
 		}
 
 		protected function adicionarNovo($gravacao){
-			$comando = 'insert into gravacao (id, nome, dataCadastro) values (:id, :nome, now())';
+			$comando = 'insert into gravacao (nome, dataCadastro) values (:nome, now())';
 			$this->getBancoDados()->executar($comando, $this->parametros($gravacao));
 		}
 
 		protected function atualizar($gravacao){
 			$comando = 'update gravacao set nome = :nome where id = :id';
-			$this->getBancoDados()->executar($comando, $this->parametros($gravacao));
+			$this->getBancoDados()->executar($comando, $this->parametros($gravacao,true));
 		}
 
-		protected function parametros($gravacao){
-			return array(
-				'id' => $gravacao->getId(),
-				'nome' => $gravacao->getNome(),
-				'dataCadastro' => $gravacao->getDataCadastro()
+		protected function parametros($gravacao,$update = false){
+			$parametros = array(
+				'nome' => $gravacao->getNome()
 			);
+			if($update)
+				$parametros['id'] = $gravacao->getId();
+			return $parametros;
 		}
 
 		public function existe($gravacao){
@@ -37,7 +34,7 @@
 			$gravacao = new Gravacao();
 			$gravacao->setId($l['id']);
 			$gravacao->setNome($l['nome']);
-			$gravacao->setDataCadastro($l['dataCadastro']),
+			$gravacao->setDataCadastro($l['dataCadastro']);
 			return $gravacao;
 		}
 

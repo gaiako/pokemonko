@@ -28,6 +28,13 @@
 							<a href="./index.html">Home</a>
 						</li>-->
 						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-download-alt"></i> Gravação <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/gravacao-cadastrar"><i class="icon-plus"></i> Nova</a></li>
+								<li><a href="/gravacao-gerenciar"><i class="icon-arrow-up"></i> Carregar</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Jogadores <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/jogador-gerenciar"><i class="icon-list"></i> Lista</a></li>
@@ -52,6 +59,8 @@
 	<?php
 	if(isset($_GET['file'])){
 		require_once($_->raiz.'/app/'.$_GET['file'].'.php');
+	}else{
+		require_once($_->raiz.'/app/inicio.php');
 	}
 	?>
 	
