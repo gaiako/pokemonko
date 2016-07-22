@@ -1,0 +1,23 @@
+{
+    "name": "gaiako/pokemonko",
+    "description": "Projeto Pokemon Ko",
+    "authors": [
+        {
+            "name": "gaiako"
+        },
+        {
+            "name": "wenderpmachado",
+            "email": "wender_machado@msn.com"
+        }
+    ],
+    "require": {
+        "thiagodp/php-util": "dev-master",
+        "slim/slim": "^3.4"
+    },
+    "autoload": {
+        "classmap" : [
+            "classes/",
+            "vendor/thiagodp/php-util"
+            ]
+    }
+}

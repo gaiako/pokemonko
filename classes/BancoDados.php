@@ -1,9 +1,4 @@
 <?php
-
-require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
-require_once($_->raiz."/util/autoload.php");
-require_once($_->raiz."/util/Util.php");
-
 /**
  * Database utilities.
  *

@@ -1,0 +1,25 @@
+{
+  "name": "pokemonko",
+  "version": "0.0.1",
+  "description": "Projeto Pokemon Ko",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaiako/pokemonko.git"
+  },
+  "author": "Cássio Amorim, Wender Machado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaiako/pokemonko/issues"
+  },
+  "homepage": "https://github.com/gaiako/pokemonko#readme",
+  "dependencies": {
+    "bower": "^1.7.9"
+  }
+}

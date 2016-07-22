@@ -1,9 +1,6 @@
 <?php
 
-require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 global $_;
-require_once($_->raiz.'/util/autoload.php');
-
 /*
  *	Classe imagem, do tipo readOnly, qualquer operação para ser salva deve ser realizada pela ImagemFactory
  */

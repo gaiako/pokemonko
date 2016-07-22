@@ -1,6 +1,4 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
-
 	class FactorySingleton {
 		private static $defaultDAOFactory = null;
 		private static $defaultServiceFactory = null;

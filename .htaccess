@@ -1,25 +1,11 @@
 <IfModule mod_rewrite.c>
-	Options +FollowSymlinks
-	RewriteEngine on
-	#RewriteCond %{http_host} ^powerpumpsuplementos.com.br [NC]
-	#RewriteRule ^(.*)$ http://www.powerpumpsuplementos.com.br/$1 [R=301,L]
-	
-	RewriteBase /
-	RewriteRule ^/?$ index.php [NC,L]
-	#RewriteRule ^admin/?$ admin/index.php [NC,L]
-	#RewriteRule ^admin/admin/?$ admin/index.php [NC,L]
-	#RewriteRule ^admin/painel/?$ admin/painel.php [NC,L]
-	#RewriteRule ^admin/painel/([a-zA-Z0-9\-\_]+)/([0-9]+)/([a-zA-Z\-\_]+)/(-?[0-9a-zA-Z\.\_\-]+)/?$ admin/painel.php?conteudo=$1.php&id=$2&acao=$3&idAcao=$4 [NC,L]
-	RewriteRule ^ops/?$ /ops/Ops.php [NC,L]
-	RewriteRule ^([a-zA-Z0-9\-\_]+)/?$ index.php?file=$1 [NC,L]
-	RewriteRule ^([a-zA-Z0-9\-\_]+)/([0-9]+)/?$ index.php?file=$1&id=$2 [NC,L]
-	RewriteRule ^([a-zA-Z0-9\-\_]+)/([0-9]+)/([a-zA-Z0-9\-\_]+)/?$ index.php?file=$1&id=$2&acao=$3 [NC,L]
-	
-	RewriteRule ^busca/q/(.*)?$ busca.php?q=$1 [NC,L]
-	
-	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteEngine On
+
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule (.*) / [L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-l
+
+	RewriteRule ^(.+)$ index.php?path=$1 [QSA,L]
 	
 	#--------------------- Configuracoes de optimizacao de desempenho ---------------------#
 	

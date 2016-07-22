@@ -9,10 +9,6 @@
 *   JoséEduardo de Almeida <dudu2904@hotmail.com>
 * @version	1.6.2
 */
-
-require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
-require_once($_->raiz."/util/autoload.php");
-
 abstract class Util {
 
 	public static function makeController($class){

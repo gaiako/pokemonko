@@ -1,8 +1,4 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
-	require_once($_->raiz."/util/autoload.php");
-	require_once($_->raiz."/classes/singleton/FactorySingleton.php");
-	
 	abstract class Controller{
 		protected $classe = '';
 		private $service = null;

@@ -1,6 +1,5 @@
 <?php
 	session_start("erro");
-	require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
 	if(!isset($_SESSION['erro'])){
 		if(isset($e)){
 			$exception = array(

@@ -1,8 +1,4 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT']."/config.php");
-	require_once($_->raiz."/classes/singleton/BDSingleton.php");
-	require_once($_->raiz."/util/autoload.php");
-	
 	class OpsController{
 		private $servico = null;
 		

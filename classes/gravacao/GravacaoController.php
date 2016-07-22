@@ -1,7 +1,4 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT']."/init.php");
-	require_once($_->raiz."/util/autoload.php");
-
 	class GravacaoController extends Controller{
 
 		public function __construct(){
