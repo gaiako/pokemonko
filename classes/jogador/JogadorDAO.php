@@ -6,18 +6,17 @@
 		}
 
 		protected function adicionarNovo($jogador){
-			$comando = 'insert into jogador (id, nome, humano, dificuldade, idGravacao, idMapa, x, y, cor, dinheiro) values (:id, :nome, :humano, :dificuldade, :idGravacao, :idMapa, :x, :y, :cor, :dinheiro)';
+			$comando = 'insert into jogador (nome, humano, dificuldade, idGravacao, idMapa, x, y, cor, dinheiro) values (:nome, :humano, :dificuldade, :idGravacao, :idMapa, :x, :y, :cor, :dinheiro)';
 			$this->getBancoDados()->executar($comando, $this->parametros($jogador));
 		}
 
 		protected function atualizar($jogador){
 			$comando = 'update jogador set nome = :nome, humano = :humano, dificuldade = :dificuldade, idGravacao = :idGravacao, idMapa = :idMapa, x = :x, y = :y, cor = :cor, dinheiro = :dinheiro where id = :id';
-			$this->getBancoDados()->executar($comando, $this->parametros($jogador));
+			$this->getBancoDados()->executar($comando, $this->parametros($jogador,true));
 		}
 
-		protected function parametros($jogador){
-			return array(
-				'id' => $jogador->getId(),
+		protected function parametros($jogador,$update = false){
+			$parametros = array(
 				'nome' => $jogador->getNome(),
 				'humano' => $jogador->getHumano(),
 				'dificuldade' => $jogador->getDificuldade(),
@@ -28,6 +27,9 @@
 				'cor' => $jogador->getCor(),
 				'dinheiro' => $jogador->getDinheiro()
 			);
+			if($update)
+				$parametros['id'] = $jogador->getId();
+			return $parametros;
 		}
 
 		public function existe($jogador){
