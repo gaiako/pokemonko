@@ -1,0 +1,1 @@
+ALTER TABLE `treinador` DROP `idMapa`, DROP `x`, DROP `y`, DROP `nome`, DROP `dinheiro`;

@@ -1,11 +1,11 @@
 <?php
-	class JogadorService extends Service{
+	class MapaService extends Service{
 
-		public function __construct($jogadorDAO){
-			parent::__construct($jogadorDAO);
+		public function __construct($mapaDAO){
+			parent::__construct($mapaDAO);
 		}
 
-		public function validar($jogador, &$erro){
+		public function validar($mapa, &$erro){
 			if(count($erro) > 0){
 				$erro['validado'] = true;
 				throw new ServiceException('Corrija os campos abaixo para efetuar o cadastro');

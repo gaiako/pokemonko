@@ -1,5 +1,5 @@
 <?php
-	class Jogador{
+	class Treinador{
 
 		private $id = 0;
 		private $nome = "";

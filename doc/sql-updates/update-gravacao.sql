@@ -1,1 +1,0 @@
-ALTER TABLE `gravacao` CHANGE `dataCriacao` `dataCadastro` DATETIME NOT NULL;

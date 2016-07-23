@@ -1,0 +1,1 @@
+ALTER TABLE `pokemon` CHANGE `idTreinador` `idTreinadorGravacao` INT(11) NULL DEFAULT NULL;

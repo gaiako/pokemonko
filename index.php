@@ -35,9 +35,9 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Jogadores <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Treinadores <b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="/jogador-gerenciar"><i class="icon-list"></i> Lista</a></li>
+								<li><a href="/treinador-gerenciar"><i class="icon-list"></i> Lista</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
