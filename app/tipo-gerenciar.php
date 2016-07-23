@@ -70,7 +70,7 @@ try{
 					<td><?php echo $t->getId(); ?></td>
 					<td><span class="label" style="background-color:<?php echo $t->getCor(); ?>;"><?php echo $t->getNome(); ?></span></td>
 					<td width="14"><a href="/tipo-gerenciar/<?php echo $t->getId(); ?>" class="alterar-tipo" href=""><i class="icon-edit"></i></a></td>
-					<td width="14"><a href="/tipo-gerenciar/<?php echo $t->getId(); ?>/excluir>" class="remover-tipo" href=""><i class="icon-remove"></i></a></td>
+					<td width="14"><a href="/tipo-gerenciar/<?php echo $t->getId(); ?>/excluir" class="remover-tipo" href=""><i class="icon-remove"></i></a></td>
 				</tr>
 				<?php
 			}

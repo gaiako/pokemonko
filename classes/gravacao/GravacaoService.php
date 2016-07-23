@@ -6,8 +6,16 @@
 		}
 
 		public function validar($gravacao, &$erro){
+			if(strlen($gravacao->getNome()) < 1)
+				$erro['nome'] = 'Preencha o nome da gravação';
+						
+			if(!count($gravacao->getTreinadores()))
+				$erro['jogadores'] = 'Escolha ao menos 1 treinador para começar';
+			
+			if(!$gravacao->getMapaInicial() instanceOf Mapa)
+				$erro['mapaInicial'] = 'Mapa inicial não selecionado';
+			
 			if(count($erro) > 0){
-				$erro['validado'] = true;
 				throw new ServiceException('Corrija os campos abaixo para efetuar o cadastro');
 			}
 		}

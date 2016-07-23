@@ -10,6 +10,10 @@ try{
 		echo "<div class='alert alert-success'>Salvo com sucesso</div>";
 		$gravacao = null;
 	}
+	
+	if(isset($_GET['id'])){
+		$gravacao = $gravacaoController->obterComId($_GET['id']);
+	}
 }catch(ServiceException $e){
 	
 }catch(Exception $e){

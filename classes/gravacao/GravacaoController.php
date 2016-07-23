@@ -10,6 +10,15 @@
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$gravacao = new Gravacao();
 			$this->povoarSimples($gravacao, $todosOsCampos, $_POST);
+			
+			if(isset($_POST['treinadores'])){
+				$treinadorController = Util::makeService('treinador');
+				$gravacao->setTreinadores($treinadorController->obterComIds($_POST['treinadores'],false));
+			}
+			
+			$mapaController = Util::makeController('mapa');
+			$gravacao->setMapaInicial($mapaController->obterComId($_POST['idMapa']));
+			
 			return $gravacao;
 		}
 	}

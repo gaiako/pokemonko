@@ -10,6 +10,7 @@
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$mapa = new Mapa();
 			$this->povoarSimples($mapa, $todosOsCampos, $_POST);
+			
 			return $mapa;
 		}
 	}

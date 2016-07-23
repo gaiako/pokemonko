@@ -3,14 +3,14 @@
 
 		private $id = 0;
 		private $nome = "";
-		private $humano = 1;
+		private $humano = false;
 		private $dificuldade = null;
 		private $gravacao = null;
-		private $idMapa = 0;
-		private $x = 1;
-		private $y = 1;
+		private $mapa = 0; //Gravação
+		private $x = 1; //Gravação
+		private $y = 1; //Gravação
 		private $cor = "";
-		private $dinheiro = 0.0;
+		private $pokemonDollar = 0.0; //Gravação
 
 		public function getId(){
 			return $this->id;
@@ -32,7 +32,7 @@
 			return $this->humano;
 		}
 
-		public function setHumano($humano){
+		public function setHumano($humano = true){
 			$this->humano = $humano;
 		}
 
@@ -52,12 +52,12 @@
 			$this->idGravacao = $idGravacao;
 		}
 
-		public function getIdMapa(){
-			return $this->idMapa;
+		public function getMapa(){
+			return $this->mapa;
 		}
 
-		public function setIdMapa($idMapa){
-			$this->idMapa = $idMapa;
+		public function setMapa($mapa){
+			$this->mapa = $mapa;
 		}
 
 		public function getX(){
@@ -84,12 +84,12 @@
 			$this->cor = $cor;
 		}
 
-		public function getDinheiro(){
-			return $this->dinheiro;
+		public function getPokemonDollar(){
+			return $this->pokemonDollar;
 		}
 
-		public function setDinheiro($dinheiro){
-			$this->dinheiro = $dinheiro;
+		public function setPokemonDollar($pokemonDollar){
+			$this->pokemonDollar = $pokemonDollar;
 		}
 
 	}

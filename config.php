@@ -6,12 +6,18 @@
 		header('Location:/gravacao-gerenciar');
 	}
 	
+	
+	
 	error_reporting(E_ALL & ~(E_DEPRECATED|E_STRICT|E_NOTICE|E_WARNING));
 
 	global $_;
 	global $_service;
 	global $_dao;
 	$_ = new stdClass();
+	$_->config = new stdClass();
+	
+	$_->config->minDificuldade = 1;
+	$_->config->maxDificuldade = 7;
 
 	if(substr($_SERVER['DOCUMENT_ROOT'], -1) == '/')
 		$_->raiz = substr($_SERVER['DOCUMENT_ROOT'], 0, -1);

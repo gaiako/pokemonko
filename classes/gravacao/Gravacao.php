@@ -2,6 +2,8 @@
 	class Gravacao{
 
 		private $id = 0;
+		private $treinadores = array();
+		private $mapaInicial = 0;
 		private $nome = "";
 		private $dataCadastro = "";
 
@@ -11,6 +13,26 @@
 
 		public function setId($id){
 			$this->id = $id;
+		}
+		
+		public function getTreinadores(){
+			return $this->treinadores;
+		}
+		
+		public function addTreinador($treinador){
+			array_push($this->treinadores,$treinador);
+		}
+		
+		public function setTreinadores($treinadores){
+			$this->treinadores = $treinadores;
+		}
+		
+		public function getMapaInicial(){
+			return $this->mapaInicial;
+		}
+		
+		public function setMapaInicial($mapaInicial){
+			$this->mapaInicial = $mapaInicial;
 		}
 
 		public function getNome(){

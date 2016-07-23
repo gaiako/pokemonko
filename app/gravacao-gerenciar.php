@@ -37,7 +37,7 @@
 					<td><?php echo $t->getId(); ?></td>
 					<td><?php echo $t->getNome(); ?></td>
 					<td width="14"><a href="/gravacao-gerenciar/<?php echo $t->getId(); ?>/carregar" href=""><img src="/app/assets/images/carregar.png" alt="Carregar" title="Carregar" /></a></td>
-					<td width="14"><a href="/gravacao-gerenciar/<?php echo $t->getId(); ?>" href=""><i class="icon-edit"></i></a></td>
+					<td width="14"><a href="/gravacao-cadastrar/<?php echo $t->getId(); ?>" href=""><i class="icon-edit"></i></a></td>
 					<td width="14"><a href="/gravacao-gerenciar/<?php echo $t->getId(); ?>/excluir>" href=""><i class="icon-remove"></i></a></td>
 				</tr>
 				<?php

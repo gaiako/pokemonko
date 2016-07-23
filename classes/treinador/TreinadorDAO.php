@@ -6,12 +6,12 @@
 		}
 
 		protected function adicionarNovo($treinador){
-			$comando = 'insert into treinador (nome, humano, dificuldade, idGravacao, idMapa, x, y, cor, dinheiro) values (:nome, :humano, :dificuldade, :idGravacao, :idMapa, :x, :y, :cor, :dinheiro)';
+			$comando = 'insert into treinador (nome, humano, dificuldade, cor) values (:nome, :humano, :dificuldade, :cor)';
 			$this->getBancoDados()->executar($comando, $this->parametros($treinador));
 		}
 
 		protected function atualizar($treinador){
-			$comando = 'update treinador set nome = :nome, humano = :humano, dificuldade = :dificuldade, idGravacao = :idGravacao, idMapa = :idMapa, x = :x, y = :y, cor = :cor, dinheiro = :dinheiro where id = :id';
+			$comando = 'update treinador set nome = :nome, humano = :humano, dificuldade = :dificuldade, cor = :cor where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($treinador,true));
 		}
 
@@ -20,12 +20,7 @@
 				'nome' => $treinador->getNome(),
 				'humano' => $treinador->getHumano(),
 				'dificuldade' => $treinador->getDificuldade(),
-				'idGravacao' => $treinador->getGravacao()->getId(),
-				'idMapa' => $treinador->getMapa()->getId(),
-				'x' => $treinador->getX(),
-				'y' => $treinador->getY(),
-				'cor' => $treinador->getCor(),
-				'dinheiro' => $treinador->getDinheiro()
+				'cor' => $treinador->getCor()
 			);
 			if($update)
 				$parametros['id'] = $treinador->getId();
@@ -54,7 +49,7 @@
 			$treinador->setX($l['x']);
 			$treinador->setY($l['y']);
 			$treinador->setCor($l['cor']);
-			$treinador->setDinheiro($l['dinheiro']);
+			$treinador->setPokemonDollar($l['pokemonDollar']);
 			return $treinador;
 		}
 
@@ -64,9 +59,11 @@
 		}
 
 		public function obterComId($id, $completo = true){
-			$comando = 'select * from treinador where id = :id';
+			$comando = 'select treinador.*,tg.idMapa,tg.x,tg.y,tg.pokemonDollar from treinador  
+			left join treinador_gravacao tg on tg.idTreinador = treinador.id and tg.idGravacao = :idGravacao and treinador.id = :id';
 			$parametros = array(
-				'id' => $id
+				'id' => $id,
+				'idGravacao' => $_SESSION['gravacao']
 			);
 			return $this->getBancoDados()->obterObjeto($comando, array($this, 'transformarEmObjeto'), $parametros, $completo);
 		}

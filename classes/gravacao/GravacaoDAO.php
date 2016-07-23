@@ -8,11 +8,27 @@
 		protected function adicionarNovo($gravacao){
 			$comando = 'insert into gravacao (nome, dataCadastro) values (:nome, now())';
 			$this->getBancoDados()->executar($comando, $this->parametros($gravacao));
+			
+			$this->salvarTreinadores($gravacao);
 		}
 
 		protected function atualizar($gravacao){
 			$comando = 'update gravacao set nome = :nome where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($gravacao,true));
+		}
+		
+		public function salvarTreinadores($gravacao){
+			foreach($gravacao->getTreinadores() as $treinador){
+				$comando = "insert into treinador_gravacao (idTreinador,idGravacao,idMapa,x,y) values (:idTreinador,:idGravacao,:idMapa,:x,:y)";
+				$parametros = array(
+					'idTreinador' => $gravacao->getTreinador()->getId(),
+					'idGravacao' => $gravacao->getId(),
+					'idMapa' => $gravacao->getMapaInicial()->getId(),
+					'x' => $gravacao->getMapaInicial()->getXInicial(),
+					'y' => $gravacao->getMapaInicial()->getYInicial()
+				);
+				$this->getBancoDados()->executar($comando,$parametros);
+			}
 		}
 
 		protected function parametros($gravacao,$update = false){

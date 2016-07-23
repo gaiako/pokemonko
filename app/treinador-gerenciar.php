@@ -13,7 +13,7 @@ try{
 
 	if(isset($_GET['acao']) && $_GET['acao'] == 'excluir'){
 		$treinadorController->desativarComId($_GET['id']);
-	}else{
+	}elseif(isset($_GET['id'])){
 		$treinador = $treinadorController->obterComId($_GET['id']);
 	}
 
@@ -25,7 +25,7 @@ try{
 }
 
 ?>
-<form id="formularioTreinador method="post" action="/treinador-gerenciar" class='form-horizontal' enctype='multipart/form-data'>
+<form id="formularioTreinador" method="post" action="/treinador-gerenciar" class='form-horizontal' enctype='multipart/form-data'>
 	<input type="hidden" name="id" value="<?php if(isset($treinador)) echo $treinador->getId(); ?>" />
 	<fieldset>
 		<legend>Cadastrar Treinador</legend>
@@ -38,6 +38,20 @@ try{
 			</div>
 		</div>
 
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['humano'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="humano">Humano</label>
+			<div class="controls">
+				<input type="checkbox" name="humano" id="humano" <?php if(!isset($treinador) || (isset($treinador) && $treinador->getHumano())) echo 'checked'; ?> />
+			</div>
+		</div>
+		
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['dificuldade'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="dificuldade">Dificuldade</label>
+			<div class="controls">
+				<input type="number" class="input input-mini" name="dificuldade" id="dificuldade" min="<?php echo $_->config->minDificuldade; ?>" max="<?php echo $_->config->maxDificuldade; ?>" value="1" <?php if(!isset($treinador) || (isset($treinador) && $treinador->getHumano())) echo 'disabled'; ?> />
+			</div>
+		</div>
+		
 		<div class="control-group <?php if(isset($erro)){ if(isset($erro['cor'])) echo "error"; else echo "success"; } ?>">
 			<label class="control-label" for="cor">Cor</label>
 			<div class="controls">
@@ -81,6 +95,14 @@ try{
 
 <script>
 $(document).ready(function(){
+	$('#humano').click(function(){
+		if($(this).prop('checked')){
+			$('#dificuldade').attr('disabled','disabled').val('1');
+		}else{
+			$('#dificuldade').removeAttr('disabled');
+		}
+	});
+	
 	$('form').on("click", '.habilitado-duplicacao .duplicar', function(){
 
 		if($(this).parent().parent().find(".duplicar").length >= 4){
