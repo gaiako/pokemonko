@@ -18,6 +18,9 @@
 	
 	$_->config->minDificuldade = 1;
 	$_->config->maxDificuldade = 7;
+	$_->config->maxTamanhomapa = 100;
+	$_->config->minDado = 1;
+	$_->config->maxDado = 6;
 
 	if(substr($_SERVER['DOCUMENT_ROOT'], -1) == '/')
 		$_->raiz = substr($_SERVER['DOCUMENT_ROOT'], 0, -1);

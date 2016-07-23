@@ -3,8 +3,8 @@
 
 		private $id = 0;
 		private $nome = "";
-		private $dimensaox = 50;
-		private $dimensaoy = 50;
+		private $dimensaoX = 50;
+		private $dimensaoY = 50;
 		private $terrenoPadrao = 1;
 		private $xInicial = 1;
 		private $yInicial = 1;
@@ -25,20 +25,20 @@
 			$this->nome = $nome;
 		}
 
-		public function getDimensaox(){
-			return $this->dimensaox;
+		public function getDimensaoX(){
+			return $this->dimensaoX;
 		}
 
-		public function setDimensaox($dimensaox){
-			$this->dimensaox = $dimensaox;
+		public function setDimensaoX($dimensaoX){
+			$this->dimensaoX = $dimensaoX;
 		}
 
-		public function getDimensaoy(){
-			return $this->dimensaoy;
+		public function getDimensaoY(){
+			return $this->dimensaoY;
 		}
 
-		public function setDimensaoy($dimensaoy){
-			$this->dimensaoy = $dimensaoy;
+		public function setDimensaoY($dimensaoY){
+			$this->dimensaoY = $dimensaoY;
 		}
 
 		public function getTerrenoPadrao(){

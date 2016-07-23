@@ -52,6 +52,7 @@
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-map icon-ko"></i> Mapa <b class="caret"></b></a>
 							<ul class="dropdown-menu">
+								<li><a href="/mapa-gerenciar"><i class="icon-map-marker"></i> Mapas</a></li>
 								<li><a href="/terreno-gerenciar"><i class="icon-th-large"></i> Terreno</a></li>
 							</ul>
 						</li>

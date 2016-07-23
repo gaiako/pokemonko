@@ -6,12 +6,12 @@
 		}
 
 		protected function adicionarNovo($mapa){
-			$comando = 'insert into mapa (id, nome, dimensaox, dimensaoy, terrenoPadrao, xInicial, yInicial) values (:id, :nome, :dimensaox, :dimensaoy, :terrenoPadrao, :xInicial, :yInicial)';
+			$comando = 'insert into mapa (id, nome, dimensaoX, dimensaoY, terrenoPadrao, xInicial, yInicial) values (:id, :nome, :dimensaoX, :dimensaoY, :terrenoPadrao, :xInicial, :yInicial)';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa));
 		}
 
 		protected function atualizar($mapa){
-			$comando = 'update mapa set nome = :nome, dimensaox = :dimensaox, dimensaoy = :dimensaoy, terrenoPadrao = :terrenoPadrao, xInicial = :xInicial, yInicial = :yInicial where id = :id';
+			$comando = 'update mapa set nome = :nome, dimensaoX = :dimensaoX, dimensaoY = :dimensaoY, terrenoPadrao = :terrenoPadrao, xInicial = :xInicial, yInicial = :yInicial where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa,true));
 		}
 
@@ -19,9 +19,9 @@
 			$parametros = array(
 				'id' => $mapa->getId(),
 				'nome' => $mapa->getNome(),
-				'dimensaox' => $mapa->getDimensaox(),
-				'dimensaoy' => $mapa->getDimensaoy(),
-				'terrenoPadrao' => $mapa->getTerrenoPadrao(),
+				'dimensaoX' => $mapa->getDimensaoX(),
+				'dimensaoY' => $mapa->getDimensaoY(),
+				'terrenoPadrao' => $mapa->getTerrenoPadrao()->getId(),
 				'xInicial' => $mapa->getXInicial(),
 				'yInicial' => $mapa->getYInicial()
 			);
@@ -40,8 +40,8 @@
 			$mapa = new Mapa();
 			$mapa->setId($l['id']);
 			$mapa->setNome($l['nome']);
-			$mapa->setDimensaox($l['dimensaox']);
-			$mapa->setDimensaoy($l['dimensaoy']);
+			$mapa->setDimensaoX($l['dimensaoX']);
+			$mapa->setDimensaoY($l['dimensaoY']);
 			$mapa->setTerrenoPadrao($l['terrenoPadrao']);
 			$mapa->setXInicial($l['xInicial']);
 			$mapa->setYInicial($l['yInicial']);
