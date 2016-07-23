@@ -40,20 +40,20 @@ try{
 			</div>
 		</div>
 
-		<div class="control-group <?php if(isset($erro)){ if(isset($erro['dimensaox'])) echo "error"; else echo "success"; } ?>">
-			<label class="control-label" for="dimensaox">Dimensão X</label>
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['dimensaoX'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="dimensaoX">Dimensão X</label>
 			<div class="controls">
 				<div class="input-append habilitado-duplicacao">
-					<input type="number" class='input-mini' name='dimensaox' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getDimensao(); else echo '50'; ?>" />
+					<input type="number" class='input-mini' name='dimensaoX' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getDimensaoX(); else echo '50'; ?>" />
 				</div>
 			</div>
 		</div>
 
-		<div class="control-group <?php if(isset($erro)){ if(isset($erro['dimensaoy'])) echo "error"; else echo "success"; } ?>">
-			<label class="control-label" for="dimensaoy">Dimensão Y</label>
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['dimensaoY'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="dimensaoY">Dimensão Y</label>
 			<div class="controls">
 				<div class="input-append habilitado-duplicacao">
-					<input type="number" class='input-mini' name='dimensaoy' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getDimensao(); else echo '50'; ?>" />
+					<input type="number" class='input-mini' name='dimensaoY' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getDimensaoY(); else echo '50'; ?>" />
 				</div>
 			</div>
 		</div>
@@ -79,7 +79,7 @@ try{
 			<label class="control-label" for="xInicial">X inicial</label>
 			<div class="controls">
 				<div class="input-append habilitado-duplicacao">
-					<input type="number" class='input-mini' name='xInicial' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getDimensao(); else echo '1'; ?>" />
+					<input type="number" class='input-mini' name='xInicial' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getXInicial(); else echo '1'; ?>" />
 				</div>
 			</div>
 		</div>
@@ -88,7 +88,7 @@ try{
 			<label class="control-label" for="xInicial">Y inicial</label>
 			<div class="controls">
 				<div class="input-append habilitado-duplicacao">
-					<input type="number" class='input-mini' name='yInicial' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getDimensao(); else echo '1'; ?>" />
+					<input type="number" class='input-mini' name='yInicial' min="1" max="<?php echo $_->config->maxTamanhomapa; ?>" value="<?php if(isset($mapa)) echo $mapa->getYInicial(); else echo '1'; ?>" />
 				</div>
 			</div>
 		</div>

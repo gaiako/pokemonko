@@ -143,3 +143,9 @@
 
 	</fieldset>
 </form>
+
+<script>
+$(document).ready(function(){
+	$('#nome').focus();
+});
+</script>

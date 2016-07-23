@@ -8,6 +8,10 @@
 		protected function adicionarNovo($mapa){
 			$comando = 'insert into mapa (id, nome, dimensaoX, dimensaoY, terrenoPadrao, xInicial, yInicial) values (:id, :nome, :dimensaoX, :dimensaoY, :terrenoPadrao, :xInicial, :yInicial)';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa));
+			$id = $this->getBancoDados()->ultimoId();
+			$mapa->setId($id);
+			
+			$this->gerarMapaPixels($mapa);
 		}
 
 		protected function atualizar($mapa){
@@ -46,6 +50,26 @@
 			$mapa->setXInicial($l['xInicial']);
 			$mapa->setYInicial($l['yInicial']);
 			return $mapa;
+		}
+		
+		public function gerarMapaPixels($mapa){
+			$dimensaoX = $mapa->getDimensaoX();
+			$dimensaoY = $mapa->getDimensaoY();
+			
+			for($y=1;$y<=$dimensaoY;$y++){
+				$dificuldade = ceil($y/10);
+				for($x=1;$x<=$dimensaoX;$x++){
+					$comando = "insert into mapa_pixel (idMapa,x,y,idTerreno,dificuldade) values (:idMapa,:x,:y,:idTerreno,:dificuldade)";
+					$parametros = array(
+						'idMapa' => $mapa->getId(),
+						'x' => $x,
+						'y' => $y,
+						'idTerreno' => $mapa->getTerrenoPadrao()->getId(),
+						'dificuldade' => $dificuldade
+					);
+					$this->getBancoDados()->executar($comando,$parametros);
+				}
+			}
 		}
 
 		public function obterTodos($orderBy = 'mapa.id', $limit = null, $offset = 0, $completo = true){

@@ -1,0 +1,1 @@
+ALTER TABLE `pokemon_base` CHANGE `nivel` `nivel` TINYINT(4) NULL;
