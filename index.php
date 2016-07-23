@@ -10,6 +10,7 @@
 	<link href="/bootstrap/css/bootstrap.css" rel="stylesheet" />
 	<link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 	<link href="/bootstrap/css/estilo.css" rel="stylesheet" />
+	<link href="/app/assets/style/estilo.css" rel="stylesheet" />
 	<script src="/js/jquery.js"></script>
 </head>
 <body>
@@ -28,24 +29,30 @@
 							<a href="./index.html">Home</a>
 						</li>-->
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-download-alt"></i> Gravação <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-download-alt icon-white"></i> Gravação <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/gravacao-cadastrar"><i class="icon-plus"></i> Nova</a></li>
 								<li><a href="/gravacao-gerenciar"><i class="icon-arrow-up"></i> Carregar</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> Treinadores <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user icon-white"></i> Treinadores <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/treinador-gerenciar"><i class="icon-list"></i> Lista</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-qrcode"></i> Pokémons <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-qrcode icon-white"></i> Pokémons <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/pokemon-cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
 								<li><a href="/pokemon-gerenciar"><i class="icon-list"></i> Lista</a></li>
 								<li><a href="/tipo-gerenciar"><i class="icon-plus"></i> Tipos</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-map icon-ko"></i> Mapa <b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="/terreno-gerenciar"><i class="icon-th-large"></i> Terreno</a></li>
 							</ul>
 						</li>
 					</ul>

@@ -17,7 +17,7 @@ try{
 		$treinador = $treinadorController->obterComId($_GET['id']);
 	}
 
-	$treinadors = $treinadorController->obterTodos();
+	$treinadores = $treinadorController->obterTodos();
 }catch(ServiceException $e){
 	
 }catch(Exception $e){
@@ -67,7 +67,7 @@ try{
 	</fieldset>
 </form>
 
-<div class="modal-body lista-treinadors" id="lista-treinadors">
+<div class="modal-body lista-treinadores" id="lista-treinadores">
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -78,7 +78,7 @@ try{
 		</thead>
 		<tbody>
 			<?php
-			foreach($treinadors as $t){
+			foreach($treinadores as $t){
 				?>
 				<tr>
 					<td><?php echo $t->getId(); ?></td>
