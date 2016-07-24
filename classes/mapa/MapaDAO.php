@@ -84,6 +84,31 @@
 			);
 			return $this->getBancoDados()->obterObjeto($comando, array($this, 'transformarEmObjeto'), $parametros, $completo);
 		}
+		
+		public function obterTodosOsPixels($mapa){
+			$comando = "
+			select mp.*,t.cor,t.imagem,o.nome as nomeObjeto 
+			from mapa_pixel mp 
+			left join terreno t on t.id = mp.idTerreno 
+			left join objeto o on o.id = mp.idObjeto 
+			where idMapa = :idMapa";
+			$parametros = array(
+				'idMapa' => $mapa->getId()
+			);
+			return $this->getBancoDados()->consultar($comando,$parametros);
+		}
+		
+		public function obterMapaPixelComId($idMapaPixel){
+			$comando = "
+			select mp.*,t.cor,t.imagem,o.nome as nomeObjeto 
+			from mapa_pixel mp 
+			left join terreno t on t.id = mp.idTerreno 
+			left join objeto o on o.id = mp.idObjeto 
+			where mp.id = :id
+			";
+			$parametros['id'] = $idMapaPixel;
+			return $this->getBancoDados()->consultar($comando,$parametros);
+		}
 
 		public function desativarComId($id){
 			$this->getBancoDados()->desativar('mapa', $id);
@@ -91,6 +116,45 @@
 
 		public function excluirComId($id){
 			$this->getBancoDados()->excluir('mapa', $id);
+		}
+		
+		public function updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade){
+			$comando = "update mapa_pixel set ativo = 1";
+			$parametros['id'] = $idMapaPixel;
+			if(is_numeric($idTerreno)){
+				$comando .= ',idTerreno = :idTerreno';
+				$parametros['idTerreno'] = $idTerreno;
+			}
+			if(!is_numeric($idObjeto))
+				$idObjeto = null;
+			if($idObjeto != 0){
+				$comando .= ',idObjeto = :idObjeto';
+				$parametros['idObjeto'] = $idObjeto;
+			}
+			if(!is_numeric($idAcao))
+				$idAcao = null;
+			$comando .= ',idAcao = :idAcao';
+			$parametros['idAcao'] = $idAcao;
+			if(is_numeric($dificuldade)){
+				$comando .= ',dificuldade = :dificuldade';
+				$parametros['dificuldade'] = $dificuldade;
+			}
+			$comando .= ' where id = :id';
+			$this->getBancoDados()->executar($comando,$parametros);
+			$mapaPixel = $this->obterMapaPixelComId($idMapaPixel);
+			
+			$style = '';
+			$objeto = '';
+			
+			if($mapaPixel[0]['imagem'] != '')
+				$style = 'background-image: url("'.'/app/assets/images/terreno/'.$mapaPixel[0]['imagem'].'")';
+			if($mapaPixel[0]['nomeObjeto'] != '')
+				$objeto = '<img style="z-index: 1000" src="'.'/app/assets/images/objeto/'.Util::formatarParaUrl($mapaPixel[0]['nomeObjeto']).'.png" />';
+			
+			return array(
+				'style' => $style,
+				'objeto' => $objeto
+			);
 		}
 	}
 ?>

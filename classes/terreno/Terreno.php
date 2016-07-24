@@ -18,7 +18,9 @@
 			$this->id = $id;
 		}
 
-		public function getNome(){
+		public function getNome($imagem = false){
+			if($imagem)
+				return Util::formatarParaUrl($this->nome).'.png';
 			return $this->nome;
 		}
 

@@ -17,5 +17,13 @@
 			
 			return $mapa;
 		}
+		
+		public function obterTodosOsPixels($mapa){
+			return Util::makeService($this->classe)->obterTodosOsPixels($mapa);
+		}
+		
+		public function updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade){
+			return Util::makeService($this->classe)->updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade);
+		}
 	}
 ?>

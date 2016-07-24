@@ -105,6 +105,7 @@ try{
 			<th>#</th>
 			<th>Mapa</th>
 			<th>Dimensões</th>
+			<th>Editor de mapas</th>
 			<th></th>
 		</tr>
 	</thead>
@@ -116,8 +117,9 @@ try{
 				<td><?php echo $m->getId(); ?></td>
 				<td><?php echo $m->getNome(); ?></td>
 				<td><?php echo $m->getDimensaoX().' x '.$m->getDimensaoY(); ?></td>
-				<td width="14"><a href="/mapa-gerenciar/<?php echo $m->getId(); ?>" class="alterar-mapa" href=""><i class="icon-edit"></i></a></td>
-				<td width="14"><a href="/mapa-gerenciar/<?php echo $m->getId(); ?>/excluir>" class="remover-mapa" href=""><i class="icon-remove"></i></a></td>
+				<td><a href="/mapa-editar/<?php echo $m->getId(); ?>" class="alterar-mapa">Editar mapa</a></td>
+				<td width="14"><a href="/mapa-gerenciar/<?php echo $m->getId(); ?>" class="alterar-mapa"><i class="icon-edit"></i></a></td>
+				<td width="14"><a href="/mapa-gerenciar/<?php echo $m->getId(); ?>/excluir>" class="remover-mapa"><i class="icon-remove"></i></a></td>
 			</tr>
 			<?php
 		}

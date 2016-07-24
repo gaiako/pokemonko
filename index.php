@@ -13,6 +13,7 @@
 	<link href="/app/assets/style/estilo.css" rel="stylesheet" />
 	<script src="/js/jquery.js"></script>
 </head>
+
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="navbar-inner">
@@ -22,7 +23,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="brand" href="/">Pokémon KO</a>
+				<a class="brand" href="/"><img src="/app/assets/images/pikachu-mini.png" /> Pokémon KO</a>
 				<div class="nav-collapse collapse">
 					<ul class="nav">
 						<!--<li class="">
@@ -54,6 +55,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="/mapa-gerenciar"><i class="icon-map-marker"></i> Mapas</a></li>
 								<li><a href="/terreno-gerenciar"><i class="icon-th-large"></i> Terreno</a></li>
+								<li><a href="/objeto-gerenciar"><i class="icon-home"></i> Objetos</a></li>
 							</ul>
 						</li>
 					</ul>

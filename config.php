@@ -21,6 +21,8 @@
 	$_->config->maxTamanhomapa = 100;
 	$_->config->minDado = 1;
 	$_->config->maxDado = 6;
+	$_->config->pastaImagemObjeto = '/app/assets/images/objeto/';
+	$_->config->pastaImagemTerreno = '/app/assets/images/terreno/';
 
 	if(substr($_SERVER['DOCUMENT_ROOT'], -1) == '/')
 		$_->raiz = substr($_SERVER['DOCUMENT_ROOT'], 0, -1);
