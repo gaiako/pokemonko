@@ -6,7 +6,7 @@
 		}
 
 		protected function adicionarNovo($mapa){
-			$comando = 'insert into mapa (id, nome, dimensaoX, dimensaoY, terrenoPadrao, xInicial, yInicial) values (:id, :nome, :dimensaoX, :dimensaoY, :terrenoPadrao, :xInicial, :yInicial)';
+			$comando = 'insert into mapa (id, nome, dimensaoX, dimensaoY, xInicial, yInicial) values (:id, :nome, :dimensaoX, :dimensaoY, :xInicial, :yInicial)';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa));
 			$id = $this->getBancoDados()->ultimoId();
 			$mapa->setId($id);
@@ -15,7 +15,7 @@
 		}
 
 		protected function atualizar($mapa){
-			$comando = 'update mapa set nome = :nome, dimensaoX = :dimensaoX, dimensaoY = :dimensaoY, terrenoPadrao = :terrenoPadrao, xInicial = :xInicial, yInicial = :yInicial where id = :id';
+			$comando = 'update mapa set nome = :nome, dimensaoX = :dimensaoX, dimensaoY = :dimensaoY, xInicial = :xInicial, yInicial = :yInicial where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa,true));
 		}
 
@@ -25,7 +25,6 @@
 				'nome' => $mapa->getNome(),
 				'dimensaoX' => $mapa->getDimensaoX(),
 				'dimensaoY' => $mapa->getDimensaoY(),
-				'terrenoPadrao' => $mapa->getTerrenoPadrao()->getId(),
 				'xInicial' => $mapa->getXInicial(),
 				'yInicial' => $mapa->getYInicial()
 			);
@@ -46,7 +45,6 @@
 			$mapa->setNome($l['nome']);
 			$mapa->setDimensaoX($l['dimensaoX']);
 			$mapa->setDimensaoY($l['dimensaoY']);
-			$mapa->setTerrenoPadrao($l['terrenoPadrao']);
 			$mapa->setXInicial($l['xInicial']);
 			$mapa->setYInicial($l['yInicial']);
 			return $mapa;
@@ -59,12 +57,11 @@
 			for($y=1;$y<=$dimensaoY;$y++){
 				$dificuldade = ceil($y/10);
 				for($x=1;$x<=$dimensaoX;$x++){
-					$comando = "insert into mapa_pixel (idMapa,x,y,idTerreno,dificuldade) values (:idMapa,:x,:y,:idTerreno,:dificuldade)";
+					$comando = "insert into mapa_pixel (idMapa,x,y,dificuldade) values (:idMapa,:x,:y,:dificuldade)";
 					$parametros = array(
 						'idMapa' => $mapa->getId(),
 						'x' => $x,
 						'y' => $y,
-						'idTerreno' => $mapa->getTerrenoPadrao()->getId(),
 						'dificuldade' => $dificuldade
 					);
 					$this->getBancoDados()->executar($comando,$parametros);
@@ -87,12 +84,9 @@
 		
 		public function obterTodosOsPixels($mapa){
 			$comando = "
-			select mp.*,t.cor,t.nome as nomeTerreno,o.nome as nomeObjeto 
-			from mapa_pixel mp 
-			left join terreno t on t.id = mp.idTerreno 
-			left join objeto o on o.id = mp.idObjeto 
-			where idMapa = :idMapa 
-			order by y, x";
+			select * 
+			from mapa_pixel  
+			where idMapa = :idMapa";
 			$parametros = array(
 				'idMapa' => $mapa->getId()
 			);
@@ -101,10 +95,8 @@
 		
 		public function obterMapaPixelComId($idMapaPixel){
 			$comando = "
-			select mp.*,t.cor,t.nome as nomeTerreno,o.nome as nomeObjeto 
+			select mp.* 
 			from mapa_pixel mp 
-			left join terreno t on t.id = mp.idTerreno 
-			left join objeto o on o.id = mp.idObjeto 
 			where mp.id = :id
 			";
 			$parametros['id'] = $idMapaPixel;
@@ -119,18 +111,18 @@
 			$this->getBancoDados()->excluir('mapa', $id);
 		}
 		
-		public function updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade){
+		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade){
 			$comando = "update mapa_pixel set ativo = 1";
 			$parametros['id'] = $idMapaPixel;
-			if(is_numeric($idTerreno)){
-				$comando .= ',idTerreno = :idTerreno';
-				$parametros['idTerreno'] = $idTerreno;
+			if(strlen($terreno)){
+				$comando .= ',terreno = :terreno';
+				$parametros['terreno'] = $terreno;
 			}
-			if(!is_numeric($idObjeto))
-				$idObjeto = null;
-			if($idObjeto !== 0){
-				$comando .= ',idObjeto = :idObjeto';
-				$parametros['idObjeto'] = $idObjeto;
+			if(!strlen($objeto))
+				$objeto = null;
+			if($objeto !== 0){
+				$comando .= ',objeto = :objeto';
+				$parametros['objeto'] = $objeto;
 			}
 			if(!is_numeric($idAcao))
 				$idAcao = null;
@@ -147,10 +139,10 @@
 			$style = '';
 			$objeto = '';
 			
-			if($mapaPixel[0]['nomeTerreno'] != '')
-				$style = 'background-image: url("'.'/app/assets/images/terreno/'.Util::formatarParaUrl($mapaPixel[0]['nomeTerreno']).'.png")';
-			if($mapaPixel[0]['nomeObjeto'] != '')
-				$objeto = '<img style="z-index: 1000" src="'.'/app/assets/images/objeto/'.Util::formatarParaUrl($mapaPixel[0]['nomeObjeto']).'.png" />';
+			if($mapaPixel[0]['terreno'] != '')
+				$style = 'background-image: url("'.'/app/assets/images/terreno/'.$mapaPixel[0]['terreno'].'")';
+			if($mapaPixel[0]['objeto'] != '')
+				$objeto = '<img style="z-index: 1000" src="'.'/app/assets/images/objeto/'.$mapaPixel[0]['objeto'].'" />';
 			
 			return array(
 				'style' => $style,

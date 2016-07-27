@@ -1,7 +1,7 @@
 <?php //print_r($mapa); exit; ?>
 <style>
 .mapa{
-	width: <?php echo $mapa->getDimensaoX()*30; ?>px;
+	width: <?php echo $mapa->getDimensaoX()*32; ?>px;
 }
 </style>
 
@@ -10,9 +10,9 @@
 $y = 0;
 foreach($mapaPixels as $mp){
 	if($mp['y'] != $y) echo '';
-	if($mp['nomeTerreno'] != '') $style = "background-image: url('".$_->config->pastaImagemTerreno.Util::formatarParaUrl($mp['nomeTerreno']).".png')"; else $style = "background-color: ".$mp['cor'];
+	if($mp['terreno'] != '') $style = "background-image: url('".$_->config->pastaImagemTerreno.$mp['terreno']."')";
 	?>
-	<div class="mapa-pixel" data-idMapaPixel="<?php echo $mp['id']; ?>" data-x="<?php echo $mp['x']; ?>" data-y="<?php echo $mp['y']; ?>" data-possivelCaminhar="<?php echo $mp['possivelCaminhar']; ?>" style="<?php echo $style; ?>"><?php if($mp['nomeObjeto'] != '') echo '<img class="objeto" src="'.$_->config->pastaImagemObjeto.Util::formatarParaUrl($mp['nomeObjeto']).'.png" />'; ?></div>
+	<div class="mapa-pixel" data-idMapaPixel="<?php echo $mp['id']; ?>" data-x="<?php echo $mp['x']; ?>" data-y="<?php echo $mp['y']; ?>" data-possivelCaminhar="<?php echo $mp['possivelCaminhar']; ?>" style="<?php echo $style; ?>"><?php if($mp['objeto'] != '') echo '<img class="objeto" src="'.$_->config->pastaImagemObjeto.$mp['objeto'].'" />'; ?></div>
 	<?php
 	if($mapa->getDimensaoY() == $y){
 		echo '</div><div class="mapa">';

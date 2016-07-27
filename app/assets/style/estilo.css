@@ -11,8 +11,8 @@
 }
 
 i.preview-terreno{
-	width: 30px;
-	height: 30px;
+	width: 32px;
+	height: 32px;
 	display: block;
 }
 
@@ -26,49 +26,68 @@ i.preview-terreno{
 
 .mapa{	
 	position: relative;
-	max-height: 30px;
-	min-height: 30px;
+	max-height: 32px;
+	min-height: 32px;
 }
 
 .mapa-pixel{
 	position: relative;
-	width: 30px;
-	min-height: 30px;
-	max-height: 30px;
+	width: 32px;
+	min-height: 32px;
+	max-height: 32px;
 	float:left;
 }
 
 div.mapa-pixel img.objeto{
-	z-index:900;
+	position:absolute;
+	z-index:1003;
 }
 
 div.auxiliar-editor{
 	position: fixed;
-	width: 50%;
-	left: 25%;
-	right: 0;
-	bottom: 0;
+	width: 177px;
+	height: 90%;
+	top: 50px;
+	/*right: 0;*/
+	/*bottom: 0;*/
 	z-index: 1030;
     margin-bottom: 5px;
 	padding: 5px;
-	overflow: visible;
+	overflow: auto;
 	
 	-webkit-border-radius: 5px;
 	
     background-color: #FFF;
 }
 
-div.auxiliar-editor div.terreno-editor{
+div.auxiliar-editor.left{
+	left: 5px;
+}
+
+div.auxiliar-editor.right{
+	right:5px;
+}
+
+div.auxiliar-editor div.terreno-editor,
+div.auxiliar-editor div.objeto-editor,
+div.auxiliar-editor div.change-side{
 	position: relative;
 	width: 30px;
-	min-height: 30px;
-	max-height: 30px;
+	min-height: 32px;
+	max-height: 32px;
 	float:left;
 	margin:1px;
 }
 
+div.change-side{
+	background-image: url('/app/assets/images/change-side.png');
+}
+
 div.auxiliar-editor div.terreno-editor.selecionado,
-div.auxiliar-editor div.terreno-editor:hover{
+div.auxiliar-editor div.terreno-editor:hover,
+div.auxiliar-editor div.objeto-editor.selecionado,
+div.auxiliar-editor div.objeto-editor:hover,
+div.auxiliar-editor div.change-side{
 	position: relative;
 	border: 1px solid #FF0000;
 	margin:0px;
@@ -77,8 +96,8 @@ div.auxiliar-editor div.terreno-editor:hover{
 
 div.personagem{
 	position: relative;
-	width: 30px;
-	height: 30px;
+	width: 32px;
+	height: 32px;
 	background-image: url('/app/assets/images/ash.png');
 	background-position:center;
 	background-repeat: no-repeat;

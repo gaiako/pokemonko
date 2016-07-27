@@ -25,8 +25,8 @@ $mapaPixels = $mapaController->obterTodosOsPixels($mapa);
 <style>
 div.personagem{
 	display:block;
-	top:<?php echo ($treinador->getY()*30)-30; ?>px;
-	left:<?php echo ($treinador->getX()*30)-30; ?>px;
+	top:<?php echo ($treinador->getY()*32)-32; ?>px;
+	left:<?php echo ($treinador->getX()*32)-32; ?>px;
 }
 </style>
 <div class="wrapper">

@@ -11,8 +11,8 @@
 			$mapa = new Mapa();
 			$this->povoarSimples($mapa, $todosOsCampos, $_POST);
 			
-			if(isset($_POST['idTerrenoPadrao'])){
-				$mapa->setTerrenoPadrao(Util::makeController('terreno')->obterComId($_POST['idTerrenoPadrao']));
+			if(isset($_POST['terrenoPadrao'])){
+				$mapa->setTerrenoPadrao(Util::makeController('terreno')->obterComId($_POST['terrenoPadrao']));
 			}
 			
 			return $mapa;
@@ -22,8 +22,8 @@
 			return Util::makeService($this->classe)->obterTodosOsPixels($mapa);
 		}
 		
-		public function updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade){
-			return Util::makeService($this->classe)->updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade);
+		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade){
+			return Util::makeService($this->classe)->updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade);
 		}
 	}
 ?>

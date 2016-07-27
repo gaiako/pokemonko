@@ -16,10 +16,10 @@
 			return $this->getDAO()->obterTodosOsPixels($mapa);
 		}
 		
-		public function updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade){
-			//if(!is_numeric($idTerreno) && !is_numeric($idObjeto) && !is_numeric($idAcao) && !is_numeric($dificuldade))
+		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade){
+			//if(!is_numeric($terreno) && !is_numeric($objeto) && !is_numeric($idAcao) && !is_numeric($dificuldade))
 				//return false;
-			return $this->getDAO()->updateMapaPixel($idMapaPixel,$idTerreno,$idObjeto,$idAcao,$dificuldade);
+			return $this->getDAO()->updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade);
 		}
 	}
 ?>

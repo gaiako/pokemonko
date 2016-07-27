@@ -12,38 +12,39 @@ $mapa = $mapaController->obterComId($_GET['id']);
 $mapaPixels = $mapaController->obterTodosOsPixels($mapa);
 require_once('mapa.php');
 
-$terrenoController = Util::makeController('terreno');
-$objetoController = Util::makeController('objeto');
-$terrenos = $terrenoController->obterTodos();
-$objetos = $objetoController->obterTodos();
-?>
-<?php require_once('mapa.php'); ?>
+$terrenos = Util::todasAsImagensNaPasta('/app/assets/images/terreno/');
+$objetos = Util::todasAsImagensNaPasta('/app/assets/images/objeto/');
+require_once('mapa.php'); ?>
 </div>
 
-<div class="auxiliar-editor">
-	<div class="terreno-editor" data-idTerreno="" style="background-image: url('/app/assets/images/manter.jpg');"></div>
-	<?php
-	foreach($terrenos as $terreno){
-		?>
-		<div class="terreno-editor" data-idTerreno="<?php echo $terreno->getId(); ?>" style="background-size: 30px 30px; background-image: url('<?php echo $_->config->pastaImagemTerreno.$terreno->getNome(true); ?>');"></div>
+<div class="auxiliar-editor left">
+	<div>
+		<div class="change-side"></div>
+		<div class="terreno-editor" data-terreno="" style="background-image: url('/app/assets/images/manter.jpg');"></div>
 		<?php
-	}
-	?>
-	<select name="idObjeto" id="idObjeto">
-		<option value="">Nenhum</option>
-		<option value="0">Manter</option>
-		<?php
-		foreach($objetos as $objeto){
+		foreach($terrenos as $terreno){
 			?>
-			<option value="<?php echo $objeto->getId(); ?>"><?php echo $objeto->getNome(); ?></option>
+			<div class="terreno-editor" data-terreno="<?php echo $terreno->getNome(true); ?>" style="background-size: 32px 32px; background-image: url('<?php echo $_->config->pastaImagemTerreno.$terreno->getNome(true); ?>');"></div>
 			<?php
 		}
 		?>
-	</select>
+	</div>
+	<div>
+		<div class="change-side"></div>
+		<div class="objeto-editor" data-objeto="" style="background-image: url('/app/assets/images/manter.jpg');"></div>
+		<?php
+		foreach($objetos as $objeto){
+			?>
+			<div class="objeto-editor" data-objeto="<?php echo $objeto->getNome(true); ?>" style="background-size: 32px 32px; background-image: url('<?php echo $_->config->pastaImagemObjeto.$objeto->getNome(true); ?>');"></div>
+			<?php
+		}
+		?>
+		<div class="change-side"></div>
+	</div>
 </div>
 <script>
-var idTerreno = '';
-var idObjeto = '';
+var terreno = '';
+var objeto = '';
 var idMapaPixel = '';
 var element = '';
 
@@ -51,12 +52,22 @@ $(document).ready(function(){
 	$('.terreno-editor').click(function(){
 		$('.terreno-editor').removeClass('selecionado');
 		$(this).addClass('selecionado');
-		idTerreno = $(this).attr('data-idTerreno');
+		terreno = $(this).attr('data-terreno');
+	});
+	
+	$('.objeto-editor').click(function(){
+		$('.objeto-editor').removeClass('selecionado');
+		$(this).addClass('selecionado');
+		objeto = $(this).attr('data-objeto');
+	});
+	
+	$('.change-side').click(function(){
+		$('.auxiliar-editor').toggleClass('left');
+		$('.auxiliar-editor').toggleClass('right');
 	});
 	
 	$('.mapa-pixel').click(function(){
 		idMapaPixel = $(this).attr('data-idMapaPixel');
-		idObjeto = $('#idObjeto').val();
 		
 		element = $(this);
 		
@@ -66,8 +77,8 @@ $(document).ready(function(){
 				o : 'updateMapaPixel',
 				p : {
 					idMapaPixel : idMapaPixel,
-					idTerreno : idTerreno,
-					idObjeto : idObjeto,
+					terreno : terreno,
+					objeto : objeto,
 					idAcao : null,
 					dificuldade : null
 				}

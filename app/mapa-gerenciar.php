@@ -1,6 +1,5 @@
 <?php
 $mapaController = Util::makeController('mapa');
-$terrenoController = Util::makeController('terreno');
 
 try{
 	global $erro;
@@ -19,7 +18,7 @@ try{
 	}
 
 	$mapas = $mapaController->obterTodos();
-	$terrenos = $terrenoController->obterTodos();
+	$terrenos = Util::todasAsImagensNaPasta('/app/assets/images/terreno/');
 }catch(ServiceException $e){
 	
 }catch(Exception $e){
