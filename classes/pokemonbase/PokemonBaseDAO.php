@@ -61,10 +61,33 @@
 			$pokemonBase->setRaridade($l['raridade']);
 			return $pokemonBase;
 		}
+		
+		public function obterAleatoriamente($nivel){
+			$sorte = rand(1,100);
+			if($sorte < 15)
+				$nivel --;
+			if($sorte > 95){
+				$nivel++;
+				$sorteUltra = rand(1,100);
+				if($sorteUltra == 100)
+					$nivel++;
+			}
+			if($nivel < 1)
+				$nivel = 1;
+			
+			$raridade = rand(1,100);
+			
+			$comando = "select * from pokemon_base where nivel = :nivel and raridade <= :raridade";
+			$parametros = array(
+				'nivel' => $nivel,
+				'raridade' => $raridade
+			);
+			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros, 'rand()', 1);
+		}
 
 		public function obterTodos($orderBy = 'pokemonBase.id', $limit = null, $offset = 0, $completo = true){
 			$comando = 'select * from pokemon_base where ativo = 1';
-			return $this->getBancoDados()->obterObjetos($comando, array($this, 'transformarEmObjeto'), array(), $orderBy, $limit, $offset, $completo);
+			return $this->getBancoDados()->obterObjetos($comando,array($this, 'transformarEmObjeto'), array(), $orderBy, $limit, $offset, $completo);
 		}
 
 		public function obterComId($id, $completo = true){

@@ -52,6 +52,75 @@
 			$treinador->setPokemonDollar($l['pokemonDollar']);
 			return $treinador;
 		}
+		
+		public function obterComGravacao($gravacao){
+			$comando = "
+			SELECT t.nome,tg.idMapa,tg.x,tg.y,tg.pokemonDollar,tg.id 
+			FROM treinador t 
+			JOIN treinador_gravacao tg 
+				ON tg.idTreinador = t.id 
+				AND tg.ativo = 1 
+				AND tg.idGravacao = :idGravacao
+			";
+			$parametros = array(
+				'idGravacao' => $gravacao->getId()
+			);
+			return $this->getBancoDados()->obterObjetos($comando, array($this, 'transformarEmObjeto'),$parametros,'tg.id');
+		}
+		
+		public function obterComIdEGravacao($idTreinador,$gravacao){
+			$comando = "
+			SELECT t.nome,tg.idMapa,tg.x,tg.y,tg.pokemonDollar,tg.id 
+			FROM treinador t 
+			JOIN treinador_gravacao tg 
+				ON tg.idTreinador = t.id 
+				AND tg.ativo = 1 
+				AND tg.idGravacao = :idGravacao 
+				AND tg.id = :idTreinador 
+			";
+			$parametros = array(
+				'idGravacao' => $gravacao->getId(),
+				'idTreinador' => $idTreinador
+			);
+			return $this->getBancoDados()->obterObjeto($comando, array($this, 'transformarEmObjeto'),$parametros);
+		}
+		
+		public function mover($jogador,$x,$y){
+			$comando = "select * from mapa_pixel where x=:x and y=:y and possivelCaminhar = 1";
+			$parametros = array(
+				'x' => $x,
+				'y' => $y
+			);
+			$mapaPixel = $this->getBancoDados()->consultar($comando,$parametros);
+			
+			if(!count($mapaPixel))
+				Throw new Exception('Não foi possível mover');
+			
+			$this->atualizarPosicao($x,$y);
+			
+			$resposta = null;
+			if($mapaPixel[0]['aparecePokemon']){
+				$sorte = rand(1,100);
+				if($sorte >= 1){
+					$pokemon = Util::makeDao('pokemonBase')->obterAleatoriamente($mapaPixel[0]['dificuldade']);
+					if(count($pokemon)){
+						$pokemon[0]->setFoto(str_pad($pokemon[0]->getId(),3,0,STR_PAD_LEFT).'.png');
+						$resposta = $pokemon[0];
+					}
+				}
+			}
+			return $resposta;
+		}
+		
+		public function atualizarPosicao($x,$y){
+			$comando = "update treinador_gravacao set x = :x, y = :y where id = :vezIdTreinador";
+			$parametros = array(
+				'vezIdTreinador' => $_SESSION['vezIdTreinador'],
+				'x' => $x,
+				'y' => $y
+			);
+			$this->getBancoDados()->executar($comando,$parametros);
+		}
 
 		public function obterTodos($orderBy = 'treinador.id', $limit = null, $offset = 0, $completo = true){
 			$comando = 'select * from treinador where ativo = 1';

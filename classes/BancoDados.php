@@ -46,26 +46,9 @@ class BancoDados{
 	public function __construct() {
 		global $_;
 
-		if(substr($_SERVER['HTTP_HOST'], -4) == '.dev'){
-			$dsn = "mysql:dbname=pokemon;host=localhost";
-			$usuario = "root";
-			$senha = "";
-		}else{
-			//if(!isset($_SESSION['rds']))
-			//	$_SESSION['rds'] = rand(1,3);
-			
-			//if($_SESSION['rds'] == 1)
-			//	$dsn = "mysql:dbname=dlk;host=rds-dlk.cg5ctui11shi.us-west-2.rds.amazonaws.com";
-			//elseif($_SESSION['rds'] == 2)
-			//	$dsn = "mysql:dbname=dlk;host=dlk-rds-read1.cg5ctui11shi.us-west-2.rds.amazonaws.com";
-			//else
-			//	$dsn = "mysql:dbname=dlk;host=rds-dlk-read2.cg5ctui11shi.us-west-2.rds.amazonaws.com";
-                        //$usuario = "dlkrds";
-                        //$senha = "aar1988*rds";
-			$dsn = "mysql:dbname=pokemon;host=127.0.0.1;port=11257;";
-			$usuario = "";
-			$senha = "";
-		}
+		$dsn = "mysql:dbname=pokemon;host=localhost";
+		$usuario = "root";
+		$senha = "";
 
 		try {
 			$this->pdo =  new PDO($dsn, $usuario, $senha);

@@ -87,11 +87,12 @@
 		
 		public function obterTodosOsPixels($mapa){
 			$comando = "
-			select mp.*,t.cor,t.imagem,o.nome as nomeObjeto 
+			select mp.*,t.cor,t.nome as nomeTerreno,o.nome as nomeObjeto 
 			from mapa_pixel mp 
 			left join terreno t on t.id = mp.idTerreno 
 			left join objeto o on o.id = mp.idObjeto 
-			where idMapa = :idMapa";
+			where idMapa = :idMapa 
+			order by y, x";
 			$parametros = array(
 				'idMapa' => $mapa->getId()
 			);
@@ -100,7 +101,7 @@
 		
 		public function obterMapaPixelComId($idMapaPixel){
 			$comando = "
-			select mp.*,t.cor,t.imagem,o.nome as nomeObjeto 
+			select mp.*,t.cor,t.nome as nomeTerreno,o.nome as nomeObjeto 
 			from mapa_pixel mp 
 			left join terreno t on t.id = mp.idTerreno 
 			left join objeto o on o.id = mp.idObjeto 
@@ -127,7 +128,7 @@
 			}
 			if(!is_numeric($idObjeto))
 				$idObjeto = null;
-			if($idObjeto != 0){
+			if($idObjeto !== 0){
 				$comando .= ',idObjeto = :idObjeto';
 				$parametros['idObjeto'] = $idObjeto;
 			}
@@ -146,8 +147,8 @@
 			$style = '';
 			$objeto = '';
 			
-			if($mapaPixel[0]['imagem'] != '')
-				$style = 'background-image: url("'.'/app/assets/images/terreno/'.$mapaPixel[0]['imagem'].'")';
+			if($mapaPixel[0]['nomeTerreno'] != '')
+				$style = 'background-image: url("'.'/app/assets/images/terreno/'.Util::formatarParaUrl($mapaPixel[0]['nomeTerreno']).'.png")';
 			if($mapaPixel[0]['nomeObjeto'] != '')
 				$objeto = '<img style="z-index: 1000" src="'.'/app/assets/images/objeto/'.Util::formatarParaUrl($mapaPixel[0]['nomeObjeto']).'.png" />';
 			

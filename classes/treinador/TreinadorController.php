@@ -22,5 +22,13 @@
 			
 			return $treinador;
 		}
+		
+		public function obterComIdEGravacao($idTreinador,$gravacao){
+			return Util::makeService($this->classe)->obterComIdEGravacao($idTreinador,$gravacao);
+		}
+		
+		public function mover($idTreinador,$x,$y){
+			return Util::makeService($this->classe)->mover($idTreinador,$x,$y);
+		}
 	}
 ?>

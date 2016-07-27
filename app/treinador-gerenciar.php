@@ -7,7 +7,7 @@ try{
 		$treinador = $treinadorController->criar();
 		$treinadorController->salvar($treinador,$erro);
 		
-		echo "<div class='alert alert-success'>Salvo com sucesso</div>";
+		echo "<div class='alert alert-success'>Salvo com sucesso - <a href='gravacao-cadastrar'>Criar gravação</a></div>";
 		$treinador = null;
 	}
 

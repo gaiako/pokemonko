@@ -21,5 +21,9 @@
 			
 			return $gravacao;
 		}
+		
+		public function passarAVez($idJogador = null){
+			return Util::makeService($this->classe)->passarAVez($idJogador);
+		}
 	}
 ?>

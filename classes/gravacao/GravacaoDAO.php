@@ -8,6 +8,8 @@
 		protected function adicionarNovo($gravacao){
 			$comando = 'insert into gravacao (nome, dataCadastro) values (:nome, now())';
 			$this->getBancoDados()->executar($comando, $this->parametros($gravacao));
+			$id = $this->getBancoDados()->ultimoId();
+			$gravacao->setId($id);
 			
 			$this->salvarTreinadores($gravacao);
 		}
@@ -21,7 +23,7 @@
 			foreach($gravacao->getTreinadores() as $treinador){
 				$comando = "insert into treinador_gravacao (idTreinador,idGravacao,idMapa,x,y) values (:idTreinador,:idGravacao,:idMapa,:x,:y)";
 				$parametros = array(
-					'idTreinador' => $gravacao->getTreinador()->getId(),
+					'idTreinador' => $treinador->getId(),
 					'idGravacao' => $gravacao->getId(),
 					'idMapa' => $gravacao->getMapaInicial()->getId(),
 					'x' => $gravacao->getMapaInicial()->getXInicial(),
@@ -51,7 +53,17 @@
 			$gravacao->setId($l['id']);
 			$gravacao->setNome($l['nome']);
 			$gravacao->setDataCadastro($l['dataCadastro']);
+			
+			if($completo){
+				$treinadores = Util::makeDao('treinador')->obterComGravacao($gravacao);
+				$gravacao->setTreinadores($treinadores);
+			}
+			
 			return $gravacao;
+		}
+		
+		public function passarAVez($idJogador){
+			
 		}
 
 		public function obterTodos($orderBy = 'gravacao.id', $limit = null, $offset = 0, $completo = true){

@@ -10,6 +10,10 @@
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$objeto = new Objeto();
 			$this->povoarSimples($objeto, $todosOsCampos, $_POST);
+			
+			if(isset($_POST['possivelCaminhar']))
+				$objeto->setPossivelCaminhar();
+			
 			return $objeto;
 		}
 	}

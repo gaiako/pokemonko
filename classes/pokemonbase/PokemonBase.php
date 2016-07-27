@@ -3,6 +3,7 @@
 
 		private $id = 0;
 		private $nome = "";
+		private $foto = "";
 		private $tipo = null;
 		private $tipo2 = null;
 		private $hp = 0;
@@ -29,6 +30,14 @@
 
 		public function setNome($nome){
 			$this->nome = $nome;
+		}
+		
+		public function getFoto(){
+			return $this->foto;
+		}
+		
+		public function setFoto($foto){
+			$this->foto = $foto;
 		}
 
 		public function getTipo(){

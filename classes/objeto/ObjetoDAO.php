@@ -6,18 +6,19 @@
 		}
 
 		protected function adicionarNovo($objeto){
-			$comando = 'insert into objeto (nome) values (:nome)';
+			$comando = 'insert into objeto (nome,possivelCaminhar) values (:nome,:possivelCaminhar)';
 			$this->getBancoDados()->executar($comando, $this->parametros($objeto));
 		}
 
 		protected function atualizar($objeto){
-			$comando = 'update objeto set nome = :nome where id = :id';
+			$comando = 'update objeto set nome = :nome, possivelCaminhar = :possivelCaminhar where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($objeto,true));
 		}
 
 		protected function parametros($objeto,$update = false){
 			$parametros = array(
-				'nome' => $objeto->getNome()
+				'nome' => $objeto->getNome(),
+				'possivelCaminhar' => $objeto->getPossivelCaminhar()
 			);
 			if($update)
 				$parametros['id'] = $objeto->getId();

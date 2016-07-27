@@ -38,6 +38,14 @@ try{
 			</div>
 		</div>
 		
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['possivelCaminhar'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="possivelCaminhar">Possível caminhar?</label>
+			<div class="controls">
+				<input type="checkbox" name="possivelCaminhar" id="possivelCaminhar" value="1" <?php if(isset($objeto) && $objeto->getPossivelCaminhar()) echo 'checked'; ?> />
+				<span class="help-inline"><?php if(isset($erro['possivelCaminhar'])) echo $erro['possivelCaminhar']; ?></span>
+			</div>
+		</div>
+		
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" name="enviar">Salvar</button>
 		</div>
@@ -60,7 +68,7 @@ try{
 				<td><img src="/app/assets/images/objeto/<?php echo $o->getNome(true); ?>" alt="<?php echo $o->getNome(true); ?>" title="<?php echo $o->getNome(true); ?>" /></td>
 				<td><?php echo $o->getNome(); ?></td>
 				<td width="14"><a href="/objeto-gerenciar/<?php echo $o->getId(); ?>" class="alterar-objeto" href=""><i class="icon-edit"></i></a></td>
-				<td width="14"><a href="/objeto-gerenciar/<?php echo $o->getId(); ?>/excluir>" class="remover-objeto" href=""><i class="icon-remove"></i></a></td>
+				<td width="14"><a href="/objeto-gerenciar/<?php echo $o->getId(); ?>/excluir" class="remover-objeto" href=""><i class="icon-remove"></i></a></td>
 			</tr>
 			<?php
 		}

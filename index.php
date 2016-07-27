@@ -56,6 +56,7 @@
 								<li><a href="/mapa-gerenciar"><i class="icon-map-marker"></i> Mapas</a></li>
 								<li><a href="/terreno-gerenciar"><i class="icon-th-large"></i> Terreno</a></li>
 								<li><a href="/objeto-gerenciar"><i class="icon-home"></i> Objetos</a></li>
+								<li><a href="/jogar"><i class="icon-home"></i> Jogar</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -78,11 +79,11 @@
 	<script>
 		var RAIZ = "";
 	</script>
+	<script src="/js/jogar.js"></script>
 	<script src="/js/getDefault.js"></script>
 	<script src="/js/funcoes.js"></script>
 	<script src="/js/mascaras.js"></script>
 	<script src="/js/sortable.js"></script>
-	<script src="/js/abas.js"></script>
 	<script src="/js/notify.js"></script>
 	<script>
 		$(document).ready(function(){

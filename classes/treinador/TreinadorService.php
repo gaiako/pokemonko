@@ -11,5 +11,13 @@
 				throw new ServiceException('Corrija os campos abaixo para efetuar o cadastro');
 			}
 		}
+		
+		public function obterComIdEGravacao($idTreinador,$gravacao){
+			return $this->getDao()->obterComIdEGravacao($idTreinador,$gravacao);
+		}
+		
+		public function mover($jogador,$x,$y){
+			return $this->getDao()->mover($jogador,$x,$y);
+		}
 	}
 ?>

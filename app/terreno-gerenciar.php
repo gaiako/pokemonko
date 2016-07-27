@@ -102,7 +102,7 @@ try{
 		foreach($terrenos as $t){
 			?>
 			<tr>
-				<td><i class="preview-terreno" style="background-color:<?php echo $t->getCor(); ?>"></i></td>
+				<td><img src="<?php echo $_->config->pastaImagemTerreno.$t->getNome(true); ?>" width="30" /></td>
 				<td><?php echo $t->getNome(); ?></td>
 				<td width="14"><a href="/terreno-gerenciar/<?php echo $t->getId(); ?>" class="alterar-terreno" href=""><i class="icon-edit"></i></a></td>
 				<td width="14"><a href="/terreno-gerenciar/<?php echo $t->getId(); ?>/excluir>" class="remover-terreno" href=""><i class="icon-remove"></i></a></td>
