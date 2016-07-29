@@ -6,12 +6,12 @@
 		}
 
 		protected function adicionarNovo($pokemonBase){
-			$comando = 'insert into pokemon_base (nome, idTipo, idTipo2, hp, ataque, defesa, agilidade, especial, exp, sortePokeball, nivel, raridade) values (:nome, :idTipo, :idTipo2, :hp, :ataque, :defesa, :agilidade, :especial, :exp, :sortePokeball, :nivel, :raridade)';
+			$comando = 'insert into pokemon_base (nome, idTipo, idTipo2, hp, ataque, defesa, agilidade, ataqueEspecial, defesaEspecial, exp, sortePokeball, nivel, raridade) values (:nome, :idTipo, :idTipo2, :hp, :ataque, :defesa, :agilidade, :ataqueEspecial, :defesaEspecial, :exp, :sortePokeball, :nivel, :raridade)';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemonBase));
 		}
 
 		protected function atualizar($pokemonBase){
-			$comando = 'update pokemon_base set nome = :nome, idTipo = :idTipo, idTipo2 = :idTipo2, hp = :hp, ataque = :ataque, defesa = :defesa, agilidade = :agilidade, especial = :especial, exp = :exp, sortePokeball = :sortePokeball, nivel = :nivel, raridade = :raridade where id = :id';
+			$comando = 'update pokemon_base set nome = :nome, idTipo = :idTipo, idTipo2 = :idTipo2, hp = :hp, ataque = :ataque, defesa = :defesa, agilidade = :agilidade, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, exp = :exp, sortePokeball = :sortePokeball, nivel = :nivel, raridade = :raridade where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemonBase,true));
 		}
 
@@ -24,7 +24,8 @@
 				'ataque' => $pokemonBase->getAtaque(),
 				'defesa' => $pokemonBase->getDefesa(),
 				'agilidade' => $pokemonBase->getAgilidade(),
-				'especial' => $pokemonBase->getEspecial(),
+				'ataqueEspecial' => $pokemonBase->getAtaqueEspecial(),
+				'defesaEspecial' => $pokemonBase->getDefesaEspecial(),
 				'exp' => $pokemonBase->getExp(),
 				'sortePokeball' => $pokemonBase->getSortePokeball(),
 				'nivel' => $pokemonBase->getNivel(),
@@ -54,7 +55,8 @@
 			$pokemonBase->setAtaque($l['ataque']);
 			$pokemonBase->setDefesa($l['defesa']);
 			$pokemonBase->setAgilidade($l['agilidade']);
-			$pokemonBase->setEspecial($l['especial']);
+			$pokemonBase->setAtaqueEspecial($l['ataqueEspecial']);
+			$pokemonBase->setDefesaEspecial($l['defesaEspecial']);
 			$pokemonBase->setExp($l['exp']);
 			$pokemonBase->setSortePokeball($l['sortePokeball']);
 			$pokemonBase->setNivel($l['nivel']);
@@ -83,6 +85,27 @@
 				'raridade' => $raridade
 			);
 			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros, 'rand()', 1);
+		}
+		
+		public function obterOrdenadosPorForca(){
+			$comando = "
+			select id,hp+ataque+defesa+agilidade+ataqueEspecial+defesaEspecial as total 
+			from pokemon_base 
+			";
+			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),array(),'total');
+		}
+		
+		public function obterPokemonsDoGrupo(&$grupo){
+			$comando = "select idPokemon from grupo_pokemon where idGrupo = :idGrupo";
+			$parametros = array(
+				'idGrupo' => $grupo->getId()
+			);
+			$linhas = $this->getBancoDados()->consultar($comando,$parametros);
+			
+			foreach($linhas as $l){
+				$pokemon = $this->obterComId($l['idPokemon']);
+				$grupo->addPokemon($pokemon);
+			}
 		}
 
 		public function obterTodos($orderBy = 'pokemonBase.id', $limit = null, $offset = 0, $completo = true){

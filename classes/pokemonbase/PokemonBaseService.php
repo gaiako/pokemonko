@@ -11,5 +11,9 @@
 				throw new ServiceException('Corrija os campos abaixo para efetuar o cadastro');
 			}
 		}
+		
+		public function obterOrdenadosPorForca(){
+			return Util::makeDao('pokemonBase')->obterOrdenadosPorForca();
+		}
 	}
 ?>

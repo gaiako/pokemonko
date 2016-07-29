@@ -10,7 +10,8 @@
 		private $ataque = 0;
 		private $defesa = 0;
 		private $agilidade = 0;
-		private $especial = 0;
+		private $ataqueAtaqueEspecial = 0;
+		private $defesaAtaqueEspecial = 0;
 		private $exp = 0;
 		private $sortePokeball = 0;
 		private $nivel = 0;
@@ -88,12 +89,20 @@
 			$this->agilidade = $agilidade;
 		}
 
-		public function getEspecial(){
-			return $this->especial;
+		public function getAtaqueEspecial(){
+			return $this->ataqueEspecial;
 		}
 
-		public function setEspecial($especial){
-			$this->especial = $especial;
+		public function setAtaqueEspecial($ataqueEspecial){
+			$this->ataqueEspecial = $ataqueEspecial;
+		}
+		
+		public function getDefesaEspecial(){
+			return $this->defesaEspecial;
+		}
+
+		public function setDefesaEspecial($defesaEspecial){
+			$this->defesaEspecial = $defesaEspecial;
 		}
 
 		public function getExp(){
