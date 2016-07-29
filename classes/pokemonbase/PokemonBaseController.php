@@ -6,7 +6,7 @@
 		}
 
 		public function criar(){
-			$todosOsCampos = array('id', 'nome', 'hp', 'ataque', 'defesa', 'agilidade', 'especial', 'exp', 'sortePokeball', 'nivel', 'raridade');
+			$todosOsCampos = array('id', 'nome', 'hp', 'ataque', 'defesa', 'agilidade', 'ataqueEspecial', 'defesaEspecial', 'exp', 'sortePokeball', 'nivel', 'raridade');
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$pokemonBase = new PokemonBase();
 			$this->povoarSimples($pokemonBase, $todosOsCampos, $_POST);
@@ -20,6 +20,10 @@
 			}
 			
 			return $pokemonBase;
+		}
+		
+		public function obterOrdenadosPorForca(){
+			return Util::makeService($this->classe)->obterOrdenadosPorForca();
 		}
 	}
 ?>

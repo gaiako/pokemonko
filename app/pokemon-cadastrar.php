@@ -97,11 +97,19 @@
 			</div>
 		</div>
 
-		<div class="control-group <?php if(isset($erro)){ if(isset($erro['especial'])) echo "error"; else echo "success"; } ?>">
-			<label class="control-label" for="especial">Especial</label>
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['ataqueEspecial'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="ataqueEspecial">Ataque especial</label>
 			<div class="controls">
-				<input type="text" class="input-large" name="especial" id="especial" value="<?php if(isset($pokemonBase)) echo $pokemonBase->getEspecial(); ?>" />
-				<span class="help-inline"><?php if(isset($erro['especial'])) echo $erro['especial']; ?></span>
+				<input type="text" class="input-large" name="ataqueEspecial" id="ataqueEspecial" value="<?php if(isset($pokemonBase)) echo $pokemonBase->getAtaqueEspecial(); ?>" />
+				<span class="help-inline"><?php if(isset($erro['ataqueEspecial'])) echo $erro['ataqueEspecial']; ?></span>
+			</div>
+		</div>
+
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['defesaEspecial'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="defesaEspecial">Defesa especial</label>
+			<div class="controls">
+				<input type="text" class="input-large" name="defesaEspecial" id="defesaEspecial" value="<?php if(isset($pokemonBase)) echo $pokemonBase->getAtaqueEspecial(); ?>" />
+				<span class="help-inline"><?php if(isset($erro['defesaEspecial'])) echo $erro['defesaEspecial']; ?></span>
 			</div>
 		</div>
 
