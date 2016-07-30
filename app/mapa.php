@@ -10,9 +10,19 @@
 $y = 0;
 foreach($mapaPixels as $mp){
 	if($mp['y'] != $y) echo '';
-	if($mp['terreno'] != '') $style = "background-image: url('".$_->config->pastaImagemTerreno.$mp['terreno']."')";
+	$style = '';
+	if($mp['terreno'] != '') $style .= "background-image:";
+	if($editor == true && !$mp['possivelCaminhar'])	$style .= "url('/app/assets/images/nPossivelCaminhar.png'),";
+	if($editor == true && is_numeric($mp['idGrupo'])) $style .= "url('/app/assets/images/nAparecePokemon.png'),";
+	if($mp['terreno'] != '') $style .= "url('".$_->config->pastaImagemTerreno.$mp['terreno']."')";
 	?>
-	<div class="mapa-pixel" data-idMapaPixel="<?php echo $mp['id']; ?>" data-x="<?php echo $mp['x']; ?>" data-y="<?php echo $mp['y']; ?>" data-possivelCaminhar="<?php echo $mp['possivelCaminhar']; ?>" style="<?php echo $style; ?>"><?php if($mp['objeto'] != '') echo '<img class="objeto" src="'.$_->config->pastaImagemObjeto.$mp['objeto'].'" />'; ?></div>
+	<div class="mapa-pixel" 
+	data-idMapaPixel="<?php echo $mp['id']; ?>" 
+	data-x="<?php echo $mp['x']; ?>" 
+	data-y="<?php echo $mp['y']; ?>" 
+	data-possivelCaminhar="<?php echo $mp['possivelCaminhar']; ?>" 
+	data-bloqueado="<?php echo $mp['bloqueado']; ?>" 
+	style="<?php echo $style; ?>"><?php if($mp['objeto'] != '') echo '<img class="objeto" src="'.$_->config->pastaImagemObjeto.$mp['objeto'].'" />'; ?></div>
 	<?php
 	if($mapa->getDimensaoY() == $y){
 		echo '</div><div class="mapa">';

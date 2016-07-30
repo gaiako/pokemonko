@@ -95,15 +95,7 @@ div.auxiliar-editor div.change-side{
 }
 
 div.personagem{
-	position: relative;
-	width: 32px;
-	height: 32px;
-	background-image: url('/app/assets/images/ash.png');
-	background-position:center;
-	background-repeat: no-repeat;
-	display:none;
-	margin-bottom:-30px;
-	z-index:1000;
+	display: none;
 }
 
 div.mostra-acao{

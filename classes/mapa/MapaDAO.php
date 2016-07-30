@@ -111,7 +111,7 @@
 			$this->getBancoDados()->excluir('mapa', $id);
 		}
 		
-		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade){
+		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$bloqueado){
 			$comando = "update mapa_pixel set ativo = 1";
 			$parametros['id'] = $idMapaPixel;
 			if(strlen($terreno)){
@@ -124,14 +124,17 @@
 				$comando .= ',objeto = :objeto';
 				$parametros['objeto'] = $objeto;
 			}
+			
 			if(!is_numeric($idAcao))
 				$idAcao = null;
 			$comando .= ',idAcao = :idAcao';
 			$parametros['idAcao'] = $idAcao;
-			if(is_numeric($dificuldade)){
-				$comando .= ',dificuldade = :dificuldade';
-				$parametros['dificuldade'] = $dificuldade;
-			}
+			
+			if(!is_numeric($bloqueado))
+				$bloqueado = null;
+			$comando .= ',bloqueado = :bloqueado';
+			$parametros['bloqueado'] = $bloqueado;
+			
 			$comando .= ' where id = :id';
 			$this->getBancoDados()->executar($comando,$parametros);
 			$mapaPixel = $this->obterMapaPixelComId($idMapaPixel);
@@ -148,6 +151,33 @@
 				'style' => $style,
 				'objeto' => $objeto
 			);
+		}
+		
+		public function setPossivelCaminhar($idMapa,$possivelCaminhar,$x,$y){
+			$comando = "update mapa_pixel set possivelCaminhar = :possivelCaminhar 
+			where x >= :x1 and x <= :x2 and y >= :y1 and y <= :y2 and idMapa = :idMapa";
+			$parametros = array(
+				'idMapa' => $idMapa,				'possivelCaminhar' => $possivelCaminhar,
+				'x1' => $x['1'],
+				'x2' => $x['2'],
+				'y1' => $y['1'],
+				'y2' => $y['2']
+			);
+			return $this->getBancoDados()->executar($comando,$parametros);
+		}
+		
+		public function setIdGrupo($idMapa,$idGrupo,$x,$y){
+			$comando = "update mapa_pixel set idGrupo = :idGrupo 
+			where x >= :x1 and x <= :x2 and y >= :y1 and y <= :y2 and idMapa = :idMapa";
+			$parametros = array(
+				'idMapa' => $idMapa,
+				'idGrupo' => $idGrupo,
+				'x1' => $x['1'],
+				'x2' => $x['2'],
+				'y1' => $y['1'],
+				'y2' => $y['2']
+			);
+			return $this->getBancoDados()->executar($comando,$parametros);
 		}
 	}
 ?>

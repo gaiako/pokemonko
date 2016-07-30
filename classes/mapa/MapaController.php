@@ -22,8 +22,16 @@
 			return Util::makeService($this->classe)->obterTodosOsPixels($mapa);
 		}
 		
-		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade){
-			return Util::makeService($this->classe)->updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$dificuldade);
+		public function updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$bloqueado){
+			return Util::makeService($this->classe)->updateMapaPixel($idMapaPixel,$terreno,$objeto,$idAcao,$bloqueado);
+		}
+		
+		public function setPossivelCaminhar($idMapa,$possivelCaminhar,$x,$y){ //arrays
+			return Util::makeService($this->classe)->setPossivelCaminhar($idMapa,$possivelCaminhar,$x,$y);
+		}
+		
+		public function setIdGrupo($idMapa,$idGrupo,$x,$y){ //arrays
+			return Util::makeService($this->classe)->setIdGrupo($idMapa,$idGrupo,$x,$y);
 		}
 	}
 ?>

@@ -1,3 +1,4 @@
+<link href="/app/assets/style/sprites.css" rel="stylesheet" />
 <?php
 $mapaController = Util::makeController('mapa');
 $gravacaoController = Util::makeController('gravacao');
@@ -30,13 +31,15 @@ div.personagem{
 }
 </style>
 <div class="wrapper">
-<div class="personagem ativo" style=""></div>
+<div class="personagem looking-down ativo" data-looking="down" style=""></div>
 <?php require_once('mapa.php'); ?>
 </div>
 <div id="mostraAcaos" class="mostra-acao">
 	<div><img id="fotoAcao" width="80" src="/app/assets/images/pokemon.png" /></div>
 	<div><h4 id="tituloAcao">Título ação</h4></div>
 </div>
+
+<script src="/js/trainer.js"></script>
 
 <script>
 var xAntes = '';
@@ -49,71 +52,9 @@ var idTreinador = <?php echo $_SESSION['vezIdTreinador']; ?>;
 var enviaPost = false;
 var posicao = '';
 var anda = true;
+var boqueado = '';
 
 $(document).ready(function(){
-	$(document).keydown(function(event){
-		if((event.keyCode >= 37 && event.keyCode <= 40) || event.keyCode == 116 || event.keyCode == 8 || event.keyCode == 13){
-			event.preventDefault();
-		}
-		
-		//Mover personagem
-		if(event.keyCode >= 37 && event.keyCode <= 40 && anda == true){
-			enviaPost = true;
-			tecla = event.keyCode;
-			
-			xAntes = x;
-			yAntes = y;
-			if(tecla == 39)
-				x = x+1;
-			if(tecla == 37)
-				x = x-1;
-			if(tecla == 38)
-				y = y-1;
-			if(tecla == 40)
-				y = y+1;
-			
-			if(x == 0){
-				x = 1;
-				enviaPost = false;
-			}
-			if(y == 0){
-				y = 1;
-				enviaPost = false;
-			}
-			
-			if(enviaPost == true){
-				if($('div[data-x="'+x+'"][data-y="'+y+'"]').attr('data-possivelCaminhar') == 1){
-					$('#mostraAcao').hide();
-					anda = false;
-					posicao = $('div[data-x="'+x+'"][data-y="'+y+'"]').position();
-				
-					var data = {
-						act : {
-							t : 'TreinadorController',
-							o : 'mover',
-							p : {
-								idTreinador : idTreinador,
-								x : x,
-								y : y
-							}
-						}
-					}
-					
-					$.post('/php/act.php',data,function(result){
-						if(result.success == true && result.message != null){
-							$('#fotoAcao').attr('src','/app/assets/images/pokemon/'+result.message.foto);
-							$('#tituloAcao').html(result.message.nome);
-							$('#mostraAcao').show();
-							anda = true;
-						}
-					},'json');
-					$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},500,function(){	});
-				}else{
-					x = xAntes;
-					y = yAntes;
-				}
-			}
-		}
-	});
+	
 });
 </script>
