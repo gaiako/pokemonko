@@ -40,6 +40,22 @@ try{
 			</div>
 		</div>
 
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['minNivel'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="minNivel">Nível mínimo</label>
+			<div class="controls">
+				<input type="number" min="1" max="100" class="input-mini" name="minNivel" id="minNivel" value="<?php if(isset($grupo)) echo $grupo->getMinNivel(); else echo '1'; ?>" />
+				<span class="help-inline"><?php if(isset($erro['minNivel'])) echo $erro['minNivel']; ?></span>
+			</div>
+		</div>
+
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['maxNivel'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="maxNivel">Nível máximo</label>
+			<div class="controls">
+				<input type="number" min="1" max="100" class="input-mini" name="maxNivel" id="maxNivel" value="<?php if(isset($grupo)) echo $grupo->getMaxNivel(); else echo '1'; ?>" />
+				<span class="help-inline"><?php if(isset($erro['maxNivel'])) echo $erro['maxNivel']; ?></span>
+			</div>
+		</div>
+
 		<div class="control-group <?php if(isset($erro)){ if(isset($erro['pokemons'])) echo "error"; else echo "success"; } ?>">
 			<label class="control-label" for="pokemons">Pokemons</label>
 			<div class="controls">
@@ -67,6 +83,7 @@ try{
 				<th>#</th>
 				<th>Grupo</th>
 				<th>Pokémons</th>
+				<th>Nível</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -84,6 +101,7 @@ try{
 						}
 						?>
 					</td>
+					<td><?php echo $g->getMinNivel().' - '.$g->getMaxNivel(); ?></td>
 					<td width="14"><a href="/grupo-gerenciar/<?php echo $g->getId(); ?>" class="alterar-grupo" href=""><i class="icon-edit"></i></a></td>
 					<td width="14"><a href="/grupo-gerenciar/<?php echo $g->getId(); ?>/excluir" class="remover-grupo" href=""><i class="icon-remove"></i></a></td>
 				</tr>

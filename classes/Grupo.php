@@ -3,6 +3,8 @@
 
 		private $id = 0;
 		private $nome = "";
+		private $minNivel = 0;
+		private $maxNivel = 0;
 		private $pokemons = array();
 
 		public function getId(){
@@ -19,6 +21,22 @@
 
 		public function setNome($nome){
 			$this->nome = $nome;
+		}
+		
+		public function getMinNivel(){
+			return $this->minNivel;
+		}
+		
+		public function setMinNivel($minNivel){
+			$this->minNivel = $minNivel;
+		}
+		
+		public function getMaxNivel(){
+			return $this->maxNivel;
+		}
+		
+		public function setMaxNivel($maxNivel){
+			$this->maxNivel = $maxNivel;
 		}
 
 		public function getPokemons(){
