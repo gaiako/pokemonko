@@ -22,7 +22,7 @@ foreach($pokemonBase as $k => $pb){
 	$pokemon = json_decode($json);
 	
 	$comando = "
-	update pokemon_base set 
+	update pokemonbase set 
 	hp = :hp,
 	ataque = :ataque,
 	defesa = :defesa,
@@ -81,7 +81,7 @@ foreach($pokemonBase as $k => $pb){
 	}
 	
 	foreach($pokemon->evolutions as $evolution){
-		$comando = "select id from pokemon_base where nome = '".$evolution->to."'";
+		$comando = "select id from pokemonbase where nome = '".$evolution->to."'";
 		$l = $bancoDados->consultar($comando);
 		if(count($l)){
 			$idEvolucao = $l[0]['id'];

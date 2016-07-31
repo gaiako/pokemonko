@@ -31,5 +31,10 @@
 				$idGrupo = null;
 			return $this->getDAO()->setIdGrupo($idMapa,$idGrupo,$x,$y);
 		}
+		
+		public function criarPokemonAleatoriamente($restricoes){
+			return $this->getDAO()->criarPokemonAleatoriamente($restricoes);
+			
+		}
 	}
 ?>

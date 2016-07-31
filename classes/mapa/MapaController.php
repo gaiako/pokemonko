@@ -6,7 +6,7 @@
 		}
 
 		public function criar(){
-			$todosOsCampos = array('id', 'nome', 'dimensaoX', 'dimensaoY', 'xInicial', 'yInicial');
+			$todosOsCampos = array('id', 'nome', 'dimensaoX', 'dimensaoY', 'xInicial', 'yInicial','maxPokemons','intervaloCriacao','intervaloMovimento');
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$mapa = new Mapa();
 			$this->povoarSimples($mapa, $todosOsCampos, $_POST);
@@ -32,6 +32,10 @@
 		
 		public function setIdGrupo($idMapa,$idGrupo,$x,$y){ //arrays
 			return Util::makeService($this->classe)->setIdGrupo($idMapa,$idGrupo,$x,$y);
+		}
+		
+		public function criarPokemonAleatoriamente($restricoes){
+			return Util::makeService($this->classe)->criarPokemonAleatoriamente($restricoes);
 		}
 	}
 ?>

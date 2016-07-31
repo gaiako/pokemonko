@@ -59,7 +59,6 @@ $(document).keydown(function(event){
 		
 		if(enviaPost == true){
 			if($('div[data-x="'+x+'"][data-y="'+y+'"]').attr('data-possivelCaminhar') == 1){
-				$('#mostraAcao').hide();
 				anda = false;
 				posicao = $('div[data-x="'+x+'"][data-y="'+y+'"]').position();
 			
@@ -77,13 +76,10 @@ $(document).keydown(function(event){
 				
 				$.post('/php/act.php',data,function(result){
 					if(result.success == true && result.message != null){
-						$('#fotoAcao').attr('src','/app/assets/images/pokemon/'+result.message.foto);
-						$('#tituloAcao').html(result.message.nome);
-						$('#mostraAcao').show();
 						anda = true;
 					}
 				},'json');
-				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},500,function(){	});
+				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},300,function(){	});
 			}else{
 				x = xAntes;
 				y = yAntes;

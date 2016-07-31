@@ -92,6 +92,27 @@ try{
 			</div>
 		</div>
 		
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['maxPokemons'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="maxPokemons">Max Pokémons</label>
+			<div class="controls">
+					<input type="number" class='input-mini' name='maxPokemons' value="<?php if(isset($mapa)) echo $mapa->getMaxPokemons(); else echo '1'; ?>" />
+			</div>
+		</div>
+		
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['intervaloCriacao'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="intervaloCriacao">Intervalo criação</label>
+			<div class="controls">
+					<input type="number" class='input-mini' name='intervaloCriacao' value="<?php if(isset($mapa)) echo $mapa->getIntervaloCriacao(); else echo '1'; ?>" />
+			</div>
+		</div>
+		
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['intervaloMovimento'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="intervaloMovimento">Intervalo movimento</label>
+			<div class="controls">
+					<input type="number" class='input-mini' name='intervaloMovimento' value="<?php if(isset($mapa)) echo $mapa->getIntervaloMovimento(); else echo '1'; ?>" />
+			</div>
+		</div>
+		
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary" name="enviar">Salvar</button>
 		</div>

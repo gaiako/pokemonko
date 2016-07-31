@@ -6,12 +6,12 @@
 		}
 
 		protected function adicionarNovo($pokemonBase){
-			$comando = 'insert into pokemon_base (nome, idTipo, idTipo2, hp, ataque, defesa, agilidade, ataqueEspecial, defesaEspecial, exp, sortePokeball, nivel, raridade) values (:nome, :idTipo, :idTipo2, :hp, :ataque, :defesa, :agilidade, :ataqueEspecial, :defesaEspecial, :exp, :sortePokeball, :nivel, :raridade)';
+			$comando = 'insert into pokemonbase (nome, idTipo, idTipo2, hp, ataque, defesa, agilidade, ataqueEspecial, defesaEspecial, exp, sortePokeball, nivel, raridade) values (:nome, :idTipo, :idTipo2, :hp, :ataque, :defesa, :agilidade, :ataqueEspecial, :defesaEspecial, :exp, :sortePokeball, :nivel, :raridade)';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemonBase));
 		}
 
 		protected function atualizar($pokemonBase){
-			$comando = 'update pokemon_base set nome = :nome, idTipo = :idTipo, idTipo2 = :idTipo2, hp = :hp, ataque = :ataque, defesa = :defesa, agilidade = :agilidade, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, exp = :exp, sortePokeball = :sortePokeball, nivel = :nivel, raridade = :raridade where id = :id';
+			$comando = 'update pokemonbase set nome = :nome, idTipo = :idTipo, idTipo2 = :idTipo2, hp = :hp, ataque = :ataque, defesa = :defesa, agilidade = :agilidade, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, exp = :exp, sortePokeball = :sortePokeball, nivel = :nivel, raridade = :raridade where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemonBase,true));
 		}
 
@@ -37,7 +37,7 @@
 		}
 
 		public function existe($pokemonBase){
-			/*if($this->getBancoDados()->existe('pokemon_base', 'nome', $pokemonBase->getNome(), $pokemonBase->getId()))
+			/*if($this->getBancoDados()->existe('pokemonbase', 'nome', $pokemonBase->getNome(), $pokemonBase->getId()))
 				return true;
 			return false;*/
 		}
@@ -64,6 +64,22 @@
 			return $pokemonBase;
 		}
 		
+		public function obterComRestricoes($restricoes,$orderBy = 'pokemonbase.id',$limit = null, $offset = null, $completo = true){
+			$select = "SELECT pokemonbase.* FROM pokemonbase ";
+			$join = '';
+			$where = '';
+			$parametros = array();
+			
+			if(isset($restricoes['idGrupo'])){
+				$join .= 'JOIN grupo_pokemon ON grupo_pokemon.idPokemon = pokemonbase.id 
+				AND grupo_pokemon.idGrupo = :idGrupo ';
+				$parametros['idGrupo'] = $restricoes['idGrupo'];
+			}
+			
+			$comando = $select.$join.$where;
+			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros,$orderBy,$limit,$offset,$completo);
+		}
+		
 		public function obterAleatoriamente($nivel){
 			$sorte = rand(1,100);
 			if($sorte < 15)
@@ -79,7 +95,7 @@
 			
 			$raridade = rand(1,100);
 			
-			$comando = "select * from pokemon_base where nivel = :nivel and raridade <= :raridade";
+			$comando = "select * from pokemonbase where nivel = :nivel and raridade <= :raridade";
 			$parametros = array(
 				'nivel' => $nivel,
 				'raridade' => $raridade
@@ -90,7 +106,7 @@
 		public function obterOrdenadosPorForca(){
 			$comando = "
 			select id,hp+ataque+defesa+agilidade+ataqueEspecial+defesaEspecial as total 
-			from pokemon_base 
+			from pokemonbase 
 			";
 			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),array(),'total');
 		}
@@ -109,12 +125,12 @@
 		}
 
 		public function obterTodos($orderBy = 'pokemonBase.id', $limit = null, $offset = 0, $completo = true){
-			$comando = 'select * from pokemon_base where ativo = 1';
+			$comando = 'select * from pokemonbase where ativo = 1';
 			return $this->getBancoDados()->obterObjetos($comando,array($this, 'transformarEmObjeto'), array(), $orderBy, $limit, $offset, $completo);
 		}
 
 		public function obterComId($id, $completo = true){
-			$comando = 'select * from pokemon_base where id = :id';
+			$comando = 'select * from pokemonbase where id = :id';
 			$parametros = array(
 				'id' => $id
 			);
@@ -122,11 +138,11 @@
 		}
 
 		public function desativarComId($id){
-			$this->getBancoDados()->desativar('pokemon_base', $id);
+			$this->getBancoDados()->desativar('pokemonbase', $id);
 		}
 
 		public function excluirComId($id){
-			$this->getBancoDados()->excluir('pokemon_base', $id);
+			$this->getBancoDados()->excluir('pokemonbase', $id);
 		}
 	}
 ?>

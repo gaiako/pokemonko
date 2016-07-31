@@ -6,7 +6,7 @@
 		}
 
 		protected function adicionarNovo($mapa){
-			$comando = 'insert into mapa (id, nome, dimensaoX, dimensaoY, xInicial, yInicial) values (:id, :nome, :dimensaoX, :dimensaoY, :xInicial, :yInicial)';
+			$comando = 'insert into mapa (id, nome, dimensaoX, dimensaoY, xInicial, yInicial, maxPokemons, intervaloCriacao, intervaloMovimento) values (:id, :nome, :dimensaoX, :dimensaoY, :xInicial, :yInicial, :maxPokemons, :intervaloCriacao, :intervaloMovimento)';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa));
 			$id = $this->getBancoDados()->ultimoId();
 			$mapa->setId($id);
@@ -15,7 +15,7 @@
 		}
 
 		protected function atualizar($mapa){
-			$comando = 'update mapa set nome = :nome, dimensaoX = :dimensaoX, dimensaoY = :dimensaoY, xInicial = :xInicial, yInicial = :yInicial where id = :id';
+			$comando = 'update mapa set nome = :nome, dimensaoX = :dimensaoX, dimensaoY = :dimensaoY, xInicial = :xInicial, yInicial = :yInicial, maxPokemons = :maxPokemons, intervaloCriacao = :intervaloCriacao, intervaloMovimento = :intervaloMovimento where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($mapa,true));
 		}
 
@@ -26,10 +26,13 @@
 				'dimensaoX' => $mapa->getDimensaoX(),
 				'dimensaoY' => $mapa->getDimensaoY(),
 				'xInicial' => $mapa->getXInicial(),
-				'yInicial' => $mapa->getYInicial()
+				'yInicial' => $mapa->getYInicial(),
+				'maxPokemons' => $mapa->getMaxPokemons(),
+				'intervaloCriacao' => $mapa->getIntervaloCriacao(),
+				'intervaloMovimento' => $mapa->getIntervaloMovimento()
 			);
 			if($update)
-				$parametros['id'] = $treinador->getId();
+				$parametros['id'] = $mapa->getId();
 			return $parametros;
 		}
 
@@ -47,6 +50,9 @@
 			$mapa->setDimensaoY($l['dimensaoY']);
 			$mapa->setXInicial($l['xInicial']);
 			$mapa->setYInicial($l['yInicial']);
+			$mapa->setMaxPokemons($l['maxPokemons']);
+			$mapa->setIntervaloCriacao($l['intervaloCriacao']);
+			$mapa->setIntervaloMovimento($l['intervaloMovimento']);
 			return $mapa;
 		}
 		
@@ -91,6 +97,33 @@
 				'idMapa' => $mapa->getId()
 			);
 			return $this->getBancoDados()->consultar($comando,$parametros);
+		}
+		
+		public function obterMapaPixelComRestricoes($restricoes, $orderBy = 'rand()', $limit = null){
+			$select = 'select * from mapa_pixel ';
+			$join = '';
+			$where = ' where ativo = 1 and possivelCaminhar = 1 ';
+			$parametros = array();
+			
+			if(isset($restricoes['idMapa'])){
+				$where .= ' and idMapa = :idMapa';
+				$parametros['idMapa'] = $restricoes['idMapa'];
+			}
+			
+			if(isset($restricoes['idGrupo'])){
+				$where .= ' and idGrupo = :idGrupo ';
+				$parametros['idGrupo'] = $restricoes['idGrupo'];
+			}else{
+				$where .= ' and idGrupo is not null ';
+			}
+			
+			$orderBy = 'order by '.$orderBy;
+			if(strlen($limit) > 0)
+				$limit = ' limit '.$limit;
+			
+			$comando = $select.$join.$where.$orderBy.$limit;
+			$l = $this->getBancoDados()->consultar($comando,$parametros);
+			return $l[0];
 		}
 		
 		public function obterMapaPixelComId($idMapaPixel){
@@ -178,6 +211,44 @@
 				'y2' => $y['2']
 			);
 			return $this->getBancoDados()->executar($comando,$parametros);
+		}
+		
+		public function criarPokemonAleatoriamente($restricoes){
+			$mapaPixel = $this->obterMapaPixelComRestricoes($restricoes);
+			$mapa = $this->obterComId($mapaPixel['idMapa']);
+			
+			$restricoes = array(
+				'idGrupo' => $mapaPixel['idGrupo']
+			);
+			
+			$pokemonBase = Util::makeDao('pokemonBase')->obterComRestricoes($restricoes,'rand()',1,0,true);
+			$pokemonBase = $pokemonBase[0];
+			
+			$pokemon = Util::makeController('pokemon')->criarAPartirDeBase($pokemonBase,$mapaPixel);
+			
+			//Verificar se vai excluir
+			$pokemonExcluir = Util::makeController('pokemon')->obterComRestricoes(array('idMapa' => $mapa->getId()));
+			$totalExcluir = count($pokemonExcluir)-$mapa->getMaxPokemons();
+			$excluidos = array();
+			if($totalExcluir > 0){
+				foreach($pokemonExcluir as $p){
+					if($totalExcluir <= 0)
+						break;
+					$comando = "delete from pokemon where id = ".$p->getId();
+					$this->getBancoDados()->executar($comando,$parametros);
+					array_push($excluidos,$p->getId());
+					$totalExcluir--;
+				}
+			}
+			
+			$del = null;
+			if(count($excluidos))
+				$del = $excluidos;
+			
+			return array(
+				'add' => $pokemon,
+				'del' => $del
+			);
 		}
 	}
 ?>

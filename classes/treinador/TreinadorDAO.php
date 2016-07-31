@@ -98,18 +98,7 @@
 			
 			$this->atualizarPosicao($x,$y);
 			
-			$resposta = null;
-			if($mapaPixel[0]['aparecePokemon']){
-				$sorte = rand(1,100);
-				if($sorte >= 1){
-					$pokemon = Util::makeDao('pokemonBase')->obterAleatoriamente($mapaPixel[0]['dificuldade']);
-					if(count($pokemon)){
-						$pokemon[0]->setFoto(str_pad($pokemon[0]->getId(),3,0,STR_PAD_LEFT).'.png');
-						$resposta = $pokemon[0];
-					}
-				}
-			}
-			return $resposta;
+			return true;
 		}
 		
 		public function atualizarPosicao($x,$y){
