@@ -6,7 +6,7 @@
 		}
 
 		public function criar(){
-			$todosOsCampos = array('id', 'nome', 'cor');
+			$todosOsCampos = array('id', 'nome', 'sprite');
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$treinador = new Treinador();
 			$this->povoarSimples($treinador, $todosOsCampos, $_POST);
@@ -23,12 +23,12 @@
 			return $treinador;
 		}
 		
-		public function obterComIdEGravacao($idTreinador,$gravacao){
-			return Util::makeService($this->classe)->obterComIdEGravacao($idTreinador,$gravacao);
+		public function obterTreinadorDaVez(){
+			return Util::makeService($this->classe)->obterTreinadorDaVez();
 		}
 		
-		public function mover($idTreinador,$x,$y){
-			return Util::makeService($this->classe)->mover($idTreinador,$x,$y);
+		public function mover($x,$y,$looking){
+			return Util::makeService($this->classe)->mover($x,$y,$looking);
 		}
 	}
 ?>

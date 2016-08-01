@@ -1,0 +1,32 @@
+div.personagem{
+	position: relative;
+	width: 32px;
+	height: 32px;
+	background-image: url('/app/assets/images/sprite/chris.png');
+	background-repeat: no-repeat;
+	margin-bottom:-30px;
+	z-index:1000;
+}
+
+div.personagem.looking-down{
+	background-position: 0px 0px;
+}
+
+div.personagem.looking-up{
+	background-position: 0px -32px;
+}
+
+div.personagem.looking-right{
+	background-position: 0px -64px;
+}
+
+div.personagem.looking-left{
+	background-position: 0px -96px;
+}
+div.pokemon{
+	position: relative;
+	width: 32px;
+	height: 32px;
+	margin-bottom:-32px;
+	z-index:1000;
+}

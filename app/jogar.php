@@ -1,44 +1,66 @@
+<link href="/app/assets/style/sprites.css" rel="stylesheet" />
 <?php
 $mapaController = Util::makeController('mapa');
 $gravacaoController = Util::makeController('gravacao');
 $treinadorController = Util::makeController('treinador');
+$pokemonController = Util::makeController('pokemon');
 
 $gravacao = $gravacaoController->obterComId($_SESSION['gravacao'],true);
 
 if(!isset($_SESSION['vezIdTreinador'])){
-	$treinador = current($gravacao->getTreinadores());
+	$treinadores = $gravacao->getTreinadores();
+	$treinador = $treinadores[0];
 	$_SESSION['vezIdTreinador'] = $treinador->getId();
 }else{
-	/*foreach($gravacao->getTreinadores() as $t){
-		if($t->getId() == $_SESSION['vezIdTreinador'])
-			$_SE
-	}*/
+	$treinador = $treinadorController->obterTreinadorDaVez();
 }
-
-if(!$treinador instanceOf Treinador)
-	$treinador = $treinadorController->obterComIdEGravacao($_SESSION['vezIdTreinador'],$gravacao);
 
 $mapa = $mapaController->obterComId($treinador->getMapa()->getId());
 $mapaPixels = $mapaController->obterTodosOsPixels($mapa);
 
+$pokemons = $pokemonController->obterComRestricoes(array('idMapa'=>$mapa->getId()));
 ?>
-<style>
-div.personagem{
-	display:block;
-	top:<?php echo ($treinador->getY()*32)-32; ?>px;
-	left:<?php echo ($treinador->getX()*32)-32; ?>px;
-}
-</style>
+
 <div class="wrapper">
-<div class="personagem ativo" style=""></div>
+	<div id="pokemons">
+		<?php
+		foreach($pokemons as $pokemon){
+			?>
+			<div class="pokemon" 
+			data-idPokemon="<?php echo $pokemon->getId(); ?>" 
+			style="
+			display: block;
+			background-image: url('/app/assets/images/pokemon/overworld/<?php echo $pokemon->getLooking(); ?>/<?php echo $pokemon->getPokemonBase()->getId(); ?>.png');
+			top:<?php echo ($pokemon->getY()*32)-32; ?>px;
+			left:<?php echo ($pokemon->getX()*32)-32; ?>px;
+			"></div>
+			<?php
+		}
+		?>
+	</div>
+	<div id="personagens">
+		<?php
+		foreach($gravacao->getTreinadores() as $t){
+			?>
+			<div class="personagem looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" style="
+			display:block;
+			background-image: url('/app/assets/images/sprite/<?php echo $t->getSprite(); ?>');
+			top:<?php echo ($t->getY()*32)-32; ?>px;
+			left:<?php echo ($t->getX()*32)-32; ?>px;
+			"></div>
+			<?php
+		}
+		?>
+	</div>
 <?php require_once('mapa.php'); ?>
 </div>
-<div id="mostraAcaos" class="mostra-acao">
-	<div><img id="fotoAcao" width="80" src="/app/assets/images/pokemon.png" /></div>
-	<div><h4 id="tituloAcao">Título ação</h4></div>
-</div>
+
+<div class="pokemon clone"></div>
+
+<script src="/js/trainer.js"></script>
 
 <script>
+var idMapa = <?php echo $mapa->getId(); ?>;
 var xAntes = '';
 var yAntes = '';
 var x = <?php echo $treinador->getX(); ?>;
@@ -47,73 +69,50 @@ var xMaximo = <?php echo $mapa->getDimensaoX(); ?>;
 var yMaximo = <?php echo $mapa->getDimensaoY(); ?>;
 var idTreinador = <?php echo $_SESSION['vezIdTreinador']; ?>;
 var enviaPost = false;
-var posicao = '';
 var anda = true;
+var posicao = '';
+var boqueado = '';
 
-$(document).ready(function(){
-	$(document).keydown(function(event){
-		if((event.keyCode >= 37 && event.keyCode <= 40) || event.keyCode == 116 || event.keyCode == 8 || event.keyCode == 13){
-			event.preventDefault();
+function criarPokemonAleatoriamente(){
+	var data = {
+		act : {
+			t : 'MapaController',
+			o : 'criarPokemonAleatoriamente',
+			p : {
+				idMapa : idMapa
+			}
 		}
-		
-		//Mover personagem
-		if(event.keyCode >= 37 && event.keyCode <= 40 && anda == true){
-			enviaPost = true;
-			tecla = event.keyCode;
-			
-			xAntes = x;
-			yAntes = y;
-			if(tecla == 39)
-				x = x+1;
-			if(tecla == 37)
-				x = x-1;
-			if(tecla == 38)
-				y = y-1;
-			if(tecla == 40)
-				y = y+1;
-			
-			if(x == 0){
-				x = 1;
-				enviaPost = false;
-			}
-			if(y == 0){
-				y = 1;
-				enviaPost = false;
+	}
+	
+	$.post('/php/act.php',data,function(result){
+		//console.log(result);
+		if(result.success == true){
+			if(result.message.add != null){
+				var div = $('.pokemon.clone').clone(1);
+				div.attr('data-idPokemon',result.message.add.id);
+				div.css('background-image','url("/app/assets/images/pokemon/overworld/'+result.message.add.looking+'/'+result.message.add.pokemonBase.id+'.png")');
+				div.css('top',result.message.add.y*(32)-32+'px');
+				div.css('left',result.message.add.x*(32)-32+'px');
+				div.removeClass('clone');
+				div.hide();
+				$('#pokemons').append(div);
+				div.fadeIn('slow');
 			}
 			
-			if(enviaPost == true){
-				if($('div[data-x="'+x+'"][data-y="'+y+'"]').attr('data-possivelCaminhar') == 1){
-					$('#mostraAcao').hide();
-					anda = false;
-					posicao = $('div[data-x="'+x+'"][data-y="'+y+'"]').position();
-				
-					var data = {
-						act : {
-							t : 'TreinadorController',
-							o : 'mover',
-							p : {
-								idTreinador : idTreinador,
-								x : x,
-								y : y
-							}
-						}
-					}
-					
-					$.post('/php/act.php',data,function(result){
-						if(result.success == true && result.message != null){
-							$('#fotoAcao').attr('src','/app/assets/images/pokemon/'+result.message.foto);
-							$('#tituloAcao').html(result.message.nome);
-							$('#mostraAcao').show();
-							anda = true;
-						}
-					},'json');
-					$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},500,function(){	});
-				}else{
-					x = xAntes;
-					y = yAntes;
+			if(result.message.del != null){
+				for(i=0;i<result.message.del.length;i++){
+					var delDiv = $('#pokemons').find('div.pokemon[data-idPokemon="'+result.message.del[i]+'"]').fadeOut('slow').remove();
+					//var delDiv = $('#pokemons').find('div:first').fadeOut('slow').remove();
 				}
 			}
+		}else{
+			console.log(result.message);
 		}
-	});
+	},'json');
+}
+
+$(document).ready(function(){
+	criarPokemonAleatoriamente();
+	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 });
 </script>

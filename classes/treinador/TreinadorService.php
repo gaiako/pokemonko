@@ -6,18 +6,21 @@
 		}
 
 		public function validar($treinador, &$erro){
+			if($treinador->getSprite() == '')
+				$erro['sprite'] = 'Selecione o sprite';
+			
 			if(count($erro) > 0){
 				$erro['validado'] = true;
 				throw new ServiceException('Corrija os campos abaixo para efetuar o cadastro');
 			}
 		}
 		
-		public function obterComIdEGravacao($idTreinador,$gravacao){
-			return $this->getDao()->obterComIdEGravacao($idTreinador,$gravacao);
+		public function obterTreinadorDaVez(){
+			return $this->getDao()->obterTreinadorDaVez();
 		}
 		
-		public function mover($jogador,$x,$y){
-			return $this->getDao()->mover($jogador,$x,$y);
+		public function mover($x,$y,$looking){
+			return $this->getDao()->mover($x,$y,$looking);
 		}
 	}
 ?>

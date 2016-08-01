@@ -8,6 +8,9 @@
 		private $terrenoPadrao = 1;
 		private $xInicial = 1;
 		private $yInicial = 1;
+		private $maxPokemons = 150;
+		private $intervaloCriacao = 10;
+		private $intervaloMovimento = 3;
 
 		public function getId(){
 			return $this->id;
@@ -63,6 +66,30 @@
 
 		public function setYInicial($yInicial){
 			$this->yInicial = $yInicial;
+		}
+		
+		public function getMaxPokemons(){
+			return $this->maxPokemons;
+		}
+		
+		public function setMaxPokemons($maxPokemons){
+			$this->maxPokemons = $maxPokemons;
+		}
+		
+		public function getIntervaloCriacao(){
+			return $this->intervaloCriacao;
+		}
+		
+		public function setIntervaloCriacao($intervaloCriacao){
+			$this->intervaloCriacao = $intervaloCriacao;
+		}
+		
+		public function getIntervaloMovimento(){
+			return $this->intervaloMovimento;
+		}
+		
+		public function setIntervaloMovimento($intervaloMovimento){
+			$this->intervaloMovimento = $intervaloMovimento;
 		}
 
 	}

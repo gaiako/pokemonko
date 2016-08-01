@@ -10,6 +10,13 @@
 	background-image: url("/app/assets/images/icons/icon-terrain.png");
 }
 
+div.select-personagem{
+	position: relative;
+	width: 32px;
+	height: 32px;
+	background-repeat: no-repeat;
+}
+
 i.preview-terreno{
 	width: 32px;
 	height: 32px;
@@ -95,36 +102,5 @@ div.auxiliar-editor div.change-side{
 }
 
 div.personagem{
-	position: relative;
-	width: 32px;
-	height: 32px;
-	background-image: url('/app/assets/images/ash.png');
-	background-position:center;
-	background-repeat: no-repeat;
-	display:none;
-	margin-bottom:-30px;
-	z-index:1000;
-}
-
-div.mostra-acao{
-	position: fixed;
-	width: 33%;
-	left: 33%;
-	right: 0;
-	bottom: 0;
-	z-index: 1030;
-    margin-bottom: 5px;
-	padding: 5px;
-	
-	-webkit-border-radius: 5px;
-	
-    background-color: #FFF;
-}
-
-div.mostra-acao div{
-	float:left;
-}
-
-.escondido{
-	display:none;
+	display: none;
 }

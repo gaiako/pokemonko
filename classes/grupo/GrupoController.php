@@ -6,7 +6,7 @@
 		}
 
 		public function criar(){
-			$todosOsCampos = array('id', 'nome', 'pokemons');
+			$todosOsCampos = array('id', 'nome', 'minNivel', 'maxNivel');
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$grupo = new Grupo();
 			$this->povoarSimples($grupo, $todosOsCampos, $_POST);

@@ -48,14 +48,13 @@
 								<li><a href="/pokemon-cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
 								<li><a href="/pokemon-gerenciar"><i class="icon-list"></i> Lista</a></li>
 								<li><a href="/tipo-gerenciar"><i class="icon-plus"></i> Tipos</a></li>
+								<li><a href="/grupo-gerenciar"><i class="icon-map-marker"></i> Grupos</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-map icon-ko"></i> Mapa <b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="/mapa-gerenciar"><i class="icon-map-marker"></i> Mapas</a></li>
-								<li><a href="/terreno-gerenciar"><i class="icon-th-large"></i> Terreno</a></li>
-								<li><a href="/objeto-gerenciar"><i class="icon-home"></i> Objetos</a></li>
 								<li><a href="/jogar"><i class="icon-home"></i> Jogar</a></li>
 							</ul>
 						</li>

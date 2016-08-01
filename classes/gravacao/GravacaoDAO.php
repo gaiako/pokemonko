@@ -17,19 +17,26 @@
 		protected function atualizar($gravacao){
 			$comando = 'update gravacao set nome = :nome where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($gravacao,true));
+			
+			$this->salvarTreinadores($gravacao);
 		}
 		
 		public function salvarTreinadores($gravacao){
 			foreach($gravacao->getTreinadores() as $treinador){
-				$comando = "insert into treinador_gravacao (idTreinador,idGravacao,idMapa,x,y) values (:idTreinador,:idGravacao,:idMapa,:x,:y)";
-				$parametros = array(
-					'idTreinador' => $treinador->getId(),
-					'idGravacao' => $gravacao->getId(),
-					'idMapa' => $gravacao->getMapaInicial()->getId(),
-					'x' => $gravacao->getMapaInicial()->getXInicial(),
-					'y' => $gravacao->getMapaInicial()->getYInicial()
-				);
-				$this->getBancoDados()->executar($comando,$parametros);
+				try{
+					$comando = "insert into treinador_gravacao (idTreinador,idGravacao,idMapa,x,y) values (:idTreinador,:idGravacao,:idMapa,:x,:y)";
+					$parametros = array(
+						'idTreinador' => $treinador->getId(),
+						'idGravacao' => $gravacao->getId(),
+						'idMapa' => $gravacao->getMapaInicial()->getId(),
+						'x' => $gravacao->getMapaInicial()->getXInicial(),
+						'y' => $gravacao->getMapaInicial()->getYInicial()
+					);
+					$this->getBancoDados()->executar($comando,$parametros);
+				}
+				catch(Exception $e){
+					
+				}
 			}
 		}
 

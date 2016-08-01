@@ -6,7 +6,7 @@
 		}
 
 		protected function adicionarNovo($grupo){
-			$comando = 'insert into grupo (nome) values (:nome)';
+			$comando = 'insert into grupo (nome,minNivel,maxNivel) values (:nome,:minNivel,:maxNivel)';
 			$this->getBancoDados()->executar($comando, $this->parametros($grupo));
 			$id = $this->getBancoDados()->ultimoId();
 			$grupo->setId($id);
@@ -15,7 +15,7 @@
 		}
 
 		protected function atualizar($grupo){
-			$comando = 'update grupo set nome = :nome where id = :id';
+			$comando = 'update grupo set nome = :nome,minNivel = :minNivel,maxNivel = :maxNivel where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($grupo,true));
 			
 			$this->salvarPokemonsGrupo($grupo);
@@ -23,7 +23,9 @@
 
 		protected function parametros($grupo,$update = false){
 			$parametros = array(
-				'nome' => $grupo->getNome()
+				'nome' => $grupo->getNome(),
+				'minNivel' => $grupo->getMinNivel(),
+				'maxNivel' => $grupo->getMaxNivel()
 			);
 			if($update)
 				$parametros['id'] = $grupo->getId();
@@ -40,6 +42,8 @@
 			$grupo = new Grupo();
 			$grupo->setId($l['id']);
 			$grupo->setNome($l['nome']);
+			$grupo->setMinNivel($l['minNivel']);
+			$grupo->setMaxNivel($l['maxNivel']);
 			
 			if($completo){
 				Util::makeDao('pokemonBase')->obterPokemonsDoGrupo($grupo);
