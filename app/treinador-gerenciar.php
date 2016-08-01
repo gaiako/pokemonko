@@ -18,6 +18,7 @@ try{
 	}
 
 	$treinadores = $treinadorController->obterTodos();
+	$sprites = Util::todasAsImagensNaPasta('/app/assets/images/sprite/');
 }catch(ServiceException $e){
 	
 }catch(Exception $e){
@@ -52,12 +53,20 @@ try{
 			</div>
 		</div>
 		
-		<div class="control-group <?php if(isset($erro)){ if(isset($erro['cor'])) echo "error"; else echo "success"; } ?>">
-			<label class="control-label" for="cor">Cor</label>
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['sprite'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="sprite">Sprite</label>
 			<div class="controls">
-				<div class="input-append habilitado-duplicacao">
-					<input type="text" class='color' name='cor' value="<?php if(isset($treinador)) echo $treinador->getCor(); ?>" />
-				</div>
+				<select name="sprite" id="sprite">
+				<option value=""></option>
+				<?php
+				foreach($sprites as $sprite){
+					?>
+					<option value="<?php echo $sprite->getNome(); ?>" <?php if(isset($treinador) && $treinador->getSprite() == $sprite->getNome()) echo 'selected'; ?>><?php echo $sprite->getNome(); ?></option>
+					<?php
+				}
+				?>
+				</select>
+				<div class="select-personagem" style="background-image:url('/app/assets/images/sprite/<?php if(isset($treinador)) echo $treinador->getSprite(); ?>');">&nbsp;</div>
 			</div>
 		</div>
 		
@@ -82,7 +91,7 @@ try{
 				?>
 				<tr>
 					<td><?php echo $t->getId(); ?></td>
-					<td><span class="label" style="background-color:<?php echo $t->getCor(); ?>;"><?php echo $t->getNome(); ?></span></td>
+					<td><?php echo $t->getNome(); ?></td>
 					<td width="14"><a href="/treinador-gerenciar/<?php echo $t->getId(); ?>" class="alterar-treinador" href=""><i class="icon-edit"></i></a></td>
 					<td width="14"><a href="/treinador-gerenciar/<?php echo $t->getId(); ?>/excluir>" class="remover-treinador" href=""><i class="icon-remove"></i></a></td>
 				</tr>
@@ -103,28 +112,8 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('form').on("click", '.habilitado-duplicacao .duplicar', function(){
-
-		if($(this).parent().parent().find(".duplicar").length >= 4){
-			return false;
-		}
-
-		var parent = $(this).parent();
-		var clone = parent.clone(1);
-		var myPicker = new jscolor.color(clone.find("input")[0]);
-		myPicker.fromString('FFFFFF')
-		parent.after(clone);
-		return false;
-
-	}).on("click", '.habilitado-duplicacao .remover', function(){
-
-		if($(this).parent().parent().find(".remover").length <= 1){
-			$(this).parent().find("input").val("");
-		}else{
-			$(this).parent().remove();
-		}
-		return false;
-
+	$('#sprite').change(function(){
+		$('.select-personagem').css('background-image','url("/app/assets/images/sprite/'+$(this).val()+'")');
 	});
 });
 </script>

@@ -10,6 +10,13 @@
 	background-image: url("/app/assets/images/icons/icon-terrain.png");
 }
 
+div.select-personagem{
+	position: relative;
+	width: 32px;
+	height: 32px;
+	background-repeat: no-repeat;
+}
+
 i.preview-terreno{
 	width: 32px;
 	height: 32px;

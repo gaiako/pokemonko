@@ -6,12 +6,12 @@
 		}
 
 		protected function adicionarNovo($treinador){
-			$comando = 'insert into treinador (nome, humano, dificuldade, cor) values (:nome, :humano, :dificuldade, :cor)';
+			$comando = 'insert into treinador (nome, humano, dificuldade, sprite) values (:nome, :humano, :dificuldade, :sprite)';
 			$this->getBancoDados()->executar($comando, $this->parametros($treinador));
 		}
 
 		protected function atualizar($treinador){
-			$comando = 'update treinador set nome = :nome, humano = :humano, dificuldade = :dificuldade, cor = :cor where id = :id';
+			$comando = 'update treinador set nome = :nome, humano = :humano, dificuldade = :dificuldade, sprite = :sprite where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($treinador,true));
 		}
 
@@ -20,7 +20,7 @@
 				'nome' => $treinador->getNome(),
 				'humano' => $treinador->getHumano(),
 				'dificuldade' => $treinador->getDificuldade(),
-				'cor' => $treinador->getCor()
+				'sprite' => $treinador->getSprite()
 			);
 			if($update)
 				$parametros['id'] = $treinador->getId();
@@ -48,14 +48,15 @@
 			}
 			$treinador->setX($l['x']);
 			$treinador->setY($l['y']);
-			$treinador->setCor($l['cor']);
+			$treinador->setSprite($l['sprite']);
 			$treinador->setPokemonDollar($l['pokemonDollar']);
+			$treinador->setLooking($l['looking']);
 			return $treinador;
 		}
 		
 		public function obterComGravacao($gravacao){
 			$comando = "
-			SELECT t.nome,tg.idMapa,tg.x,tg.y,tg.pokemonDollar,tg.id 
+			SELECT t.nome,t.sprite,tg.idMapa,tg.x,tg.y,tg.looking,tg.pokemonDollar,tg.id 
 			FROM treinador t 
 			JOIN treinador_gravacao tg 
 				ON tg.idTreinador = t.id 
@@ -68,24 +69,7 @@
 			return $this->getBancoDados()->obterObjetos($comando, array($this, 'transformarEmObjeto'),$parametros,'tg.id');
 		}
 		
-		public function obterComIdEGravacao($idTreinador,$gravacao){
-			$comando = "
-			SELECT t.nome,tg.idMapa,tg.x,tg.y,tg.pokemonDollar,tg.id 
-			FROM treinador t 
-			JOIN treinador_gravacao tg 
-				ON tg.idTreinador = t.id 
-				AND tg.ativo = 1 
-				AND tg.idGravacao = :idGravacao 
-				AND tg.id = :idTreinador 
-			";
-			$parametros = array(
-				'idGravacao' => $gravacao->getId(),
-				'idTreinador' => $idTreinador
-			);
-			return $this->getBancoDados()->obterObjeto($comando, array($this, 'transformarEmObjeto'),$parametros);
-		}
-		
-		public function mover($jogador,$x,$y){
+		public function mover($x,$y,$looking){
 			$comando = "select * from mapa_pixel where x=:x and y=:y and possivelCaminhar = 1";
 			$parametros = array(
 				'x' => $x,
@@ -96,17 +80,18 @@
 			if(!count($mapaPixel))
 				Throw new Exception('Não foi possível mover');
 			
-			$this->atualizarPosicao($x,$y);
+			$this->atualizarPosicao($x,$y,$looking);
 			
 			return true;
 		}
 		
-		public function atualizarPosicao($x,$y){
-			$comando = "update treinador_gravacao set x = :x, y = :y where id = :vezIdTreinador";
+		public function atualizarPosicao($x,$y, $looking){
+			$comando = "update treinador_gravacao set x = :x, y = :y, looking = :looking where id = :vezIdTreinador";
 			$parametros = array(
 				'vezIdTreinador' => $_SESSION['vezIdTreinador'],
 				'x' => $x,
-				'y' => $y
+				'y' => $y,
+				'looking' => $looking
 			);
 			$this->getBancoDados()->executar($comando,$parametros);
 		}
@@ -117,13 +102,21 @@
 		}
 
 		public function obterComId($id, $completo = true){
-			$comando = 'select treinador.*,tg.idMapa,tg.x,tg.y,tg.pokemonDollar from treinador  
-			left join treinador_gravacao tg on tg.idTreinador = treinador.id and tg.idGravacao = :idGravacao and treinador.id = :id';
+			$comando = 'select * from treinador where id = :id';
 			$parametros = array(
-				'id' => $id,
-				'idGravacao' => $_SESSION['gravacao']
+				'id' => $id
 			);
 			return $this->getBancoDados()->obterObjeto($comando, array($this, 'transformarEmObjeto'), $parametros, $completo);
+		}
+		
+		public function obterTreinadorDaVez(){
+			$comando = 'select tg.id,treinador.nome,treinador.sprite,tg.idMapa,tg.x,tg.y,tg.pokemonDollar from treinador 
+			join treinador_gravacao tg on tg.idTreinador = treinador.id and tg.idGravacao = :idGravacao and treinador.id = :id';
+			$parametros = array(
+				'id' => $_SESSION['vezIdTreinador'],
+				'idGravacao' => $_SESSION['gravacao']
+			);
+			return $this->getBancoDados()->obterObjeto($comando, array($this, 'transformarEmObjeto'), $parametros, true);
 		}
 
 		public function desativarComId($id){

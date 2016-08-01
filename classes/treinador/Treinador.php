@@ -9,8 +9,9 @@
 		private $mapa = 0; //Gravação
 		private $x = 1; //Gravação
 		private $y = 1; //Gravação
-		private $cor = "";
+		private $sprite = "";
 		private $pokemonDollar = 0.0; //Gravação
+		private $looking = ''; //Gravação
 
 		public function getId(){
 			return $this->id;
@@ -76,12 +77,12 @@
 			$this->y = $y;
 		}
 
-		public function getCor(){
-			return $this->cor;
+		public function getSprite(){
+			return $this->sprite;
 		}
 
-		public function setCor($cor){
-			$this->cor = $cor;
+		public function setSprite($sprite){
+			$this->sprite = $sprite;
 		}
 
 		public function getPokemonDollar(){
@@ -90,6 +91,14 @@
 
 		public function setPokemonDollar($pokemonDollar){
 			$this->pokemonDollar = $pokemonDollar;
+		}
+		
+		public function getLooking(){
+			return $this->looking;
+		}
+
+		public function setLooking($looking){
+			$this->looking = $looking;
 		}
 
 	}

@@ -67,9 +67,9 @@ $(document).keydown(function(event){
 						t : 'TreinadorController',
 						o : 'mover',
 						p : {
-							idTreinador : idTreinador,
 							x : x,
-							y : y
+							y : y,
+							looking : looking[tecla]
 						}
 					}
 				}

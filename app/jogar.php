@@ -8,17 +8,12 @@ $pokemonController = Util::makeController('pokemon');
 $gravacao = $gravacaoController->obterComId($_SESSION['gravacao'],true);
 
 if(!isset($_SESSION['vezIdTreinador'])){
-	$treinador = current($gravacao->getTreinadores());
+	$treinadores = $gravacao->getTreinadores();
+	$treinador = $treinadores[0];
 	$_SESSION['vezIdTreinador'] = $treinador->getId();
 }else{
-	/*foreach($gravacao->getTreinadores() as $t){
-		if($t->getId() == $_SESSION['vezIdTreinador'])
-			$_SE
-	}*/
+	$treinador = $treinadorController->obterTreinadorDaVez();
 }
-
-if(!$treinador instanceOf Treinador)
-	$treinador = $treinadorController->obterComIdEGravacao($_SESSION['vezIdTreinador'],$gravacao);
 
 $mapa = $mapaController->obterComId($treinador->getMapa()->getId());
 $mapaPixels = $mapaController->obterTodosOsPixels($mapa);
@@ -44,11 +39,18 @@ $pokemons = $pokemonController->obterComRestricoes(array('idMapa'=>$mapa->getId(
 		?>
 	</div>
 	<div id="personagens">
-		<div class="personagem looking-down ativo" data-looking="down" style="
-		display:block;
-		top:<?php echo ($treinador->getY()*32)-32; ?>px;
-		left:<?php echo ($treinador->getX()*32)-32; ?>px;
-		"></div>
+		<?php
+		foreach($gravacao->getTreinadores() as $t){
+			?>
+			<div class="personagem looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" style="
+			display:block;
+			background-image: url('/app/assets/images/sprite/<?php echo $t->getSprite(); ?>');
+			top:<?php echo ($t->getY()*32)-32; ?>px;
+			left:<?php echo ($t->getX()*32)-32; ?>px;
+			"></div>
+			<?php
+		}
+		?>
 	</div>
 <?php require_once('mapa.php'); ?>
 </div>
@@ -110,6 +112,7 @@ function criarPokemonAleatoriamente(){
 }
 
 $(document).ready(function(){
+	criarPokemonAleatoriamente();
 	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 });
 </script>
