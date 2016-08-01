@@ -70,15 +70,15 @@
 		}
 		
 		public function mover($x,$y,$looking){
-			$comando = "select * from mapa_pixel where x=:x and y=:y and possivelCaminhar = 1";
-			$parametros = array(
-				'x' => $x,
-				'y' => $y
-			);
-			$mapaPixel = $this->getBancoDados()->consultar($comando,$parametros);
+			//$comando = "select * from mapa_pixel where x=:x and y=:y and possivelCaminhar = 1";
+			//$parametros = array(
+			//	'x' => $x,
+			//	'y' => $y
+			//);
+			//$mapaPixel = $this->getBancoDados()->consultar($comando,$parametros);
 			
-			if(!count($mapaPixel))
-				Throw new Exception('Não foi possível mover');
+			//if(!count($mapaPixel))
+			//	Throw new Exception('Não foi possível mover');
 			
 			$this->atualizarPosicao($x,$y,$looking);
 			

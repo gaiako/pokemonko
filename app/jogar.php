@@ -69,8 +69,8 @@ var xMaximo = <?php echo $mapa->getDimensaoX(); ?>;
 var yMaximo = <?php echo $mapa->getDimensaoY(); ?>;
 var idTreinador = <?php echo $_SESSION['vezIdTreinador']; ?>;
 var enviaPost = false;
-var posicao = '';
 var anda = true;
+var posicao = '';
 var boqueado = '';
 
 function criarPokemonAleatoriamente(){

@@ -59,7 +59,6 @@ $(document).keydown(function(event){
 		
 		if(enviaPost == true){
 			if($('div[data-x="'+x+'"][data-y="'+y+'"]').attr('data-possivelCaminhar') == 1){
-				anda = false;
 				posicao = $('div[data-x="'+x+'"][data-y="'+y+'"]').position();
 			
 				var data = {
@@ -76,10 +75,11 @@ $(document).keydown(function(event){
 				
 				$.post('/php/act.php',data,function(result){
 					if(result.success == true && result.message != null){
-						anda = true;
+						
 					}
 				},'json');
-				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,function(){	});
+				anda = false;
+				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,function(){ anda = true; });
 			}else{
 				x = xAntes;
 				y = yAntes;
