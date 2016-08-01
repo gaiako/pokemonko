@@ -83,27 +83,33 @@ function criarPokemonAleatoriamente(){
 	}
 	
 	$.post('/php/act.php',data,function(result){
+		//console.log(result);
 		if(result.success == true){
-			var div = $('.pokemon.clone').clone(1);
-			div.attr('data-idPokemonBase',result.message.add.id);
-			div.css('background-image','url("/app/assets/images/pokemon/overworld/'+result.message.add.looking+'/'+result.message.add.pokemonBase.id+'.png")');
-			div.css('top',result.message.add.y*(32)-32+'px');
-			div.css('left',result.message.add.x*(32)-32+'px');
-			div.removeClass('clone');
-			div.hide();
-			$('#pokemons').append(div);
-			div.fadeIn('slow');
+			if(result.message.add != null){
+				var div = $('.pokemon.clone').clone(1);
+				div.attr('data-idPokemon',result.message.add.id);
+				div.css('background-image','url("/app/assets/images/pokemon/overworld/'+result.message.add.looking+'/'+result.message.add.pokemonBase.id+'.png")');
+				div.css('top',result.message.add.y*(32)-32+'px');
+				div.css('left',result.message.add.x*(32)-32+'px');
+				div.removeClass('clone');
+				div.hide();
+				$('#pokemons').append(div);
+				div.fadeIn('slow');
+			}
 			
 			if(result.message.del != null){
 				for(i=0;i<result.message.del.length;i++){
-					$('.pokemon[data-idPokemon="'+result.message.del[i]+'"]').fadeOut('slow').remove();
+					var delDiv = $('#pokemons').find('div.pokemon[data-idPokemon="'+result.message.del[i]+'"]').fadeOut('slow').remove();
+					//var delDiv = $('#pokemons').find('div:first').fadeOut('slow').remove();
 				}
 			}
+		}else{
+			console.log(result.message);
 		}
 	},'json');
 }
 
 $(document).ready(function(){
-	setInterval(criarPokemonAleatoriamente,20000);
+	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 });
 </script>

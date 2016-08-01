@@ -100,7 +100,7 @@
 		}
 		
 		public function obterMapaPixelComRestricoes($restricoes, $orderBy = 'rand()', $limit = null){
-			$select = 'select * from mapa_pixel ';
+			$select = 'select mapa_pixel.* from mapa_pixel ';
 			$join = '';
 			$where = ' where ativo = 1 and possivelCaminhar = 1 ';
 			$parametros = array();
@@ -213,8 +213,23 @@
 			return $this->getBancoDados()->executar($comando,$parametros);
 		}
 		
+		public function temPokemon($mapaPixel){
+			$comando = "select id from pokemon where x=:x and y=:y";
+			$parametros = array(
+				'x' => $mapaPixel['x'],
+				'y' => $mapaPixel['y']
+			);
+			return count($this->getBancoDados()->consultar($comando,$parametros));
+		}
+		
 		public function criarPokemonAleatoriamente($restricoes){
 			$mapaPixel = $this->obterMapaPixelComRestricoes($restricoes);
+			if($this->temPokemon($mapaPixel)){
+				return array(
+					'add' => null,
+					'del' => null
+				);
+			}
 			$mapa = $this->obterComId($mapaPixel['idMapa']);
 			
 			$restricoes = array(
@@ -227,15 +242,14 @@
 			$pokemon = Util::makeController('pokemon')->criarAPartirDeBase($pokemonBase,$mapaPixel);
 			
 			//Verificar se vai excluir
-			$pokemonExcluir = Util::makeController('pokemon')->obterComRestricoes(array('idMapa' => $mapa->getId()));
+			$pokemonExcluir = Util::makeDao('pokemon')->obterComRestricoes(array('idMapa' => $mapa->getId()));
 			$totalExcluir = count($pokemonExcluir)-$mapa->getMaxPokemons();
 			$excluidos = array();
 			if($totalExcluir > 0){
 				foreach($pokemonExcluir as $p){
 					if($totalExcluir <= 0)
 						break;
-					$comando = "delete from pokemon where id = ".$p->getId();
-					$this->getBancoDados()->executar($comando,$parametros);
+					Util::makeDao('pokemon')->excluirComId($p->getId());
 					array_push($excluidos,$p->getId());
 					$totalExcluir--;
 				}

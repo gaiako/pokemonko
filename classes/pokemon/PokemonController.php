@@ -35,6 +35,8 @@
 			$pokemon->setNivel($nivel);
 			$pokemon->setLooking(Looking::sortear());
 			
+			$pokemon->setAtaques(Util::makeController('ataque')->sortearAtaques($pokemon));
+			
 			return $this->salvar($pokemon,$erro);
 		}
 		

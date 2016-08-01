@@ -79,7 +79,7 @@ $(document).keydown(function(event){
 						anda = true;
 					}
 				},'json');
-				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},300,function(){	});
+				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,function(){	});
 			}else{
 				x = xAntes;
 				y = yAntes;

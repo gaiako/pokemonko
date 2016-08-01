@@ -1,9 +1,9 @@
 <?php
 
-class TipoAtaque implements Enum{
-	const FISICO 			= 0;
-	const ESPECIAL			= 1;
-	const ESTRATEGICO	 	= 2;
+class CategoriaAtaque implements Enum{
+	const FISICO 			= 1;
+	const ESPECIAL			= 2;
+	const ESTRATEGICO	 	= 3;
 	
 	public static function isValid($status) {
 		

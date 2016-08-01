@@ -7,6 +7,7 @@
 		private $idMapa = null;
 		private $idGrupo = null;
 		private $looking = "down";
+		private $ataques = array();
 		private $x = null;
 		private $y = null;
 		private $hp = 0;
@@ -64,6 +65,18 @@
 
 		public function setLooking($looking){
 			$this->looking = $looking;
+		}
+		
+		public function getAtaques(){
+			return $this->ataques;
+		}
+		
+		public function addAtaque($ataque){
+			array_push($this->ataques,$ataque);
+		}
+		
+		public function setAtaques($ataques){
+			$this->ataques = $ataques;
 		}
 
 		public function getX(){

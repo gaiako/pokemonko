@@ -11,6 +11,14 @@
 			
 			$id = $this->getBancoDados()->ultimoId();
 			$pokemon->setId($id);
+			
+			$ataques = serialize($pokemon->getAtaques());
+			$pokemon->setAtaques(array());
+			$ataques = unserialize($ataques);
+			foreach($ataques as $ataque){
+				$this->adicionarAtaque($pokemon,$ataque);
+			}
+			
 			return $pokemon;
 		}
 
@@ -69,6 +77,23 @@
 			return $pokemon;
 		}
 		
+		public function adicionarAtaque($pokemon,$ataque,$topo = false){
+			$numAtaques = count($pokemon->getAtaques());
+			
+			$comando = 'insert into pokemon_ataque (idPokemon,idAtaque,ordem) values (:idPokemon,:idAtaque,:ordem)';
+			$numAtaques++;
+			if($numAtaques > 4)
+				$ordem = null;
+			else
+				$ordem = $numAtaques;
+			$parametros = array(
+				'idPokemon' => $pokemon->getId(),
+				'idAtaque' => $ataque->getId(),
+				'ordem' => $ordem
+			);
+			$this->getBancoDados()->executar($comando,$parametros);
+		}
+		
 		public function obterComRestricoes($restricoes,$orderBy = 'pokemon.id', $limit = null, $offset = null, $completo = true){
 			$select = "select * from pokemon ";
 			$join = '';
@@ -104,6 +129,10 @@
 
 		public function excluirComId($id){
 			$this->getBancoDados()->excluir('pokemon', $id);
+			
+			$comando = "delete from pokemon_ataque where idPokemon = :idPokemon";
+			$parametros['idPokemon'] = $id;
+			$this->getBancoDados()->executar($comando,$parametros);
 		}
 	}
 ?>
