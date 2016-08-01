@@ -1,5 +1,6 @@
 <link href="/app/assets/style/sprites.css" rel="stylesheet" />
 <?php
+$_SESSION['vezIdTreinador'] = 1;
 $mapaController = Util::makeController('mapa');
 $gravacaoController = Util::makeController('gravacao');
 $treinadorController = Util::makeController('treinador');
