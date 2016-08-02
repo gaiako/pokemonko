@@ -2,6 +2,7 @@
 	class Pokemon{
 
 		private $id = 0;
+		private $idGravacao = 0;
 		private $pokemonBase = 0;
 		private $idTreinadorGravacao = null;
 		private $idMapa = null;
@@ -25,6 +26,14 @@
 
 		public function setId($id){
 			$this->id = $id;
+		}
+		
+		public function getIdGravacao(){
+			return $this->idGravacao;
+		}
+		
+		public function setIdGravacao($idGravacao){
+			$this->idGravacao = $idGravacao;
 		}
 
 		public function getPokemonBase(){

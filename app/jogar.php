@@ -101,10 +101,7 @@ function criarPokemonAleatoriamente(){
 			}
 			
 			if(result.message.del != null){
-				for(i=0;i<result.message.del.length;i++){
-					var delDiv = $('#pokemons').find('div.pokemon[data-idPokemon="'+result.message.del[i]+'"]').fadeOut('slow').remove();
-					//var delDiv = $('#pokemons').find('div:first').fadeOut('slow').remove();
-				}
+				delDivs(result.message.del);
 			}
 		}else{
 			console.log(result.message);

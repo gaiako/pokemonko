@@ -15,19 +15,27 @@ $.fn.removeClassPrefix = function(prefix) {
     return this;
 };
 
+function delDivs(divs){
+	for(i=0;i<divs.length;i++){
+		var delDiv = $('#pokemons').find('div.pokemon[data-idPokemon="'+divs[i]+'"]').fadeOut('slow').remove();
+		//var delDiv = $('#pokemons').find('div:first').fadeOut('slow').remove();
+	}
+}
+
 $(document).keydown(function(event){
 	event.preventDefault();
 	
+	tecla = event.keyCode;
+	
 	//Mover personagem
 	if(event.keyCode >= 37 && event.keyCode <= 40 && anda == true){
-		tecla = event.keyCode;
 		
 		if($('.personagem.ativo').hasClass('looking-'+looking[tecla])){
 			
 		}else{
 			$('.personagem.ativo').removeClassPrefix('looking-');
 			$('.personagem.ativo').addClass('looking-'+looking[tecla]);
-			$('.personagem.ativo').attr('data-looking','looking-'+looking[tecla]);
+			$('.personagem.ativo').attr('data-looking',looking[tecla]);
 			return false;
 		}
 		
@@ -79,12 +87,38 @@ $(document).keydown(function(event){
 					}
 				},'json');
 				anda = false;
-				$('div.personagem.ativo').addClass('animated');
-				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,'linear',function(){ anda = true; $('div.personagem.ativo').removeClass('animated'); });
+				//$('div.personagem.ativo').addClass('animated');
+				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,'linear',function(){ anda = true; /*$('div.personagem.ativo').removeClass('animated');*/ });
 			}else{
 				x = xAntes;
 				y = yAntes;
 			}
 		}
+	}
+	
+	//Capturar pokémon
+	if(tecla == 32){
+		
+		var data = {
+			act : {
+				t : 'PokemonController',
+				o : 'capturar',
+				p : {
+					looking : $('.personagem.ativo').attr('data-looking')
+				}
+			}
+		}
+		
+		$.post('/php/act.php',data,function(result){
+			if(result.message.pokemon != null){
+				$.notify(result.message.pokemon.pokemonBase.nome+' capturado!', "success");
+				delDivs(result.message.del);
+			}else if(result.message.del == null){
+				$.notify('Pokémon não capturado!', "alert");
+			}else{
+				$.notify('Pokémon não capturado fugiu!', "error");
+				delDivs(result.message.del);
+			}
+		},'json');
 	}
 });

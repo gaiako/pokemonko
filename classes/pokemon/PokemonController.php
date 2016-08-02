@@ -21,6 +21,7 @@
 			$grupo = Util::makeController('grupo')->obterComId($mapaPixel['idGrupo']);
 			$nivel = rand($grupo->getMinNivel(),$grupo->getMaxNivel());
 			
+			$pokemon->setIdGravacao($_SESSION['gravacao']);
 			$pokemon->setPokemonBase($pokemonBase);
 			$pokemon->setIdMapa($mapaPixel['idMapa']);
 			$pokemon->setIdGrupo($mapaPixel['idGrupo']);
@@ -42,6 +43,10 @@
 		
 		public function obterComRestricoes($restricoes,$orderBy = 'pokemon.id', $limit = null, $offset = null, $completo = true){
 			return Util::makeService($this->classe)->obterComRestricoes($restricoes,$orderBy, $limit, $offset, $completo);
+		}
+		
+		public function capturar($looking){
+			return Util::makeService($this->classe)->capturar($looking);
 		}
 	}
 ?>

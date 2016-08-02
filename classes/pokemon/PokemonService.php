@@ -15,5 +15,9 @@
 		public function obterComRestricoes($restricoes,$orderBy = 'pokemon.id', $limit = null, $offset = null, $completo = true){
 			return $this->getDao()->obterComRestricoes($restricoes,$orderBy, $limit, $offset, $completo);
 		}
+		
+		public function capturar($looking){
+			return $this->getDao()->capturar($looking);
+		}
 	}
 ?>

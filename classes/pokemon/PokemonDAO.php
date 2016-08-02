@@ -6,7 +6,7 @@
 		}
 
 		protected function adicionarNovo($pokemon){
-			$comando = 'insert into pokemon (idPokemonBase, idTreinadorGravacao, idMapa, idGrupo, looking, x, y, hp, ataque, defesa, ataqueEspecial, defesaEspecial, agilidade, exp, nivel) values (:idPokemonBase, :idTreinadorGravacao, :idMapa, :idGrupo, :looking, :x, :y, :hp, :ataque, :defesa, :ataqueEspecial, :defesaEspecial, :agilidade, :exp, :nivel)';
+			$comando = 'insert into pokemon (idGravacao,idPokemonBase, idTreinadorGravacao, idMapa, idGrupo, looking, x, y, hp, ataque, defesa, ataqueEspecial, defesaEspecial, agilidade, exp, nivel) values (:idGravacao,:idPokemonBase, :idTreinadorGravacao, :idMapa, :idGrupo, :looking, :x, :y, :hp, :ataque, :defesa, :ataqueEspecial, :defesaEspecial, :agilidade, :exp, :nivel)';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemon));
 			
 			$id = $this->getBancoDados()->ultimoId();
@@ -47,6 +47,8 @@
 			);
 			if($update)
 				$parametros['id'] = $pokemon->getId();
+			else
+				$parametros['idGravacao'] = $pokemon->getIdGravacao();
 			return $parametros;
 		}
 
@@ -108,6 +110,70 @@
 			$comando = $select.$join.$where;
 			
 			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros,$orderBy,$offset,$completo);
+		}
+		
+		public function obterComPosicao($mapa,$x,$y){
+			$comando = "select * from pokemon where idMapa = :idMapa and x = :x and y = :y and idGravacao = :idGravacao";
+			$parametros = array(
+				'idMapa' => $mapa->getId(),
+				'x' => $x,
+				'y' => $y,
+				'idGravacao' => $_SESSION['gravacao']
+			);
+			
+			return $this->getBancoDados()->obterObjeto($comando,array($this,'transformarEmObjeto'),$parametros);
+		}
+		
+		public function capturar($looking){
+			$treinador = Util::makeDao('treinador')->obterTreinadorDaVez();
+			$x = $treinador->getX();
+			$y = $treinador->getY();
+			
+			if($looking == 'left')
+				$x = $x-1;
+			if($looking == 'up')
+				$y = $y-1;
+			if($looking == 'right')
+				$x = $x+1;
+			if($looking == 'down')
+				$y = $y+1;
+			
+			$pokemon = $this->obterComPosicao($treinador->getMapa(),$x,$y);
+			
+			if($pokemon instanceOf Pokemon){
+				$status = 0; //10 frozen and sleep, 5 for the others
+			
+				$catchRate = 100-$pokemon->getNivel();
+				$chance = floor(($pokemon->getPokemonBase()->getHp()*4) - (($pokemon->getHp() * 2)/$pokemon->getPokemonBase()->getHp())+$status+1);
+			
+				$number = rand(0,255);
+				
+				if($number >= $chance){
+					$pokemon->setIdTreinadorGravacao($treinador->getId());
+					$pokemon->setIdMapa(null);
+					$pokemon->setX(null);
+					$pokemon->setY(null);
+					$this->salvar($pokemon);
+					$pokemon->setX($x);
+					$pokemon->setY($y);
+					$del[0] = $pokemon->getId();
+					return array(
+						'pokemon' => $pokemon,
+						'del' => $del
+					);
+				}else{
+					$sorte = rand(0,200);
+					if($sorte < $pokemon->getAgilidade()){
+						$this->excluirComId($pokemon->getId());
+						$del[0] = $pokemon->getId();
+					}
+					else $del = null;
+					return array(
+						'pokemon' => null,
+						'del' => $del
+					);
+				}
+			}
 		}
 
 		public function obterTodos($orderBy = 'pokemon.id', $limit = null, $offset = 0, $completo = true){
