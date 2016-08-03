@@ -9,7 +9,7 @@
 		private $hp = 0;
 		private $ataque = 0;
 		private $defesa = 0;
-		private $agilidade = 0;
+		private $velocidade = 0;
 		private $ataqueAtaqueEspecial = 0;
 		private $defesaAtaqueEspecial = 0;
 		private $exp = 0;
@@ -81,12 +81,12 @@
 			$this->defesa = $defesa;
 		}
 
-		public function getAgilidade(){
-			return $this->agilidade;
+		public function getvelocidade(){
+			return $this->velocidade;
 		}
 
-		public function setAgilidade($agilidade){
-			$this->agilidade = $agilidade;
+		public function setvelocidade($velocidade){
+			$this->velocidade = $velocidade;
 		}
 
 		public function getAtaqueEspecial(){

@@ -6,7 +6,7 @@
 		}
 
 		public function criar(){
-			$todosOsCampos = array('id', 'idTreinadorGravacao', 'idMapa', 'idGrupo', 'looking', 'x', 'y', 'hp', 'ataque', 'defesa', 'ataqueEspecial', 'defesaEspecial', 'agilidade', 'exp', 'nivel', 'ativo');
+			$todosOsCampos = array('id', 'idTreinadorGravacao', 'idMapa', 'idGrupo', 'looking', 'x', 'y', 'hp', 'ataque', 'defesa', 'ataqueEspecial', 'defesaEspecial', 'velocidade', 'exp', 'nivel', 'ativo');
 			$this->verificaEnvio($todosOsCampos, $_POST);
 			$pokemon = new Pokemon();
 			$this->povoarSimples($pokemon, $todosOsCampos, $_POST);
@@ -32,7 +32,7 @@
 			$pokemon->setDefesa($pokemonBase->getDefesa()+($nivel*2));
 			$pokemon->setAtaqueEspecial($pokemonBase->getAtaqueEspecial()+($nivel*2));
 			$pokemon->setDefesaEspecial($pokemonBase->getDefesaEspecial()+($nivel*2));
-			$pokemon->setAgilidade($pokemonBase->getAgilidade()+($nivel*2));
+			$pokemon->setvelocidade($pokemonBase->getvelocidade()+($nivel*2));
 			$pokemon->setNivel($nivel);
 			$pokemon->setLooking(Looking::sortear());
 			

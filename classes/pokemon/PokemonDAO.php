@@ -6,7 +6,7 @@
 		}
 
 		protected function adicionarNovo($pokemon){
-			$comando = 'insert into pokemon (idGravacao,idPokemonBase, idTreinadorGravacao, idMapa, idGrupo, looking, x, y, hp, ataque, defesa, ataqueEspecial, defesaEspecial, agilidade, exp, nivel) values (:idGravacao,:idPokemonBase, :idTreinadorGravacao, :idMapa, :idGrupo, :looking, :x, :y, :hp, :ataque, :defesa, :ataqueEspecial, :defesaEspecial, :agilidade, :exp, :nivel)';
+			$comando = 'insert into pokemon (idGravacao,idPokemonBase, idTreinadorGravacao, idMapa, idGrupo, looking, x, y, hp, ataque, defesa, ataqueEspecial, defesaEspecial, velocidade, exp, nivel) values (:idGravacao,:idPokemonBase, :idTreinadorGravacao, :idMapa, :idGrupo, :looking, :x, :y, :hp, :ataque, :defesa, :ataqueEspecial, :defesaEspecial, :velocidade, :exp, :nivel)';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemon));
 			
 			$id = $this->getBancoDados()->ultimoId();
@@ -23,7 +23,7 @@
 		}
 
 		protected function atualizar($pokemon){
-			$comando = 'update pokemon set idPokemonBase = :idPokemonBase, idTreinadorGravacao = :idTreinadorGravacao, idMapa = :idMapa, idGrupo = :idGrupo, looking = :looking, x = :x, y = :y, hp = :hp, ataque = :ataque, defesa = :defesa, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, agilidade = :agilidade, exp = :exp, nivel = :nivel where id = :id';
+			$comando = 'update pokemon set idPokemonBase = :idPokemonBase, idTreinadorGravacao = :idTreinadorGravacao, idMapa = :idMapa, idGrupo = :idGrupo, looking = :looking, x = :x, y = :y, hp = :hp, ataque = :ataque, defesa = :defesa, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, velocidade = :velocidade, exp = :exp, nivel = :nivel where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemon, true));
 		}
 
@@ -41,7 +41,7 @@
 				'defesa' => $pokemon->getDefesa(),
 				'ataqueEspecial' => $pokemon->getAtaqueEspecial(),
 				'defesaEspecial' => $pokemon->getDefesaEspecial(),
-				'agilidade' => $pokemon->getAgilidade(),
+				'velocidade' => $pokemon->getvelocidade(),
 				'exp' => $pokemon->getExp(),
 				'nivel' => $pokemon->getNivel()
 			);
@@ -73,7 +73,7 @@
 			$pokemon->setDefesa($l['defesa']);
 			$pokemon->setAtaqueEspecial($l['ataqueEspecial']);
 			$pokemon->setDefesaEspecial($l['defesaEspecial']);
-			$pokemon->setAgilidade($l['agilidade']);
+			$pokemon->setvelocidade($l['velocidade']);
 			$pokemon->setExp($l['exp']);
 			$pokemon->setNivel($l['nivel']);
 			return $pokemon;
@@ -146,7 +146,8 @@
 				$catchRate = 100-$pokemon->getNivel();
 				$chance = floor(($pokemon->getPokemonBase()->getHp()*4) - (($pokemon->getHp() * 2)/$pokemon->getPokemonBase()->getHp())+$status+1);
 			
-				$number = rand(0,255)*10;
+				//$number = rand(0,255);
+				$number = 1000;
 				
 				if($number >= $chance){
 					$pokemon->setIdTreinadorGravacao($treinador->getId());
@@ -163,7 +164,7 @@
 					);
 				}else{
 					$sorte = rand(0,200);
-					if($sorte < $pokemon->getAgilidade()){
+					if($sorte < $pokemon->getvelocidade()){
 						$this->excluirComId($pokemon->getId());
 						$del[0] = $pokemon->getId();
 					}
