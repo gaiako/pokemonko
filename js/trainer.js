@@ -127,7 +127,7 @@ $(document).keydown(function(event){
 				$('#ataqueEspecial').html(pokemon.ataqueEspecial);
 				$('#defesaEspecial').html(pokemon.defesaEspecial);
 				$('#velocidade').html(pokemon.velocidade);
-				$('.pokemon-capturado').toggleClass('escondido');
+				$('.pokemon-capturado').removeClass('escondido');
 				//$.notify(result.message.pokemon.pokemonBase.nome+' capturado!', "success");
 				delDivs(result.message.del);
 			}else if(result.message.del == null){

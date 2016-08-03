@@ -136,7 +136,7 @@ $(document).ready(function(){
 	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 	
 	$('.links').click(function(){
-		
+		$('.pokemon-capturado').addClass('escondido');
 	});
 });
 </script>
