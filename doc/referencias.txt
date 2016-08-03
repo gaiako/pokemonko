@@ -12,3 +12,6 @@ http://www.deviantart.com/browse/all/?section=&global=1&q=tile+fence&offset=0
 
 http://jquerymy.com/
 http://pokemonessentials.wikia.com/wiki/Moves
+http://codepen.io/search/pens?q=Pokeball&limit=all&type=type-pens
+http://codepen.io/LOverride/pen/bZawLB
+http://codepen.io/CucuIonel/pen/hFJlr

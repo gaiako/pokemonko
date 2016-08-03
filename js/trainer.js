@@ -111,7 +111,8 @@ $(document).keydown(function(event){
 		
 		$.post('/php/act.php',data,function(result){
 			if(result.message.pokemon != null){
-				$.notify(result.message.pokemon.pokemonBase.nome+' capturado!', "success");
+				$('.gif-pokemon-capturado').css('background-image','url("/app/assets/images/pokemon/gif/'+result.message.pokemon.pokemonBase.nome.toLowerCase()+'.gif")');
+				//$.notify(result.message.pokemon.pokemonBase.nome+' capturado!', "success");
 				delDivs(result.message.del);
 			}else if(result.message.del == null){
 				$.notify('Pokémon não capturado!', "alert");

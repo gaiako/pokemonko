@@ -146,7 +146,7 @@
 				$catchRate = 100-$pokemon->getNivel();
 				$chance = floor(($pokemon->getPokemonBase()->getHp()*4) - (($pokemon->getHp() * 2)/$pokemon->getPokemonBase()->getHp())+$status+1);
 			
-				$number = rand(0,255);
+				$number = rand(0,255)*10;
 				
 				if($number >= $chance){
 					$pokemon->setIdTreinadorGravacao($treinador->getId());

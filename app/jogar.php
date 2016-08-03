@@ -56,6 +56,10 @@ $pokemons = $pokemonController->obterComRestricoes(array('idMapa'=>$mapa->getId(
 <?php require_once('mapa.php'); ?>
 </div>
 
+<div class="pokemon-capturado">
+	<div class="gif-pokemon-capturado" style="background-image : url('/app/assets/images/pokemon/gif/pikachu.gif');"></div>
+</div>
+
 <div class="pokemon clone"></div>
 
 <script src="/js/trainer.js"></script>
