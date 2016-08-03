@@ -111,7 +111,24 @@ $(document).keydown(function(event){
 		
 		$.post('/php/act.php',data,function(result){
 			if(result.message.pokemon != null){
-				$.notify(result.message.pokemon.pokemonBase.nome+' capturado!', "success");
+				var pokemon = result.message.pokemon;
+				$('.gif-pokemon-capturado').css('background-image','url("'+raiz+'app/assets/images/pokemon/gif/'+result.message.pokemon.pokemonBase.nome.toLowerCase()+'.gif")');
+				$('#nome-pokemon-capturado').html(pokemon.pokemonBase.nome);
+				console.log(pokemon.pokemonBase.tipo.nome);
+				$('#tipo1').html(pokemon.pokemonBase.tipo.nome).css('background-color',pokemon.pokemonBase.tipo.cor);
+				if(pokemon.pokemonBase.tipo2 != null)
+					$('#tipo2').html(pokemon.pokemonBase.tipo2.nome).css('background-color',pokemon.pokemonBase.tipo2.cor);
+				else
+					$('#tipo2').html('');
+				$('#nivel').html(pokemon.nivel);
+				$('#hp').html(pokemon.hp);
+				$('#ataque').html(pokemon.ataque);
+				$('#defesa').html(pokemon.defesa);
+				$('#ataqueEspecial').html(pokemon.ataqueEspecial);
+				$('#defesaEspecial').html(pokemon.defesaEspecial);
+				$('#velocidade').html(pokemon.velocidade);
+				$('.pokemon-capturado').toggleClass('escondido');
+				//$.notify(result.message.pokemon.pokemonBase.nome+' capturado!', "success");
 				delDivs(result.message.del);
 			}else if(result.message.del == null){
 				$.notify('Pokémon não capturado!', "alert");

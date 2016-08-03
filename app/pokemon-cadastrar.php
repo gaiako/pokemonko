@@ -89,11 +89,11 @@
 			</div>
 		</div>
 
-		<div class="control-group <?php if(isset($erro)){ if(isset($erro['agilidade'])) echo "error"; else echo "success"; } ?>">
-			<label class="control-label" for="agilidade">Agilidade</label>
+		<div class="control-group <?php if(isset($erro)){ if(isset($erro['velocidade'])) echo "error"; else echo "success"; } ?>">
+			<label class="control-label" for="velocidade">velocidade</label>
 			<div class="controls">
-				<input type="text" class="input-large" name="agilidade" id="agilidade" value="<?php if(isset($pokemonBase)) echo $pokemonBase->getAgilidade(); ?>" />
-				<span class="help-inline"><?php if(isset($erro['agilidade'])) echo $erro['agilidade']; ?></span>
+				<input type="text" class="input-large" name="velocidade" id="velocidade" value="<?php if(isset($pokemonBase)) echo $pokemonBase->getvelocidade(); ?>" />
+				<span class="help-inline"><?php if(isset($erro['velocidade'])) echo $erro['velocidade']; ?></span>
 			</div>
 		</div>
 

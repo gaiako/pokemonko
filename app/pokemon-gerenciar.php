@@ -26,7 +26,7 @@ try{
 				<th>HP</th>
 				<th>Ataque</th>
 				<th>Defesa</th>
-				<th>Agilidade</th>
+				<th>velocidade</th>
 				<th>Ataque especial</th>
 				<th>Defesa especial</th>
 				<th>Nivel</th>
@@ -53,7 +53,7 @@ try{
 					<td><?php echo $p->getHp(); ?></td>
 					<td><?php echo $p->getAtaque(); ?></td>
 					<td><?php echo $p->getDefesa(); ?></td>
-					<td><?php echo $p->getAgilidade(); ?></td>
+					<td><?php echo $p->getvelocidade(); ?></td>
 					<td><?php echo $p->getAtaqueEspecial(); ?></td>
 					<td><?php echo $p->getDefesaEspecial(); ?></td>
 					<td><?php echo $p->getNivel(); ?></td>

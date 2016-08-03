@@ -16,7 +16,7 @@
 		private $defesa = 0;
 		private $ataqueEspecial = 0;
 		private $defesaEspecial = 0;
-		private $agilidade = 0;
+		private $velocidade = 0;
 		private $exp = 0;
 		private $nivel = 1;
 
@@ -144,12 +144,12 @@
 			$this->defesaEspecial = $defesaEspecial;
 		}
 
-		public function getAgilidade(){
-			return $this->agilidade;
+		public function getvelocidade(){
+			return $this->velocidade;
 		}
 
-		public function setAgilidade($agilidade){
-			$this->agilidade = $agilidade;
+		public function setvelocidade($velocidade){
+			$this->velocidade = $velocidade;
 		}
 
 		public function getExp(){

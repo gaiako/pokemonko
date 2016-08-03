@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
 	Options +FollowSymlinks
 	RewriteEngine on
-	#RewriteCond %{http_host} ^powerpumpsuplementos.com.br [NC]
-	#RewriteRule ^(.*)$ http://www.powerpumpsuplementos.com.br/$1 [R=301,L]
+	#RewriteCond %{http_host} ^pokeko.com.br [NC]
+	#RewriteRule ^(.*)$ http://www.pokeko.com.br/$1 [R=301,L]
 	
 	RewriteBase /
 	RewriteRule ^/?$ index.php [NC,L]

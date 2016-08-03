@@ -6,12 +6,12 @@
 		}
 
 		protected function adicionarNovo($pokemonBase){
-			$comando = 'insert into pokemonbase (nome, idTipo, idTipo2, hp, ataque, defesa, agilidade, ataqueEspecial, defesaEspecial, exp, sortePokeball, nivel, raridade) values (:nome, :idTipo, :idTipo2, :hp, :ataque, :defesa, :agilidade, :ataqueEspecial, :defesaEspecial, :exp, :sortePokeball, :nivel, :raridade)';
+			$comando = 'insert into pokemonbase (nome, idTipo, idTipo2, hp, ataque, defesa, velocidade, ataqueEspecial, defesaEspecial, exp, sortePokeball, nivel, raridade) values (:nome, :idTipo, :idTipo2, :hp, :ataque, :defesa, :velocidade, :ataqueEspecial, :defesaEspecial, :exp, :sortePokeball, :nivel, :raridade)';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemonBase));
 		}
 
 		protected function atualizar($pokemonBase){
-			$comando = 'update pokemonbase set nome = :nome, idTipo = :idTipo, idTipo2 = :idTipo2, hp = :hp, ataque = :ataque, defesa = :defesa, agilidade = :agilidade, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, exp = :exp, sortePokeball = :sortePokeball, nivel = :nivel, raridade = :raridade where id = :id';
+			$comando = 'update pokemonbase set nome = :nome, idTipo = :idTipo, idTipo2 = :idTipo2, hp = :hp, ataque = :ataque, defesa = :defesa, velocidade = :velocidade, ataqueEspecial = :ataqueEspecial, defesaEspecial = :defesaEspecial, exp = :exp, sortePokeball = :sortePokeball, nivel = :nivel, raridade = :raridade where id = :id';
 			$this->getBancoDados()->executar($comando, $this->parametros($pokemonBase,true));
 		}
 
@@ -23,7 +23,7 @@
 				'hp' => $pokemonBase->getHp(),
 				'ataque' => $pokemonBase->getAtaque(),
 				'defesa' => $pokemonBase->getDefesa(),
-				'agilidade' => $pokemonBase->getAgilidade(),
+				'velocidade' => $pokemonBase->getvelocidade(),
 				'ataqueEspecial' => $pokemonBase->getAtaqueEspecial(),
 				'defesaEspecial' => $pokemonBase->getDefesaEspecial(),
 				'exp' => $pokemonBase->getExp(),
@@ -54,7 +54,7 @@
 			$pokemonBase->setHp($l['hp']);
 			$pokemonBase->setAtaque($l['ataque']);
 			$pokemonBase->setDefesa($l['defesa']);
-			$pokemonBase->setAgilidade($l['agilidade']);
+			$pokemonBase->setvelocidade($l['velocidade']);
 			$pokemonBase->setAtaqueEspecial($l['ataqueEspecial']);
 			$pokemonBase->setDefesaEspecial($l['defesaEspecial']);
 			$pokemonBase->setExp($l['exp']);
@@ -105,7 +105,7 @@
 		
 		public function obterOrdenadosPorForca(){
 			$comando = "
-			select id,hp+ataque+defesa+agilidade+ataqueEspecial+defesaEspecial as total 
+			select id,hp+ataque+defesa+velocidade+ataqueEspecial+defesaEspecial as total 
 			from pokemonbase 
 			";
 			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),array(),'total');

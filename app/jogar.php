@@ -56,11 +56,33 @@ $pokemons = $pokemonController->obterComRestricoes(array('idMapa'=>$mapa->getId(
 <?php require_once('mapa.php'); ?>
 </div>
 
+<div class="pokemon-capturado escondido">
+	<div class="titulo">Capturado! <i class="icon-close"></i></div>
+	<div class="gif-pokemon-capturado" style="background-image: url('/app/assets/images/pokemon/gif/pikachu.gif')">
+	</div>
+	<div class="nome" id="nome-pokemon-capturado">Pikachu</div>
+	<div class="tipos">
+		<span id="tipo1" class="label"></span>
+		<span id="tipo2" class="label"></span>
+	</div>
+	<div class="nivel">Nível <span id="nivel"></span></div>
+	<div class="status">
+		<div class="hp">HP: <span id="hp"></span></div>
+		<div class="ataque">Ataque: <span id="ataque"></span></div>
+		<div class="defesa">Defesa: <span id="defesa"></span></div>
+		<div class="ataqueEspecial">Atq. Especial: <span id="ataqueEspecial"></span></div>
+		<div class="defesaEspecial">Def. Especial: <span id="defesaEspecial"></span></div>
+		<div class="velocidade">Velocidade: <span id="velocidade"></span></div>
+		<div class="links">Fechar</div>
+	</div>
+</div>
+
 <div class="pokemon clone"></div>
 
 <script src="/js/trainer.js"></script>
 
 <script>
+var raiz = '<?php echo $raiz; ?>';
 var idMapa = <?php echo $mapa->getId(); ?>;
 var xAntes = '';
 var yAntes = '';
@@ -112,5 +134,9 @@ function criarPokemonAleatoriamente(){
 $(document).ready(function(){
 	criarPokemonAleatoriamente();
 	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
+	
+	$('.links').click(function(){
+		
+	});
 });
 </script>
