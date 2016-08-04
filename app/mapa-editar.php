@@ -41,7 +41,7 @@ require_once('mapa.php'); ?>
 		<?php
 		foreach($terrenos as $terreno){
 			?>
-			<div class="terreno-editor" data-terreno="<?php echo $terreno->getNome(true); ?>" style="background-size: 32px 32px; background-image: url('<?php echo $_->config->pastaImagemTerreno.$terreno->getNome(true); ?>');"></div>
+			<div class="terreno-editor" data-terreno="<?php echo $terreno->getNome(true); ?>" style="background-size: 32px 32px; background-image: url('<?php echo $config->pastaImagemTerreno.$terreno->getNome(true); ?>');"></div>
 			<?php
 		}
 		?>
@@ -52,7 +52,7 @@ require_once('mapa.php'); ?>
 		<?php
 		foreach($objetos as $objeto){
 			?>
-			<div class="objeto-editor" data-objeto="<?php echo $objeto->getNome(true); ?>" style="background-size: 32px 32px; background-image: url('<?php echo $_->config->pastaImagemObjeto.$objeto->getNome(true); ?>');"></div>
+			<div class="objeto-editor" data-objeto="<?php echo $objeto->getNome(true); ?>" style="background-size: 32px 32px; background-image: url('<?php echo $config->pastaImagemObjeto.$objeto->getNome(true); ?>');"></div>
 			<?php
 		}
 		?>

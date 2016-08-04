@@ -28,15 +28,17 @@
 		header('Location:/gravacao-gerenciar');
 	}
 
-	$_->config = new stdClass();
+	$config = new stdClass();
 	
-	$_->config->gravacao = Util::makeController('gravacao')->obterComId($_SESSION['gravacao']);
-	$_->config->minDificuldade = 1;
-	$_->config->maxDificuldade = 7;
-	$_->config->maxTamanhomapa = 100;
-	$_->config->minDado = 1;
-	$_->config->maxDado = 6;
-	$_->config->pastaImagemObjeto = '/app/assets/images/objeto/';
-	$_->config->pastaImagemTerreno = '/app/assets/images/terreno/';
-	$_->config->pastaImagemPokemon = '/app/assets/images/pokemon/';
+	$config->gravacao = Util::makeController('gravacao')->obterComId($_SESSION['gravacao']);
+	$config->minDificuldade = 1;
+	$config->maxDificuldade = 7;
+	$config->maxTamanhomapa = 100;
+	$config->minDado = 1;
+	$config->maxDado = 6;
+	$config->pastaImagemObjeto = '/app/assets/images/objeto/';
+	$config->pastaImagemTerreno = '/app/assets/images/terreno/';
+	$config->pastaImagemPokemon = '/app/assets/images/pokemon/';
+	$config->pastaImagemSprite = '/app/assets/images/sprite/';
+	$config->pastaImagemSpriteAnimated = '/app/assets/images/sprite/animated/';
 ?>
