@@ -137,7 +137,7 @@ div.pokemon{
 		<?php
 		foreach($gravacao->getTreinadores() as $k => $t){
 			?>
-			<div class="personagem n<?php echo $k; ?> looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" style="
+			<div class="personagem n<?php echo $k; ?> looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" data-id="<?php echo $t->getId(); ?>" style="
 			display:block;
 			top:<?php echo ($t->getY()*32)-32; ?>px;
 			left:<?php echo ($t->getX()*32)-32; ?>px;
@@ -225,6 +225,14 @@ function criarPokemonAleatoriamente(){
 }
 
 $(document).ready(function(){
+	<?php
+	foreach($gravacao->getTreinadores() as $t){
+		?>
+		if($('div[data-x="<?php echo $t->getX(); ?>"][data-y="<?php echo $t->getY(); ?>"]').attr('data-water') == '1')
+			$('.personagem[data-id="<?php echo $t->getId(); ?>"]').addClass('water');
+		<?php
+	}
+	?>
 	criarPokemonAleatoriamente();
 	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 	

@@ -153,10 +153,8 @@
 			}
 			if(!strlen($objeto))
 				$objeto = null;
-			if($objeto !== 0){
-				$comando .= ',objeto = :objeto';
-				$parametros['objeto'] = $objeto;
-			}
+			$comando .= ',objeto = :objeto';
+			$parametros['objeto'] = $objeto;
 			
 			if(!is_numeric($idAcao))
 				$idAcao = null;
