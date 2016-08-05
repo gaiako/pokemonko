@@ -35,6 +35,8 @@ foreach($gravacao->getTreinadores() as $k => $t){
 	?>
 	div.looking-down.n<?php echo $k; ?>{
 		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-down.png'; ?>');
+	}div.looking-down.n<?php echo $k; ?>.water{
+		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-down-w.png'; ?>');
 	}div.looking-down.n<?php echo $k; ?>.animated{
 		animation-name: personagemAnimacao-down;
 		animation-duration: 400ms;
@@ -43,6 +45,8 @@ foreach($gravacao->getTreinadores() as $k => $t){
 
 	div.looking-up.n<?php echo $k; ?>{
 		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-up.png'; ?>');
+	}div.looking-up.n<?php echo $k; ?>.water{
+		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-up-w.png'; ?>');
 	}div.looking-up.n<?php echo $k; ?>.animated{
 		animation-name: personagemAnimacao-up;
 		animation-duration: 400ms;
@@ -51,6 +55,8 @@ foreach($gravacao->getTreinadores() as $k => $t){
 
 	div.looking-right.n<?php echo $k; ?>{
 		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-right.png'; ?>');
+	}div.looking-right.n<?php echo $k; ?>.water{
+		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-right-w.png'; ?>');
 	}div.looking-right.n<?php echo $k; ?>.animated{
 		animation-name: personagemAnimacao-right;
 		animation-duration: 400ms;
@@ -59,6 +65,8 @@ foreach($gravacao->getTreinadores() as $k => $t){
 
 	div.looking-left.n<?php echo $k; ?>{
 		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-left.png'; ?>');
+	}div.looking-left.n<?php echo $k; ?>.water{
+		background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$t->getSprite().'-left-w.png'; ?>');
 	}div.looking-left.n<?php echo $k; ?>.animated{
 		animation-name: personagemAnimacao-left;
 		animation-duration: 400ms;
@@ -67,6 +75,10 @@ foreach($gravacao->getTreinadores() as $k => $t){
 	<?php
 }
 ?>
+
+div.water{
+	z-index:200;
+}
 
 @keyframes personagemAnimacao-down {
 	0% { background-image: url('<?php echo $config->pastaImagemSpriteAnimated.$treinador->getSprite() ?>-down-f1.png'); }

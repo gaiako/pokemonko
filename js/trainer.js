@@ -87,7 +87,12 @@ $(document).keydown(function(event){
 					}
 				},'json');
 				anda = false;
-				$('div.personagem.ativo').addClass('animated');
+				if($('div[data-x="'+x+'"][data-y="'+y+'"]').attr('data-water') == '1'){
+					$('div.personagem.ativo').addClass('water');
+				}else{
+					$('div.personagem.ativo').removeClass('water');
+					$('div.personagem.ativo').addClass('animated');
+				}
 				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,'linear',function(){ anda = true; $('div.personagem.ativo').removeClass('animated'); });
 			}else{
 				x = xAntes;

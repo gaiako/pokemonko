@@ -22,6 +22,7 @@ foreach($mapaPixels as $mp){
 	data-y="<?php echo $mp['y']; ?>" 
 	data-possivelCaminhar="<?php echo $mp['possivelCaminhar']; ?>" 
 	data-bloqueado="<?php echo $mp['bloqueado']; ?>" 
+	data-water="<?php if($mp['terreno'] == 'water.png') echo '1'; else echo '0'; ?>" 
 	style="<?php echo $style; ?>"><?php if($mp['objeto'] != '') echo '<img class="objeto" src="'.$config->pastaImagemObjeto.$mp['objeto'].'" />'; ?></div>
 	<?php
 	if($mapa->getDimensaoY() == $y){
