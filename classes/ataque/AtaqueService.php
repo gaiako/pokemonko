@@ -14,5 +14,9 @@
 		public function sortearAtaques($pokemon){
 			return $this->getDao()->sortearAtaques($pokemon);
 		}
+		
+		public function obterOutrosAtaques($pokemon){
+			return $this->getDao()->obterOutrosAtaques($pokemon);
+		}
 	}
 ?>

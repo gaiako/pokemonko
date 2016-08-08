@@ -16,5 +16,9 @@
 		public function sortearAtaques($pokemon){
 			return Util::makeService($this->classe)->sortearAtaques($pokemon);
 		}
+		
+		public function obterOutrosAtaques($pokemon){
+			return Util::makeService($this->classe)->obterOutrosAtaques($pokemon);
+		}
 	}
 ?>

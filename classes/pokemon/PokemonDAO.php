@@ -15,8 +15,10 @@
 			$ataques = serialize($pokemon->getAtaques());
 			$pokemon->setAtaques(array());
 			$ataques = unserialize($ataques);
+			$numAtaque = 1;
 			foreach($ataques as $ataque){
-				$this->adicionarAtaque($pokemon,$ataque);
+				$this->adicionarAtaque($pokemon,$ataque,$numAtaque);
+				$numAtaque++;
 			}
 			
 			return $pokemon;
@@ -76,18 +78,20 @@
 			$pokemon->setvelocidade($l['velocidade']);
 			$pokemon->setExp($l['exp']);
 			$pokemon->setNivel($l['nivel']);
+			
+			$pokemon->setAtaques(Util::makeDao('ataque')->obterAtaquesDoPokemon($pokemon));
+			
 			return $pokemon;
 		}
 		
-		public function adicionarAtaque($pokemon,$ataque,$topo = false){
+		public function adicionarAtaque($pokemon,$ataque,$numAtaque,$topo = false){
 			$numAtaques = count($pokemon->getAtaques());
 			
 			$comando = 'insert into pokemon_ataque (idPokemon,idAtaque,ordem) values (:idPokemon,:idAtaque,:ordem)';
-			$numAtaques++;
-			if($numAtaques > 4)
+			if($numAtaque > 4)
 				$ordem = null;
 			else
-				$ordem = $numAtaques;
+				$ordem = $numAtaque;
 			$parametros = array(
 				'idPokemon' => $pokemon->getId(),
 				'idAtaque' => $ataque->getId(),
@@ -97,15 +101,23 @@
 		}
 		
 		public function obterComRestricoes($restricoes,$orderBy = 'pokemon.id', $limit = null, $offset = null, $completo = true){
-			$select = "select * from pokemon ";
+			$select = "select pokemon.* from pokemon ";
 			$join = '';
-			$where = '';
+			$where = 'where ativo = 1 ';
 			$parametros = array();
 			
 			if(isset($restricoes['idMapa'])){
-				$where .= ' where idMapa = :idMapa';
+				$where .= ' and idMapa = :idMapa';
 				$parametros['idMapa'] = $restricoes['idMapa'];
 			}
+			
+			if(isset($restricoes['idTreinadorGravacao'])){
+				$where .= ' and idTreinadorGravacao = :idTreinadorGravacao';
+				$parametros['idTreinadorGravacao'] = $restricoes['idTreinadorGravacao'];
+			}
+			
+			$where .= " and idGravacao = :idGravacao";
+			$parametros['idGravacao'] = $_SESSION['gravacao'];
 			
 			$comando = $select.$join.$where;
 			

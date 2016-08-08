@@ -6,6 +6,8 @@
 		private $mapaInicial = 0;
 		private $nome = "";
 		private $dataCadastro = "";
+		private $vezTreinadorGravacao = null;
+		private $dado = null;
 
 		public function getId(){
 			return $this->id;
@@ -56,6 +58,21 @@
 			$dataCadastro = str_replace('/','-',$dataCadastro);
 			$this->dataCadastro = $dataCadastro;
 		}
-
+		
+		public function getVezTreinadorGravacao(){
+			return $this->vezTreinadorGravacao;
+		}
+		
+		public function setVezTreinadorGravacao($vezTreinadorGravacao){
+			$this->vezTreinadorGravacao = $vezTreinadorGravacao;
+		}
+		
+		public function getDado(){
+			return $this->dado;
+		}
+		
+		public function setDado($dado){
+			$this->dado = $dado;
+		}
 	}
 ?>

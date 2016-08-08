@@ -111,7 +111,7 @@
 		
 		public function obterTreinadorDaVez(){
 			$comando = 'select tg.id,treinador.nome,treinador.sprite,tg.idMapa,tg.x,tg.y,tg.pokemonDollar from treinador 
-			join treinador_gravacao tg on tg.idTreinador = treinador.id and tg.idGravacao = :idGravacao and treinador.id = :id';
+			join treinador_gravacao tg on tg.idTreinador = treinador.id and tg.idGravacao = :idGravacao and tg.id = :id';
 			$parametros = array(
 				'id' => $_SESSION['vezIdTreinador'],
 				'idGravacao' => $_SESSION['gravacao']

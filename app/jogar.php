@@ -1,5 +1,5 @@
 <?php
-$_SESSION['vezIdTreinador'] = 1;
+$_SESSION['vezIdTreinador'] = 4;
 $mapaController = Util::makeController('mapa');
 $gravacaoController = Util::makeController('gravacao');
 $treinadorController = Util::makeController('treinador');
@@ -12,6 +12,9 @@ if(!isset($_SESSION['vezIdTreinador'])){
 	$treinador = $treinadores[0];
 	$_SESSION['vezIdTreinador'] = $treinador->getId();
 }else{
+	$dado = 0;
+	if($dado == 0)
+		$gravacaoController->passarAVez();
 	$treinador = $treinadorController->obterTreinadorDaVez();
 }
 
@@ -26,7 +29,7 @@ div.personagem{
 	width: 32px;
 	height: 32px;
 	background-repeat: no-repeat;
-	margin-bottom:-30px;
+	margin-bottom:-32px;
 	z-index:1000;
 }
 
@@ -137,7 +140,7 @@ div.pokemon{
 		<?php
 		foreach($gravacao->getTreinadores() as $k => $t){
 			?>
-			<div class="personagem n<?php echo $k; ?> looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" data-id="<?php echo $t->getId(); ?>" style="
+			<div <?php if($t->getId() == $treinador->getId()) echo 'id="ativo"'; ?> class="personagem n<?php echo $k; ?> looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" data-id="<?php echo $t->getId(); ?>" style="
 			display:block;
 			top:<?php echo ($t->getY()*32)-32; ?>px;
 			left:<?php echo ($t->getX()*32)-32; ?>px;
@@ -166,7 +169,11 @@ div.pokemon{
 		<div class="ataqueEspecial">Atq. Especial: <span id="ataqueEspecial"></span></div>
 		<div class="defesaEspecial">Def. Especial: <span id="defesaEspecial"></span></div>
 		<div class="velocidade">Velocidade: <span id="velocidade"></span></div>
-		<div class="links">Fechar</div>
+		<div class="links">
+			<span class="fechar">fechar</span>
+			<span class="divisor"> - </span>
+			<span class="ver-pokemons"><a href="/treinador-painel">ver</a></span>
+		</div>
 	</div>
 </div>
 
@@ -236,7 +243,7 @@ $(document).ready(function(){
 	criarPokemonAleatoriamente();
 	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 	
-	$('.links').click(function(){
+	$('.fechar').click(function(){
 		$('.pokemon-capturado').addClass('escondido');
 	});
 });

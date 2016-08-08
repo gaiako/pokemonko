@@ -48,7 +48,7 @@
 			$ataque->setJson($l['json']);
 			$ataque->setDescricao($l['descricao']);
 			$ataque->setCategoria($l['categoria']);
-			$ataque->setTipo($l['tipo']);
+			$ataque->setTipo(Util::makeDao('tipo')->obterComId($l['tipo']));
 			$ataque->setDano($l['dano']);
 			$ataque->setRecuperacao($l['recuperacao']);
 			$ataque->setPrecisao($l['precisao']);
@@ -59,6 +59,16 @@
 			$ataque->setPrecisaoEfeito($l['precisaoEfeito']);
 			$ataque->setHabilitado($l['habilitado']);
 			return $ataque;
+		}
+		
+		public function obterAtaquesDoPokemon($pokemon,$ordem = true){
+			$comando = "
+			SELECT ataque.*,pa.ordem FROM ataque 
+			JOIN pokemon_ataque pa on pa.idAtaque = ataque.id and pa.ordem is not null 
+			JOIN pokemon on pokemon.id = pa.idPokemon and pokemon.id = :idPokemon 
+			";
+			$parametros['idPokemon'] = $pokemon->getId();
+			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros,'ordem');
 		}
 		
 		public function sortearAtaques($pokemon){
@@ -74,6 +84,14 @@
 				'nivel' => $pokemon->getNivel()
 			);
 			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros,'nivel desc');
+		}
+		
+		public function obterOutrosAtaques($pokemon){
+			$comando = "select ataque.* from ataque join pokemon_ataque on pokemon_ataque.idAtaque = ataque.id and pokemon_ataque.idPokemon = :idPokemon and pokemon_ataque.ordem is null";
+			$parametros = array(
+				'idPokemon' => $pokemon->getId()
+			);
+			return $this->getBancoDados()->obterObjetos($comando,array($this,'transformarEmObjeto'),$parametros);
 		}
 
 		public function obterTodos($orderBy = 'ataque.id', $limit = null, $offset = 0, $completo = true){
