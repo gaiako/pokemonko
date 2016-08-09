@@ -1,5 +1,5 @@
 <?php
-$_SESSION['vezIdTreinador'] = 1;
+$_SESSION['vezIdTreinador'] = 7;
 $mapaController = Util::makeController('mapa');
 $gravacaoController = Util::makeController('gravacao');
 $treinadorController = Util::makeController('treinador');
