@@ -27,6 +27,8 @@
 		}
 		
 		public function setIdGrupo($idMapa,$idGrupo,$x,$y){ //arrays
+			if($idGrupo <= 0 || $idGrupo == '')
+				$idGrupo = null;
 			return $this->getDAO()->setIdGrupo($idMapa,$idGrupo,$x,$y);
 		}
 		

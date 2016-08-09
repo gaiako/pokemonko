@@ -16,7 +16,7 @@
 
 <body>
 	<?php
-	if($_GET['file'] != 'jogar' && $_GET['file'] != 'treinador-painel'){
+	//if($_GET['file'] != 'jogar' && $_GET['file'] != 'treinador-painel'){
 		?>
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
@@ -67,9 +67,9 @@
 			</div>
 		</div>
 		<?php
-	}
+	//}
 	
-	if($_GET['file'] != 'jogar' && $_GET['file'] != 'treinador-painel') echo '<div style="margin-bottom:43px;"></div>';
+	/*if($_GET['file'] != 'jogar' && $_GET['file'] != 'treinador-painel')*/ echo '<div style="margin-bottom:43px;"></div>';
 	
 	if(isset($_GET['file'])){
 		require_once($_->raiz.'/app/'.$_GET['file'].'.php');

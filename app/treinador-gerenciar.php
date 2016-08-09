@@ -60,13 +60,17 @@ try{
 				<option value=""></option>
 				<?php
 				foreach($sprites as $sprite){
+					$explode = explode('/',$sprite);
+					$nomeSprite = $explode[count($explode)-1];
+					$explode = explode('.', $nomeSprite);
+					$nomeSprite = $explode[0];
 					?>
-					<option value="<?php echo $sprite->getNome(); ?>" <?php if(isset($treinador) && $treinador->getSprite() == $sprite->getNome()) echo 'selected'; ?>><?php echo $sprite->getNome(); ?></option>
+					<option value="<?php echo $nomeSprite; ?>" <?php if(isset($treinador) && $treinador->getSprite() == $nomeSprite) echo 'selected'; ?>><?php echo $nomeSprite; ?></option>
 					<?php
 				}
 				?>
 				</select>
-				<div class="select-personagem" style="background-image:url('/app/assets/images/sprite/<?php if(isset($treinador)) echo $treinador->getSprite(); ?>');">&nbsp;</div>
+				<div class="select-personagem" style="background-image:url('/app/assets/images/sprite/<?php if(isset($treinador)) echo $treinador->getSprite(); ?>.png');">&nbsp;</div>
 			</div>
 		</div>
 		
@@ -113,7 +117,7 @@ $(document).ready(function(){
 	});
 	
 	$('#sprite').change(function(){
-		$('.select-personagem').css('background-image','url("/app/assets/images/sprite/'+$(this).val()+'")');
+		$('.select-personagem').css('background-image','url("/app/assets/images/sprite/'+$(this).val()+'.png")');
 	});
 });
 </script>

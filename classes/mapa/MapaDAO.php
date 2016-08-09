@@ -231,9 +231,9 @@
 			}
 			$mapa = $this->obterComId($mapaPixel['idMapa']);
 			
-			$raridade = rand(1,100);
-			if($raridade == 100)
-				$raridade = rand(1,120);
+			$raridade = rand(1,120);
+			if($raridade >= 100)
+				$raridade = rand(80,120);
 			$restricoes = array(
 				'idGrupo' => $mapaPixel['idGrupo'],
 				'raridade' => $raridade
