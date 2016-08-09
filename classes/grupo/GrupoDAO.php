@@ -71,6 +71,16 @@
 			return $this->getBancoDados()->executar($comando,$parametros);
 		}
 
+		public function alterarRaridade($idGrupo,$idPokemon,$raridade){
+			$comando = "update grupo_pokemon set raridade = :raridade where idPokemon = :idPokemon and idGrupo = :idGrupo";
+			$parametros = array(
+				'raridade' => $raridade,
+				'idPokemon' => $idPokemon,
+				'idGrupo' => $idGrupo
+			);
+			return $this->getBancoDados()->executar($comando,$parametros);
+		}
+
 		public function obterTodos($orderBy = 'grupo.id', $limit = null, $offset = 0, $completo = true){
 			$comando = 'select * from grupo where ativo = 1';
 			return $this->getBancoDados()->obterObjetos($comando, array($this, 'transformarEmObjeto'), array(), $orderBy, $limit, $offset, $completo);

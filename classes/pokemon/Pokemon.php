@@ -19,6 +19,7 @@
 		private $velocidade = 0;
 		private $exp = 0;
 		private $nivel = 1;
+		private $raridade = 1; //Grupo
 
 		public function getId(){
 			return $this->id;
@@ -166,6 +167,14 @@
 
 		public function setNivel($nivel){
 			$this->nivel = $nivel;
+		}
+
+		public function getRaridade(){
+			return $this->raridade;
+		}
+
+		public function setRaridade($raridade){
+			$this->raridade = $raridade;
 		}
 	}
 ?>

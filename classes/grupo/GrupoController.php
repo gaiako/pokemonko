@@ -17,5 +17,9 @@
 			
 			return $grupo;
 		}
+
+		public function alterarRaridade($idGrupo,$idPokemon,$raridade){
+			return Util::makeService('grupo')->alterarRaridade($idGrupo,$idPokemon,$raridade);
+		}
 	}
 ?>

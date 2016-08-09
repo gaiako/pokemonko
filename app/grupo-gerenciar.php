@@ -97,7 +97,9 @@ try{
 					<td>
 						<?php
 						foreach($g->getPokemons() as $p){
-							echo '<img src="/app/assets/images/pokemon/icon/'.$p->getId().'.png" />';
+							?>
+							<img class="popover-raridade" data-content="<input type='number' data-idGrupo='<?php echo $g->getId(); ?>' data-idPokemon='<?php echo $p->getId(); ?>' class='input-mini input-raridade' value='<?php echo $p->getRaridade(); ?>' />" title="" data-original-title="Raridade" style="cursor:pointer;" src="/app/assets/images/pokemon/icon/<?php echo $p->getId(); ?>.png" />
+							<?php
 						}
 						?>
 					</td>
@@ -123,6 +125,30 @@ $(document).ready(function(){
 		else{
 			$('input[data-id="'+id+'"]').prop('checked', true);
 		}
+	});
+
+	$('.popover-raridade').popover({placement : 'top',html : true});
+
+	$(document).on('change','.input-raridade',function(){
+		var idGrupo = $(this).attr('data-idGrupo');
+		var idPokemon = $(this).attr('data-idPokemon');
+		var raridade = $(this).val();
+
+		var data = {
+			act : {
+				t : 'GrupoController',
+				o : 'alterarRaridade',
+				p : {
+					idGrupo : idGrupo,
+					idPokemon : idPokemon,
+					raridade : raridade
+				}
+			}
+		}
+
+		$.post('/php/act.php',data,function(result){
+			$.notify('Salvo com sucesso!', "success");
+		},'json');
 	});
 });
 </script>

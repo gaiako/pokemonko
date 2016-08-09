@@ -11,5 +11,9 @@
 				throw new ServiceException('Corrija os campos abaixo para efetuar o cadastro');
 			}
 		}
+
+		public function alterarRaridade($idGrupo,$idPokemon,$raridade){
+			return $this->getDao()->alterarRaridade($idGrupo,$idPokemon,$raridade);
+		}
 	}
 ?>

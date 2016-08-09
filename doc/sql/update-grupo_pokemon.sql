@@ -1,0 +1,1 @@
+ALTER TABLE `grupo_pokemon` ADD `raridade` INT NOT NULL DEFAULT '1' AFTER `idPokemon`;

@@ -188,7 +188,8 @@
 			$comando = "update mapa_pixel set possivelCaminhar = :possivelCaminhar 
 			where x >= :x1 and x <= :x2 and y >= :y1 and y <= :y2 and idMapa = :idMapa";
 			$parametros = array(
-				'idMapa' => $idMapa,				'possivelCaminhar' => $possivelCaminhar,
+				'idMapa' => $idMapa,
+				'possivelCaminhar' => $possivelCaminhar,
 				'x1' => $x['1'],
 				'x2' => $x['2'],
 				'y1' => $y['1'],
@@ -230,8 +231,12 @@
 			}
 			$mapa = $this->obterComId($mapaPixel['idMapa']);
 			
+			$raridade = rand(1,100);
+			if($raridade == 100)
+				$raridade = rand(1,120);
 			$restricoes = array(
-				'idGrupo' => $mapaPixel['idGrupo']
+				'idGrupo' => $mapaPixel['idGrupo'],
+				'raridade' => $raridade
 			);
 			
 			$pokemonBase = Util::makeDao('pokemonBase')->obterComRestricoes($restricoes,'rand()',1,0,true);

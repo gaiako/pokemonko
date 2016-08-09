@@ -71,9 +71,10 @@
 			$parametros = array();
 			
 			if(isset($restricoes['idGrupo'])){
-				$join .= 'JOIN grupo_pokemon ON grupo_pokemon.idPokemon = pokemonbase.id 
+				$join .= 'JOIN grupo_pokemon ON grupo_pokemon.idPokemon = pokemonbase.id and grupo_pokemon.raridade <= :raridade 
 				AND grupo_pokemon.idGrupo = :idGrupo ';
 				$parametros['idGrupo'] = $restricoes['idGrupo'];
+				$parametros['raridade'] = $restricoes['raridade'];
 			}
 			
 			$comando = $select.$join.$where;
@@ -112,7 +113,7 @@
 		}
 		
 		public function obterPokemonsDoGrupo(&$grupo){
-			$comando = "select idPokemon from grupo_pokemon where idGrupo = :idGrupo";
+			$comando = "select idPokemon,raridade from grupo_pokemon where idGrupo = :idGrupo";
 			$parametros = array(
 				'idGrupo' => $grupo->getId()
 			);
@@ -120,6 +121,7 @@
 			
 			foreach($linhas as $l){
 				$pokemon = $this->obterComId($l['idPokemon']);
+				$pokemon->setRaridade($l['raridade']);
 				$grupo->addPokemon($pokemon);
 			}
 		}
