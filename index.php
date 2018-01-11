@@ -79,8 +79,9 @@
 	?>
 	
 	<script src="/js/bootstrap/bootstrap.js"></script>
+	<script src="node/node_modules/socket.io-client/dist/socket.io.js"></script>
 	<script>
-		var RAIZ = "";
+		var socket = io('http://localhost:3000');
 	</script>
 	<script src="/js/jogar.js"></script>
 	<script src="/js/getDefault.js"></script>
@@ -89,7 +90,7 @@
 	<script src="/js/sortable.js"></script>
 	<script src="/js/notify.js"></script>
 	<script>
-		$(document).ready(function(){
+		$(function () {
 			$('form').mascarar();
 		});
 	</script>

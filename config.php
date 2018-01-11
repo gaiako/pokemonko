@@ -3,8 +3,6 @@
 	
 	error_reporting(E_ALL & ~(E_DEPRECATED|E_STRICT|E_NOTICE|E_WARNING));
 	
-	set_time_limit (300);
-	
 	global $_;
 	global $_service;
 	global $_dao;

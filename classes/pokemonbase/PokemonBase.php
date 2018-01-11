@@ -12,7 +12,6 @@
 		private $velocidade = 0;
 		private $ataqueAtaqueEspecial = 0;
 		private $defesaAtaqueEspecial = 0;
-		private $exp = 0;
 		private $sortePokeball = 0;
 		private $nivel = 0;
 		private $raridade = 0;

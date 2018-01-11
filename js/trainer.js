@@ -26,9 +26,17 @@ $(document).keydown(function(event){
 	event.preventDefault();
 	
 	tecla = event.keyCode;
+
+	if(!$('.personagem.ativo').hasClass('looking-'+looking[tecla])){
+		$('.personagem.ativo').removeClassPrefix('looking-');
+		$('.personagem.ativo').addClass('looking-'+looking[tecla]);
+		$('.personagem.ativo').attr('data-looking',looking[tecla]);
+	}
+
+	var position = $('.personagem .ativo').position();
 	
 	//Mover personagem
-	if(event.keyCode >= 37 && event.keyCode <= 40 && anda == true){
+	/*if(event.keyCode >= 37 && event.keyCode <= 40 && anda == true){
 		
 		if($('.personagem.ativo').hasClass('looking-'+looking[tecla])){
 			
@@ -93,13 +101,19 @@ $(document).keydown(function(event){
 					$('div.personagem.ativo').removeClass('water');
 					$('div.personagem.ativo').addClass('animated');
 				}
-				$('div.personagem.ativo').animate({'top' : posicao.top+'px','left' : posicao.left+'px'},400,'linear',function(){ anda = true; $('div.personagem.ativo').removeClass('animated'); });
+				$('div.personagem.ativo').animate({
+					'top' : posicao.top+'px',
+					'left' : posicao.left+'px'
+				},400,'linear',function(){
+					anda = true;
+					//$('div.personagem.ativo').removeClass('animated');
+				});
 			}else{
 				x = xAntes;
 				y = yAntes;
 			}
 		}
-	}
+	}*/
 	
 	//Capturar pokémon
 	if(tecla == 32){

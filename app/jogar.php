@@ -1,5 +1,5 @@
 <?php
-$_SESSION['vezIdTreinador'] = 4;
+$_SESSION['vezIdTreinador'] = 8;
 $mapaController = Util::makeController('mapa');
 $gravacaoController = Util::makeController('gravacao');
 $treinadorController = Util::makeController('treinador');
@@ -17,6 +17,7 @@ if(!isset($_SESSION['vezIdTreinador'])){
 		$gravacaoController->passarAVez();
 	$treinador = $treinadorController->obterTreinadorDaVez();
 }
+$treinadores = $gravacao->getTreinadores();
 
 $mapa = $mapaController->obterComId($treinador->getMapa()->getId());
 $mapaPixels = $mapaController->obterTodosOsPixels($mapa);
@@ -26,10 +27,10 @@ $pokemons = $pokemonController->obterComRestricoes(array('idMapa'=>$mapa->getId(
 <style>
 div.personagem{
 	position: relative;
-	width: 32px;
-	height: 32px;
+	width: 64px;
+	height: 64px;
 	background-repeat: no-repeat;
-	margin-bottom:-32px;
+	margin-bottom:-64px;
 	z-index:1000;
 }
 
@@ -113,9 +114,9 @@ div.water{
 
 div.pokemon{
 	position: relative;
-	width: 32px;
-	height: 32px;
-	margin-bottom:-32px;
+	width: 64px;
+	height: 64px;
+	margin-bottom:-64px;
 	z-index:1000;
 }
 </style>
@@ -129,8 +130,8 @@ div.pokemon{
 			style="
 			display: block;
 			background-image: url('/app/assets/images/pokemon/overworld/<?php echo $pokemon->getLooking(); ?>/<?php echo $pokemon->getPokemonBase()->getId(); ?>.png');
-			top:<?php echo ($pokemon->getY()*32)-32; ?>px;
-			left:<?php echo ($pokemon->getX()*32)-32; ?>px;
+			top:<?php echo ($pokemon->getY()*64)-64; ?>px;
+			left:<?php echo ($pokemon->getX()*64)-64; ?>px;
 			"></div>
 			<?php
 		}
@@ -142,8 +143,8 @@ div.pokemon{
 			?>
 			<div <?php if($t->getId() == $treinador->getId()) echo 'id="ativo"'; ?> class="personagem n<?php echo $k; ?> looking-<?php echo $t->getLooking(); if($t->getId() == $treinador->getId()) echo ' ativo'; ?>" data-looking="<?php echo $t->getLooking(); ?>" data-id="<?php echo $t->getId(); ?>" style="
 			display:block;
-			top:<?php echo ($t->getY()*32)-32; ?>px;
-			left:<?php echo ($t->getX()*32)-32; ?>px;
+			top:<?php echo ($t->getY()*64)-64; ?>px;
+			left:<?php echo ($t->getX()*64)-64; ?>px;
 			"></div>
 			<?php
 		}
@@ -182,69 +183,7 @@ div.pokemon{
 <script src="/js/trainer.js"></script>
 
 <script>
-var raiz = '<?php echo $raiz; ?>';
-var idMapa = <?php echo $mapa->getId(); ?>;
-var xAntes = '';
-var yAntes = '';
-var x = <?php echo $treinador->getX(); ?>;
-var y = <?php echo $treinador->getY(); ?>;
-var xMaximo = <?php echo $mapa->getDimensaoX(); ?>;
-var yMaximo = <?php echo $mapa->getDimensaoY(); ?>;
-var idTreinador = <?php echo $_SESSION['vezIdTreinador']; ?>;
-var enviaPost = false;
-var anda = true;
-var posicao = '';
-var boqueado = '';
-
-function criarPokemonAleatoriamente(){
-	var data = {
-		act : {
-			t : 'MapaController',
-			o : 'criarPokemonAleatoriamente',
-			p : {
-				idMapa : idMapa
-			}
-		}
-	}
-	
-	$.post('/php/act.php',data,function(result){
-		//console.log(result);
-		if(result.success == true){
-			if(result.message.add != null){
-				var div = $('.pokemon.clone').clone(1);
-				div.attr('data-idPokemon',result.message.add.id);
-				div.css('background-image','url("/app/assets/images/pokemon/overworld/'+result.message.add.looking+'/'+result.message.add.pokemonBase.id+'.png")');
-				div.css('top',result.message.add.y*(32)-32+'px');
-				div.css('left',result.message.add.x*(32)-32+'px');
-				div.removeClass('clone');
-				div.hide();
-				$('#pokemons').append(div);
-				div.fadeIn('slow');
-			}
-			
-			if(result.message.del != null){
-				delDivs(result.message.del);
-			}
-		}else{
-			console.log(result.message);
-		}
-	},'json');
-}
-
 $(document).ready(function(){
-	<?php
-	foreach($gravacao->getTreinadores() as $t){
-		?>
-		if($('div[data-x="<?php echo $t->getX(); ?>"][data-y="<?php echo $t->getY(); ?>"]').attr('data-water') == '1')
-			$('.personagem[data-id="<?php echo $t->getId(); ?>"]').addClass('water');
-		<?php
-	}
-	?>
-	criarPokemonAleatoriamente();
-	setInterval(criarPokemonAleatoriamente,<?php echo $mapa->getIntervaloCriacao()*1000; ?>);
 	
-	$('.fechar').click(function(){
-		$('.pokemon-capturado').addClass('escondido');
-	});
 });
 </script>

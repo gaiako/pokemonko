@@ -38,7 +38,7 @@ try{
 			foreach($pokemonsBase as $p){
 				?>
 				<tr>
-					<td><img src="/app/assets/images/pokemon/<?php echo str_pad($p->getId(),3,'0',STR_PAD_LEFT); ?>.png" width="50" height="50" /></td>
+					<td><img src="/app/assets/images/pokemon/icon/<?php echo $p->getId(); ?>.png" /></td>
 					<td><?php echo $p->getNome(); ?></td>
 					<td>
 						<span class="label" style="background-color:<?php echo $p->getTipo()->getCor(); ?>;"><?php echo $p->getTipo()->getNome(); ?></span>

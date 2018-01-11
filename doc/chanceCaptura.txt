@@ -1,0 +1,25 @@
+Chance de pegar o pokémon:
+
+PC = Chance do pokémon (1 fácil - 10 difícil)
+
+V = vida
+100%-75% (0.5)
+75%-50%  (x1)
+25%-50%  (x2)
+10%-25%  (x3)
+0%-10%   (x4)
+
+poké ball  = x1
+great ball = x1.5
+ultra ball = x2
+
+a = 101 - level
+b = a / PC
+chance = round(b*V*ball)
+sorte = rand(1,100)
+if(sorte <= chance){
+	caught!
+}
+else{
+	
+}

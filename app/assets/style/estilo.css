@@ -12,14 +12,14 @@
 
 div.select-personagem{
 	position: relative;
-	width: 32px;
-	height: 32px;
+	width: 64px;
+	height: 64px;
 	background-repeat: no-repeat;
 }
 
 i.preview-terreno{
-	width: 32px;
-	height: 32px;
+	width: 64px;
+	height: 64px;
 	display: block;
 }
 
@@ -49,15 +49,15 @@ i.preview-terreno{
 .mapa{
 	font-family: monospace;
 	position: relative;
-	max-height: 32px;
-	min-height: 32px;
+	max-height: 64px;
+	min-height: 64px;
 }
 
 .mapa-pixel{
 	position: relative;
-	width: 32px;
-	min-height: 32px;
-	max-height: 32px;
+	width: 64px;
+	min-height: 64px;
+	max-height: 64px;
 	float:left;
 }
 
@@ -96,8 +96,8 @@ div.auxiliar-editor div.objeto-editor,
 div.auxiliar-editor div.change-side{
 	position: relative;
 	width: 30px;
-	min-height: 32px;
-	max-height: 32px;
+	min-height: 64px;
+	max-height: 64px;
 	float:left;
 	margin:1px;
 }

@@ -415,7 +415,7 @@ class BancoDados{
 	private function rodar($comando, $parametros = array()){ //throw
 		$preparado = $this->pdo->prepare($comando);
 		if(!$preparado->execute($parametros))
-			throw new DBException("Houve um erro no comando: <br />".$comando."<br />Parâmetros:<br />".Util::arrayParaTexto($parametros)."<br />ERROR: (".implode(" - ", $this->pdo->errorInfo()).")<br /><br />Testador MySQL:<br />".$this->geraTeste($comando, $parametros));
+			throw new DBException("Houve um erro no comando: <br />ERROR: (".implode(" - ", $this->pdo->errorInfo()).")<br /><br />Testador MySQL:<br />".$this->geraTeste($comando, $parametros));
 		return $preparado;
 	}
 }

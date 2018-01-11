@@ -63,12 +63,11 @@
 			for($y=1;$y<=$dimensaoY;$y++){
 				$dificuldade = ceil($y/10);
 				for($x=1;$x<=$dimensaoX;$x++){
-					$comando = "insert into mapa_pixel (idMapa,x,y,dificuldade) values (:idMapa,:x,:y,:dificuldade)";
+					$comando = "insert into mapa_pixel (idMapa,x,y) values (:idMapa,:x,:y)";
 					$parametros = array(
 						'idMapa' => $mapa->getId(),
 						'x' => $x,
-						'y' => $y,
-						'dificuldade' => $dificuldade
+						'y' => $y
 					);
 					$this->getBancoDados()->executar($comando,$parametros);
 				}

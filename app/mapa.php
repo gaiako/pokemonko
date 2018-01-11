@@ -1,7 +1,7 @@
 <?php //print_r($mapa); exit; ?>
 <style>
 .mapa{
-	width: <?php echo $mapa->getDimensaoX()*32; ?>px;
+	width: <?php echo $mapa->getDimensaoX()*64; ?>px;
 }
 </style>
 

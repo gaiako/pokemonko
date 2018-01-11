@@ -155,10 +155,14 @@
 			if($pokemon instanceOf Pokemon){
 				$status = 0; //10 frozen and sleep, 5 for the others
 			
-				$catchRate = 100-$pokemon->getNivel();
-				$chance = floor(($pokemon->getPokemonBase()->getHp()*4) - (($pokemon->getHp() * 2)/$pokemon->getPokemonBase()->getHp())+$status+1);
-			
-				//$number = rand(0,255);
+				//$catchRate = 100-$pokemon->getNivel();
+				//$chance = floor(($pokemon->getPokemonBase()->getHp()*4) - (($pokemon->getHp() * 2)/$pokemon->getPokemonBase()->getHp())+$status+1);
+				$chance = $pokemon->getNivel();
+				
+				// poke 0, 40
+				// great 20,60
+				// ultra 35,100
+				//$number = rand(0,70);
 				$number = 1000;
 				
 				if($number >= $chance){
